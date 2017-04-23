@@ -1,0 +1,24 @@
+{
+    "name": "eversign/eversign-php-sdk",
+    "description": "The official PHP SDK Wrapper for the Eversign API",
+    "authors": [
+        {
+          "name": "apilayer",
+          "email": "support@apilayer.com"
+        },
+        {
+          "name": "Patrick Leeb",
+          "email": "patrick.leeb@gmail.com"
+        }
+    ],
+    "license": [
+        "MIT"
+    ],
+    "autoload": {
+        "psr-0": { "Eversign\\": "sdk/" }
+    },
+    "require": {
+        "guzzlehttp/guzzle": "6.2.3",
+        "jms/serializer": "1.6.2"
+    }
+}
