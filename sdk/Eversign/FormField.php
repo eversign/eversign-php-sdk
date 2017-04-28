@@ -54,7 +54,7 @@ abstract class FormField {
    
      /**
      * A unique alphanumeric identifier which distinguishes the different form 
-      * fields from another
+     * fields from another
      * @var string $identifier 
      * @Type("string")
      */
@@ -120,7 +120,7 @@ abstract class FormField {
         return true;
     }
     
-
+    
     public function getIdentifier() {
         return $this->identifier;
     }

@@ -3,6 +3,8 @@ require_once '../vendor/autoload.php';
 
 use Eversign\Client;
 use Eversign\Document;
+use Eversign\Template;
+use Eversign\Field;
 use Eversign\Signer;
 use Eversign\File;
 use Eversign\SignatureField;
@@ -13,6 +15,7 @@ use Eversign\RadioField;
 use Eversign\DropdownField;
 use Eversign\TextField;
 use Eversign\AttachmentField;
+
 
 echo "<h1>Create Client</h1>";
 $client = new Client("MY_API_KEY");
@@ -37,15 +40,21 @@ $client->cancelDocument($document);
 
 echo "<h1>Create Document</h1>";
 $document = new Document();
-$document->setTitle("formtest1");
-$document->setMessage("jaja");
+$document->setTitle("Form Test");
+$document->setMessage("Test Message ");
 
 //Create a Signer for the Document
 $signer = new Signer();
-$signer->setName("Patrick");
-$signer->setEmail("patrick.leeb@gmail.com");
+$signer->setName("John Doe");
+$signer->setEmail("john.doe@eversign.com");
 $signer->setRequired(true);
 $document->appendSigner($signer);
+
+//Set Custom Meta Tags to the Document
+$document->setMeta([
+   "test" => "value"
+]);
+
 
 //Add a File to the Document
 $file = new File();
@@ -83,7 +92,7 @@ $textField = new TextField();
 $textField->setX(10);
 $textField->setY(50);
 $textField->setPage(2);
-$textField->setValue("blablablabla");
+$textField->setValue("Test Textfield");
 
 $document->appendFormField($textField);
 
@@ -118,7 +127,7 @@ $document->appendFormField($radioboxField1);
 $attachmentField = new AttachmentField();
 $attachmentField->setX(10);
 $attachmentField->setY(100);
-$attachmentField->setName("My Attachment");
+$attachmentField->setName("Test Attachment");
 $attachmentField->setSigner("1");
 $document->appendFormField($attachmentField);
 
@@ -135,3 +144,24 @@ $document->appendFormField($dropdownField);
 
 //Saving the created document to the API.
 $client->createDocument($document);
+
+echo "<h1>Create Document from Template</h1>";
+$template = new Template();
+$template->setTitle("Form Test");
+$template->setMessage("Test Message ");
+
+//Create a Signer for the Document
+$signer = new Signer();
+$signer->setName("John Doe");
+$signer->setRole("Testrole");
+$signer->setEmail("john.doe@eversign.com");
+$template->appendSigner($signer);
+
+$field = new Field();
+$field->setIdentifier("identifier1");
+$field->setValue("value 1");
+
+$template->appendField($field);
+
+//Creating a new Document from a Template
+$client->createDocumentFromTemplate($template);

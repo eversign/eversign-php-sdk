@@ -29,6 +29,7 @@ namespace Eversign;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\SerializerBuilder;
 use Eversign\FormField;
+use Doctrine\Common\Annotations\AnnotationRegistry;
 
 
 /**
@@ -36,12 +37,13 @@ use Eversign\FormField;
  * They can create custom FormFields, multiple Files, custom Meta Tags and extra Recipients  
  *
  * @author Patrick Leeb
+ * 
  */
 class Document {
     
     /**
      * Document Hash to identify its authenticity  
-     * @var string $documentHash 
+     * @property string $documentHash 
      * @Type("string")
      */
     private $documentHash;
@@ -207,9 +209,19 @@ class Document {
      * @var array<Eversign\File> $files
      * @Type("array<Eversign\File>")
      */
-    private $files;   
+    private $files; 
+    
+     /**
+     * Array of Custom Meta Tags which are associated with the Document
+     *
+     * @var array<string, string> $meta
+     * @Type("array<string, string>")
+     */
+    private $meta;  
     
     public function __construct() {
+        AnnotationRegistry::registerLoader('class_exists');
+
         $this->setIsDraft(false);
         $this->setUseSignerOrder(false);
         $this->setReminders(false);
@@ -220,6 +232,12 @@ class Document {
         $this->fields = [];
     }
     
+    /**
+     * Appends a \Eversign\Signer instance to the document.
+     * Will set a default Signer Id if it was not set previously on the Signer.
+     * @param \Eversign\Signer $signer
+     * @throws \Exception
+     */
     public function appendSigner(Signer $signer) {
         if (!$signer->getName() || !$signer->getEmail()) {
             throw new \Exception('Signer needs at least a Name and an E-Mail address');
@@ -230,6 +248,11 @@ class Document {
         $this->signers[] = $signer;
     }
     
+    /**
+     * Appends a \Eversign\File instance to the document
+     * @param \Eversign\File $file
+     * @throws \Exception
+     */
     public function appendFile(File $file) {
         if (!$file->getFilePath() && !$file->getFileId() && !$file->getFileUrl() && !$file->getFileBase64()) {
             throw new \Exception('File object needs a real File to be associated');
@@ -241,6 +264,13 @@ class Document {
         $this->files[] = $file;
     }
     
+    /**
+     * Appends a \Eversign\FormField subclass to the document. The second
+     * parameter defines the Index of the File instance where the FormField lives.
+     * @param FormField $formField
+     * @param type $fileIndex
+     * @throws \Exception
+     */
     public function appendFormField(FormField $formField, $fileIndex = 0) {
         if (count($this->getFiles()) == 0 || $fileIndex  > count($this->getFiles())) {
             throw new \Exception('Please check that at least 1 File was added and the fileIndex isn´t higher than the Amount of files');
@@ -256,6 +286,11 @@ class Document {
         $this->fields[$fileIndex][] = $formField;
     }
     
+    /**
+     * Appends a \Eversign\Recipient instance to the document
+     * @param \Eversign\Recipient $recipient
+     * @throws \Exception
+     */
     public function appendRecipient(Recipient $recipient) {
         if (!$recipient->getName() || !$recipient->getEmail()) {
             throw new \Exception('Recipient needs at least a Name and an E-Mail address');
@@ -264,10 +299,13 @@ class Document {
         $this->recipients[] = $recipient;
     }
     
+    /**
+     * Converts the document to a JSON String
+     * @return string
+     */
     public function printJson() {
         $serializer = SerializerBuilder::create()->build();
         return $serializer->serialize($this, 'json');
-         
     }
 
     public function getDocumentHash() {
@@ -362,7 +400,11 @@ class Document {
         return $this->fields;
     }
 
-    
+    public function getMeta() {
+        return $this->meta;
+     }
+
+
     public function setDocumentHash($documentHash) {
         $this->documentHash = $documentHash;
     }
@@ -409,6 +451,10 @@ class Document {
 
     public function setExpires($expires) {
         $this->expires = $expires;
+    }
+    
+    public function setMeta($meta) {
+        $this->meta = $meta;
     }
     
 }

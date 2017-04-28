@@ -25,78 +25,45 @@
  */
 
 namespace Eversign;
-
 use JMS\Serializer\Annotation\Type;
 
-
 /**
- * Each Document can have 1 or multiple Recipients which are not able to sign the 
- * Document but can view it. 
+ * Field Object with identifier and value for the Template 
  *
  * @author Patrick Leeb
  */
-class Recipient {
-        
+class Field {
     
-    /**
-     * Sets the full name of the Recipient.
-     * @var string $name 
-     * @Type("string")
-     */
-    private $name;
- 
-    /**
-     * Sets the email of the Recipient.
-     * @var string $email 
-     * @Type("string")
-     */
-    private $email;
-    
+       
      /**
-     * True if the Signer is required to sign to make the Document complete
-     * @var boolean $required 
-     * @Type("boolean")
-     */
-    private $required;
-    
-    /**
-     * Roles are used when creating a document from a template. 
-     * Please note that all required roles must be specified in order to use a template.
-     * @var string $role 
+     * The field's Field Identifier.
+     * @var string $identifier 
      * @Type("string")
      */
-    private $role;
+    private $identifier;
+   
+    /**
+     * The field's value.
+     * @var string $value 
+     * @Type("string")
+     */
+    private $value;
     
-    public function getName() {
-        return $this->name;
+    
+    public function getIdentifier() {
+        return $this->identifier;
     }
 
-    public function getEmail() {
-        return $this->email;
-    }
-    
-    public function getRequired() {
-        return $this->required;
-    }
-    
-    public function getRole() {
-        return $this->role;
-    }
-            
-    public function setName($name) {
-        $this->name = $name;
+    public function getValue() {
+        return $this->value;
     }
 
-    public function setEmail($mail) {
-        $this->email = $mail;
+    public function setIdentifier($identifier) {
+        $this->identifier = $identifier;
     }
-    
-    public function setRequired($required) {
-        $this->required = $required;
-    }
-    
-    public function setRole($role) {
-        $this->role = $role;
+
+    public function setValue($value) {
+        $this->value = $value;
     }
 
 

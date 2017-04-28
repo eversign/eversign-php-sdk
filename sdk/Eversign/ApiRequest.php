@@ -50,13 +50,17 @@ class ApiRequest {
     /**
      * Creating a blank Request with the Access Key and specific Endpoint
      *
+     * @param string $httpType
      * @param string $accessKey
      * @param string $endPoint
+     * @param string $serializeClass
+     * @param [] $parameters 
+     * @param [] $payLoad
      */
     public function __construct($httpType = "GET", $accessKey, $endPoint, $serializeClass = "", $parameters = NULL, $payLoad = NULL) {
         $this->httpType = $httpType;
         $this->accessKey = $accessKey;
-        $this->guzzleClient = new GuzzleClient(['base_uri' => Config::API_URL, 'debug' => true]);
+        $this->guzzleClient = new GuzzleClient(['base_uri' => Config::API_URL]);
         $this->endPoint = $endPoint;
         $this->serializeClass = $serializeClass;
         $this->parameters = $parameters;
@@ -75,6 +79,11 @@ class ApiRequest {
         return $query;
     }
     
+    /**
+     * Starts a MultiPart Upload Request to the API
+     * @return [] 
+     * @throws \Exception
+     */
     public function startMultipartUpload() {
         if(Config::DEBUG_MODE) {
            echo "<hr>" . Config::API_URL . $this->endPoint ."<br />";
@@ -106,6 +115,13 @@ class ApiRequest {
         
     }
 
+    /**
+     * Starts the configured API Request of the ApiRequest instance.
+     * Returns different objects based on the request sent. Consult the Eversign API
+     * documentation for more information.
+     * @return stdClass 
+     * @throws \Exception
+     */
     public function startRequest() {
         if(Config::DEBUG_MODE) {
            echo "<hr>" . Config::API_URL . $this->endPoint ."<br />";

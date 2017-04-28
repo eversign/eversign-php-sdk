@@ -123,7 +123,6 @@ abstract class TextFormField extends FormField{
     }
 
     public function setTextStyle($textStyle) {
-        echo $textStyle;
         $this->textStyle = $textStyle;
     }
 
