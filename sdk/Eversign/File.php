@@ -37,58 +37,58 @@ use JMS\Serializer\Annotation\Type;
  * @author Patrick Leeb
  */
 class File {
-    
+
      /**
      * The unique ID of the uploaded File
-     * @var string $fileId 
+     * @var string $fileId
      * @Type("string")
      */
     private $fileId;
-    
+
     /**
      * A URL leading to the file you would like to upload as your document file.
-     * @var string $fileUrl 
+     * @var string $fileUrl
      * @Type("string")
      */
     private $fileUrl;
-    
+
     /**
      * Specify a base64 string of the file you would like to upload.
-     * @var string $fileBase64 
+     * @var string $fileBase64
      * @Type("string")
      */
     private $fileBase64;
-    
+
     /**
      * The name of the File
-     * @var string $name 
+     * @var string $name
      * @Type("string")
      */
     private $name;
-    
+
     /**
      * The number of pages of the File
-     * @var integer $pages 
+     * @var integer $pages
      * @Type("integer")
      */
     private $pages;
 
     /**
      * The number of pages of the converted File
-     * @var integer $totalPages 
+     * @var integer $totalPages
      * @Type("integer")
      */
-    private $totalPages;  
-    
+    private $totalPages;
+
     /**
      * Setting this Property will upload the File as soon as createDocument
-     * or uploadFile on the Client is called. Cannot be used in conjuction with other 
+     * or uploadFile on the Client is called. Cannot be used in conjuction with other
      * File Links or Ids. After the Upload the fileId will be set automatically
      * @var string $filePath
      */
     private $filePath;
-    
-    
+
+
     public function getFileId() {
         return $this->fileId;
     }
@@ -112,7 +112,7 @@ class File {
     public function getFileBase64() {
         return $this->fileBase64;
     }
-    
+
     public function getFilePath() {
         return $this->filePath;
     }
@@ -123,7 +123,7 @@ class File {
         $this->fileId = "";
         $this->fileBase64 = "";
     }
-    
+
     public function setFileId($fileId) {
         $this->clearFileFields();
         $this->fileId = $fileId;
@@ -138,17 +138,17 @@ class File {
         $this->clearFileFields();
         $this->fileBase64 = $fileBase64;
     }
-    
+
     public function setFilePath($filePath) {
         if (!file_exists($filePath)) {
             throw new \Exception('The file on the specified path cannot be found.');
         }
-        
+
         $this->clearFileFields();
         $this->filePath = $filePath;
     }
-    
-    
+
+
     public function setName($name) {
         $this->name = $name;
     }

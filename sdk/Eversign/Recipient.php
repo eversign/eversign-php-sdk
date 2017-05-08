@@ -30,43 +30,43 @@ use JMS\Serializer\Annotation\Type;
 
 
 /**
- * Each Document can have 1 or multiple Recipients which are not able to sign the 
- * Document but can view it. 
+ * Each Document can have 1 or multiple Recipients which are not able to sign the
+ * Document but can view it.
  *
  * @author Patrick Leeb
  */
 class Recipient {
-        
-    
+
+
     /**
      * Sets the full name of the Recipient.
-     * @var string $name 
+     * @var string $name
      * @Type("string")
      */
     private $name;
- 
+
     /**
      * Sets the email of the Recipient.
-     * @var string $email 
+     * @var string $email
      * @Type("string")
      */
     private $email;
-    
+
      /**
      * True if the Signer is required to sign to make the Document complete
-     * @var boolean $required 
+     * @var boolean $required
      * @Type("boolean")
      */
     private $required;
-    
+
     /**
-     * Roles are used when creating a document from a template. 
+     * Roles are used when creating a document from a template.
      * Please note that all required roles must be specified in order to use a template.
-     * @var string $role 
+     * @var string $role
      * @Type("string")
      */
     private $role;
-    
+
     public function getName() {
         return $this->name;
     }
@@ -74,15 +74,15 @@ class Recipient {
     public function getEmail() {
         return $this->email;
     }
-    
+
     public function getRequired() {
         return $this->required;
     }
-    
+
     public function getRole() {
         return $this->role;
     }
-            
+
     public function setName($name) {
         $this->name = $name;
     }
@@ -90,11 +90,11 @@ class Recipient {
     public function setEmail($mail) {
         $this->email = $mail;
     }
-    
+
     public function setRequired($required) {
         $this->required = $required;
     }
-    
+
     public function setRole($role) {
         $this->role = $role;
     }

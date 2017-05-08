@@ -70,7 +70,7 @@ class Business {
      * @Type("boolean")
      */
     private $isPrimary;
-    
+
     /**
      * Creation Time of the Business, can't be set via Webservice (read-only)
      *
@@ -84,7 +84,7 @@ class Business {
      /**
      * Returns the Business Id
      *
-     * @return int 
+     * @return int
      */
     public function getBusinessId() {
         return $this->businessId;
@@ -97,7 +97,7 @@ class Business {
     /**
      * Returns the Business Name
      *
-     * @return string 
+     * @return string
      */
     public function getBusinessIdentifier() {
         return $this->businessIdentifier;
@@ -110,7 +110,7 @@ class Business {
     /**
      * Returns the Business Name
      *
-     * @return string 
+     * @return string
      */
     public function getBusinessName() {
         return $this->businessName;
@@ -123,7 +123,7 @@ class Business {
     /**
      * Returns the Business Name
      *
-     * @return int 
+     * @return int
      */
     public function getBusinessConnectionId() {
         return $this->businessConnectionId;
@@ -136,7 +136,7 @@ class Business {
     /**
      * Returns the Business Name
      *
-     * @return bool 
+     * @return bool
      */
     public function getIsPrimary() {
         return $this->isPrimary;

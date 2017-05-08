@@ -34,13 +34,13 @@ use Eversign\Signable;
  * @author Patrick Leeb
  */
 class DateSignedField extends TextFormField{
-    
+
     use Signable;
-    
+
     public function __construct() {
         parent::__construct();
         $this->setWidth(60);
         $this->setHeight(17);
     }
-    
+
 }

@@ -35,6 +35,6 @@ use Eversign\NoteField;
  * @author Patrick Leeb
  */
 class TextField extends NoteField{
-    
-    
+
+
 }

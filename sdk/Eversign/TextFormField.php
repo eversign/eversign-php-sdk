@@ -35,41 +35,41 @@ use JMS\Serializer\Annotation\Type;
  * @author Patrick Leeb
  */
 abstract class TextFormField extends FormField{
-    
+
     /**
-     * Set to your preferred font size number  
-     * @var integer $textSize 
+     * Set to your preferred font size number
+     * @var integer $textSize
      * @Type("integer")
      */
     private $textSize;
 
     /**
-     * Color of the Text as Hex color code, e.g. #003399  
-     * @var string $textColor 
+     * Color of the Text as Hex color code, e.g. #003399
+     * @var string $textColor
      * @Type("string")
      */
-    private $textColor;    
-   
+    private $textColor;
+
     /**
      * Font of the TextFormField
      * Supported fonts are: arial, calibri, courier_new, helvetica, georgia
      * and times_new_roman
-     * @var string $textFont 
+     * @var string $textFont
      * @Type("string")
      */
-    private $textFont;   
-    
+    private $textFont;
+
     /**
      * Text Style of the TextFormField
-     * The letters B for bold, U for underlined and I for italic, 
+     * The letters B for bold, U for underlined and I for italic,
      * in an order of your choice. Example: BUI
-     * @var string $textStyle 
+     * @var string $textStyle
      * @Type("string")
      */
     private $textStyle;
-    
 
-    
+
+
     public function __construct() {
         parent::__construct();
         $this->setTextSize(14);
@@ -77,18 +77,18 @@ abstract class TextFormField extends FormField{
         $this->setTextColor("#000000");
         $this->setTextFont("arial");
     }
-    
+
     public function validate() {
         $success = true;
         if(!$this->getTextSize() || !$this->getTextFont() || !$this->getTextColor() || !$this->getTextStyle()){
             echo "false";
             $success = false;
         }
-        
+
         return $success & parent::validate();
     }
-    
-    
+
+
     public function getTextSize() {
         return $this->textSize;
     }
@@ -104,8 +104,8 @@ abstract class TextFormField extends FormField{
     public function getTextStyle() {
         return $this->textStyle;
     }
-    
-   
+
+
     public function setTextSize($textSize) {
         $this->textSize = $textSize;
     }
@@ -126,5 +126,5 @@ abstract class TextFormField extends FormField{
         $this->textStyle = $textStyle;
     }
 
- 
+
 }

@@ -38,10 +38,10 @@ use Eversign\Requireable;
  * @author Patrick Leeb
  */
 class InitialsField extends FormField{
-    
+
     use Signable, Requireable;
-    
-    
+
+
     public function __construct() {
         parent::__construct();
         $this->type = "initials";
@@ -49,6 +49,6 @@ class InitialsField extends FormField{
         $this->setHeight(43);
         $this->setRequired(false);
     }
-   
-    
+
+
 }

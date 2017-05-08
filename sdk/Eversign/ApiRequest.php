@@ -32,21 +32,21 @@ use JMS\Serializer\SerializerBuilder;
 
 
 class ApiRequest {
-    
+
     private $guzzleClient;
 
     private $accessKey;
-    
+
     private $httpType;
 
     private $endPoint;
-    
+
     private $serializeClass;
-    
+
     private $parameters;
-    
+
     private $payLoad;
-    
+
     /**
      * Creating a blank Request with the Access Key and specific Endpoint
      *
@@ -54,7 +54,7 @@ class ApiRequest {
      * @param string $accessKey
      * @param string $endPoint
      * @param string $serializeClass
-     * @param [] $parameters 
+     * @param [] $parameters
      * @param [] $payLoad
      */
     public function __construct($httpType = "GET", $accessKey, $endPoint, $serializeClass = "", $parameters = NULL, $payLoad = NULL) {
@@ -65,33 +65,33 @@ class ApiRequest {
         $this->serializeClass = $serializeClass;
         $this->parameters = $parameters;
         $this->payLoad = $payLoad;
-    } 
-    
+    }
+
     private function createQuery() {
         $query = [
             'access_key' => $this->accessKey
         ];
-        
+
         if($this->parameters != NULL) {
             $query = array_merge($query, $this->parameters);
         }
-        
+
         return $query;
     }
-    
+
     /**
      * Starts a MultiPart Upload Request to the API
-     * @return [] 
+     * @return []
      * @throws \Exception
      */
     public function startMultipartUpload() {
         if(Config::DEBUG_MODE) {
            echo "<hr>" . Config::API_URL . $this->endPoint ."<br />";
         }
-         
-        
+
+
         $response = $this->guzzleClient->request($this->httpType, $this->endPoint, [
-            'query' => $this->createQuery(), 
+            'query' => $this->createQuery(),
             'multipart' => [
                 [
                     'name'     => 'upload',
@@ -99,51 +99,51 @@ class ApiRequest {
                 ]
             ]
         ]);
-        
-        
+
+
         if(Config::SHOW_API_RESPONSE) {
            echo "<div style='background-color: #eee; padding: 20px; border: solid 1px #333; margin: 10px 0; word-break:break-all;'><h3 style='margin-top: 0;'>Response</h3>".$response->getBody()."</div>";
-           
+
         }
-        
-        
+
+
         $responseJson = json_decode($response->getBody());
             if(isset($responseJson->success)) {
                 throw new \Exception('Webservice Error No ' . $responseJson->code . ' - Type: ' . $responseJson->type);
             }
         return $responseJson;
-        
+
     }
 
     /**
      * Starts the configured API Request of the ApiRequest instance.
      * Returns different objects based on the request sent. Consult the Eversign API
      * documentation for more information.
-     * @return stdClass 
+     * @return stdClass
      * @throws \Exception
      */
     public function startRequest() {
         if(Config::DEBUG_MODE) {
            echo "<hr>" . Config::API_URL . $this->endPoint ."<br />";
         }
-       
+
         if($this->payLoad && is_array($this->payLoad) && array_key_exists("sink", $this->payLoad)) {
             $response = $this->guzzleClient->request($this->httpType, $this->endPoint, [
-                'query' => $this->createQuery(), 
+                'query' => $this->createQuery(),
                 'sink' => $this->payLoad["sink"]
             ]);
         }
         else {
             $response = $this->guzzleClient->request($this->httpType, $this->endPoint, [
-                'query' => $this->createQuery(), 
+                'query' => $this->createQuery(),
                 'body' => $this->payLoad
             ]);
-        } 
-        
+        }
+
         if(Config::SHOW_API_RESPONSE && $this->endPoint != Config::DOCUMENT_FINAL_URL && $this->endPoint != Config::DOCUMENT_RAW_URL) {
            echo "<div style='background-color: #eee; padding: 20px; border: solid 1px #333; margin: 10px 0; word-break:break-all;'><h3 style='margin-top: 0;'>Response</h3>".$response->getBody()."</div>";
         }
-        
+
         if($this->payLoad && is_array($this->payLoad) &&  array_key_exists("sink", $this->payLoad)) {
             return file_exists($this->payLoad["sink"]);
         }
@@ -161,9 +161,9 @@ class ApiRequest {
             if(!$responseJson->success) {
                 throw new \Exception('Webservice Error No ' . $responseJson->code . ' - Type: ' . $responseJson->type);
             }
-            return $responseJson;   
+            return $responseJson;
         }
-     
+
     }
 
 

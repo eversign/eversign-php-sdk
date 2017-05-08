@@ -35,7 +35,7 @@ use JMS\Serializer\Annotation\Type;
  * @author Patrick Leeb
  */
 class DropdownField extends TextField{
-    
+
      /**
      * This parameter must contain a simple string Array containing
      * all available options of a Dropdown field. Pre-Select an option
@@ -45,14 +45,14 @@ class DropdownField extends TextField{
      * @Type("array<string>")
      */
     private $options;
-    
+
     public function __construct() {
         parent::__construct();
         $this->setWidth(63);
         $this->setHeight(19);
         $this->options = [];
     }
-    
+
     public function getOptions() {
         return $this->options;
     }
@@ -62,5 +62,5 @@ class DropdownField extends TextField{
     }
 
 
-    
+
 }

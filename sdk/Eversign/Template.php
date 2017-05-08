@@ -32,53 +32,53 @@ use JMS\Serializer\SerializerBuilder;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 
 /**
- * An existing template can be used by making an HTTP POST request to the 
- * document containing some key parameters. 
+ * An existing template can be used by making an HTTP POST request to the
+ * document containing some key parameters.
  * All optional and required parameters are listed in the table below.
  *
  * @author Patrick Leeb
  */
 class Template {
-    
+
      /**
-     * Set to the Template ID of the template you would like to use  
-     * @var string $templateId 
+     * Set to the Template ID of the template you would like to use
+     * @var string $templateId
      * @Type("string")
      */
     private $templateId;
-    
-        
+
+
     /**
      * Sets the title of the Document.
-     * @var string $title 
+     * @var string $title
      * @Type("string")
      */
     private $title;
-    
+
      /**
      * Used in order to specify a document message.
-     * @var string $message 
+     * @var string $message
      * @Type("string")
      */
     private $message;
-    
+
         /**
-     * This parameter is used to specify a custom completion redirect URL. 
+     * This parameter is used to specify a custom completion redirect URL.
      * If empty the default Post-Sign Completion URL of the current Business will be used
-     * @var string $redirect 
+     * @var string $redirect
      * @Type("string")
      */
     private $redirect;
-    
+
      /**
-     * This parameter is used to specify an internal reference for your application, 
-     * such as an identification string of the server or client making the API request. 
-     * @var string $client 
+     * This parameter is used to specify an internal reference for your application,
+     * such as an identification string of the server or client making the API request.
+     * @var string $client
      * @Type("string")
      */
     private $client;
-    
-        
+
+
     /**
      * Expiration Time of the Document, default expiration time will be used if unset
      *
@@ -102,23 +102,23 @@ class Template {
      * @Type("array<Eversign\Recipient>")
      */
     private $recipients;
-    
+
      /**
      * This object must contain a sub array for each Merge Field of this template.
      *
      * @var array<Eversign\Field> $fields
      * @Type("array<Eversign\Field>")
      */
-    private $fields; 
-    
+    private $fields;
+
     public function __construct() {
         if (!class_exists('Doctrine\Common\Annotations\AnnotationRegistry', false) && class_exists('Doctrine\Common\Annotations\AnnotationRegistry')) {
             AnnotationRegistry::registerLoader('class_exists');
-        }   
+        }
         $this->signers = [];
         $this->recipients = [];
     }
-     
+
     /**
      * Appends a \Eversign\Signer instance to the document created by the template.
      * The Signer Object is required to have a role
@@ -132,7 +132,7 @@ class Template {
 
         $this->signers[] = $signer;
     }
-    
+
     /**
      * Appends a \Eversign\Recipient instance to the document
      * @param \Eversign\Recipient $recipient
@@ -142,10 +142,10 @@ class Template {
         if (!$recipient->getRole() || !$recipient->getName() || !$recipient->getEmail()) {
             throw new \Exception('Recipient needs at least a Name, a Role and an E-Mail address');
         }
-     
+
         $this->recipients[] = $recipient;
     }
-    
+
      /**
      * Appends a Field Object for Merge Fields.
      * @param \Eversign\Field $field
@@ -153,7 +153,7 @@ class Template {
     public function appendField(Field $field) {
         $this->fields[] = $field;
     }
-    
+
     public function getTemplateId() {
         return $this->templateId;
     }
@@ -185,11 +185,11 @@ class Template {
     public function getRecipients() {
         return $this->recipients;
     }
-    
+
     public function getFields() {
         return $this->fields;
     }
-    
+
 
     public function setTemplateId($templateId) {
         $this->templateId = $templateId;
@@ -226,7 +226,7 @@ class Template {
     public function setFields($fields) {
         $this->fields = $fields;
     }
-    
+
      /**
      * Converts the document to a JSON String
      * @return string

@@ -33,22 +33,22 @@ use JMS\Serializer\Annotation\Type;
  * @author Patrick Leeb
  */
 trait Signable {
-    
+
      /**
-     * The unique ID of the signer this field should be assigned to. 
-     * If this field should become a No Signer field, please set this 
-     * parameter to OWNER. 
-     * @var string $signer 
+     * The unique ID of the signer this field should be assigned to.
+     * If this field should become a No Signer field, please set this
+     * parameter to OWNER.
+     * @var string $signer
      * @Type("string")
      */
     private $signer;
-      
+
     public function setSigner($signer) {
         $this->signer = $signer;
     }
-       
+
     public function getSigner() {
         return $this->signer;
     }
-    
+
 }

@@ -46,59 +46,59 @@ use JMS\Serializer\Annotation\Discriminator;
  *    "radio": "Eversign\RadioField",
  *    "dropdown": "Eversign\DropdownField",
  *    "attachment": "Eversign\AttachmentField"
- * 
+ *
  * })
  */
 abstract class FormField {
-    
-   
+
+
      /**
-     * A unique alphanumeric identifier which distinguishes the different form 
+     * A unique alphanumeric identifier which distinguishes the different form
      * fields from another
-     * @var string $identifier 
+     * @var string $identifier
      * @Type("string")
      */
     private $identifier;
-    
+
      /**
      * The number of the page where the FormField should be displayed
-     * @var integer $page 
+     * @var integer $page
      * @Type("integer")
      */
     private $page;
-    
+
      /**
-     * The width of the FormField in pixels. 
-     * @var integer $width 
+     * The width of the FormField in pixels.
+     * @var integer $width
      * @Type("integer")
      */
     private $width;
-    
+
     /**
-     * The height of the FormField in pixels. 
-     * @var integer $height 
+     * The height of the FormField in pixels.
+     * @var integer $height
      * @Type("integer")
      */
     private $height;
-    
-    
+
+
     /**
-     * The FormField's horizontal margin from the left 
-     * side of the document in pixels. 
-     * @var float $x 
+     * The FormField's horizontal margin from the left
+     * side of the document in pixels.
+     * @var float $x
      * @Type("float")
      */
     private $x;
-    
-     
+
+
     /**
      * The FormField's vertical margin from the top of the document in pixels
      * @var float $y
      * @Type("float")
      */
     private $y;
-    
-    
+
+
     public function __construct() {
         $this->setPage(1);
         $this->setX(0);
@@ -107,8 +107,8 @@ abstract class FormField {
             $this->setSigner("OWNER");
         }
     }
-    
-    
+
+
     /**
      * Validates the current FormField
      * @return boolean success
@@ -119,8 +119,8 @@ abstract class FormField {
         }
         return true;
     }
-    
-    
+
+
     public function getIdentifier() {
         return $this->identifier;
     }
@@ -169,7 +169,7 @@ abstract class FormField {
         $this->y = $y;
     }
 
-    
-    
-    
+
+
+
 }

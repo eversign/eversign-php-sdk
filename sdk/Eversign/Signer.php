@@ -30,26 +30,26 @@ use JMS\Serializer\Annotation\Type;
 use Eversign\Recipient;
 
 /**
- * Each Document can have 1 or multiple Signers which are able to sign the 
+ * Each Document can have 1 or multiple Signers which are able to sign the
  * Document. Each Signer needs an id, name and an E-Mail address.
  * Each Document needs at least 1 Signer
  *
  * @author Patrick Leeb
  */
 class Signer extends Recipient {
-    
+
     /**
      * Sets the id of the Signer.
-     * @var integer $name 
+     * @var integer $name
      * @Type("integer")
      */
     private $id;
 
-    
+
     /**
      * The order number of the Signer
      * Usually starts with 1 for the first Signer.
-     * @var integer $order 
+     * @var integer $order
      * @Type("integer")
      */
     private $order;
@@ -57,18 +57,18 @@ class Signer extends Recipient {
     /**
      * Pins are used as an extra level of security and must be put in
      * by the signer before signing the Document.
-     * @var string $pin 
+     * @var string $pin
      * @Type("string")
      */
-    private $pin;   
-    
+    private $pin;
+
      /**
      * True if the Signer has signed the associated Document
-     * @var boolean $signed 
+     * @var boolean $signed
      * @Type("boolean")
      */
     private $signed;
-    
+
      /**
      * Time of signing the Document if the Signer has signed already
      *
@@ -76,44 +76,44 @@ class Signer extends Recipient {
      * @Type("string")
      */
     private $signed_timestamp;
-    
-    
+
+
      /**
      * True if the Signer declined to sign the Document
-     * @var boolean $declined 
+     * @var boolean $declined
      * @Type("boolean")
      */
     private $declined;
-    
+
     /**
      * True if the Document has been sent to the Signer
-     * @var boolean $sent 
+     * @var boolean $sent
      * @Type("boolean")
      */
     private $sent;
-    
+
     /**
      * True if the Document has been viewed to the Signer
-     * @var boolean $sent 
+     * @var boolean $sent
      * @Type("boolean")
      */
     private $viewed;
-    
+
     /**
      * URL of the Signing Request that is sent to the Signer
-     * @var string $signingUrl 
+     * @var string $signingUrl
      * @Type("string")
      */
-    private $signingUrl; 
-    
+    private $signingUrl;
+
     /**
      * Status of the Signer
-     * @var string $status 
+     * @var string $status
      * @Type("string")
      */
-    private $status; 
-    
-    
+    private $status;
+
+
     public function getId() {
         return $this->id;
     }

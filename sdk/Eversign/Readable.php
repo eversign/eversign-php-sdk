@@ -33,14 +33,14 @@ use JMS\Serializer\Annotation\Type;
  * @author Patrick Leeb
  */
 trait Readable {
-    
+
     /**
      * Determines if the FormField is writable or not
      * @var boolean $readOnly
      * @Type("boolean")
      */
     private $readOnly;
-      
+
     public function setReadOnly($readOnly) {
         $this->readOnly = $readOnly;
     }

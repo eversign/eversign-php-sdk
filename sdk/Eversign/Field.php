@@ -28,28 +28,28 @@ namespace Eversign;
 use JMS\Serializer\Annotation\Type;
 
 /**
- * Field Object with identifier and value for the Template 
+ * Field Object with identifier and value for the Template
  *
  * @author Patrick Leeb
  */
 class Field {
-    
-       
+
+
      /**
      * The field's Field Identifier.
-     * @var string $identifier 
+     * @var string $identifier
      * @Type("string")
      */
     private $identifier;
-   
+
     /**
      * The field's value.
-     * @var string $value 
+     * @var string $value
      * @Type("string")
      */
     private $value;
-    
-    
+
+
     public function getIdentifier() {
         return $this->identifier;
     }

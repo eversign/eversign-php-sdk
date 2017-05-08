@@ -38,24 +38,24 @@ use Eversign\Requireable;
  * @author Patrick Leeb
  */
 class SignatureField extends FormField{
-    
+
     use Signable, Requireable;
-    
-    
+
+
     public function __construct() {
         parent::__construct();
         $this->setWidth(120);
         $this->setHeight(35);
         $this->setRequired(false);
     }
-   
+
     public function validate() {
         $success = true;
         if($this->getSigner() == "") {
             $success = false;
         }
-        
+
         return ($success & parent::validate());
     }
-    
+
 }
