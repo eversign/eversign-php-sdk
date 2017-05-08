@@ -174,7 +174,7 @@ class Template {
         return $this->client;
     }
 
-    public function getExpires(): \DateTime {
+    public function getExpires() {
         return $this->expires;
     }
 
@@ -189,7 +189,6 @@ class Template {
     public function getFields() {
         return $this->fields;
     }
-
 
     public function setTemplateId($templateId) {
         $this->templateId = $templateId;

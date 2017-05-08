@@ -68,7 +68,7 @@ class LogEntry {
         return $this->signer;
     }
 
-    public function getTimestamp(): \DateTime {
+    public function getTimestamp() {
         return $this->timestamp;
     }
 
