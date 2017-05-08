@@ -154,8 +154,3 @@ We encourage you to help us advance the project in the future. If you would like
 
  - Test the whole codebase
  - Add more field validation
-
-License
-----
-
-MIT
