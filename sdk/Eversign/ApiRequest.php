@@ -146,23 +146,23 @@ class ApiRequest {
 
         if($this->payLoad && is_array($this->payLoad) &&  array_key_exists("sink", $this->payLoad)) {
             return file_exists($this->payLoad["sink"]);
-        }
-        else if($this->serializeClass) {
-            $serializer = SerializerBuilder::create()->build();
-            $serializeObject = $serializer->deserialize($response->getBody(), $this->serializeClass, 'json');
-            if(Config::DEBUG_MODE) {
-                highlight_string("<?php\n\$serializeObject =\n" . var_export($serializeObject, true) . ";\n?>");
-            }
-
-            return $serializeObject;
-        }
-        else {
+        } else {
             $responseJson = json_decode($response->getBody());
-            if(!$responseJson->success) {
-                throw new \Exception('Webservice Error No ' . $responseJson->code . ' - Type: ' . $responseJson->type);
+            if($responseJson->error) {
+                throw new \Exception('Webservice Error No ' . $responseJson->error->code . ' - Type: ' . $responseJson->error->type);
+            } else if($this->serializeClass) {
+                $serializer = SerializerBuilder::create()->build();
+                $serializeObject = $serializer->deserialize($response->getBody(), $this->serializeClass, 'json');
+                if(Config::DEBUG_MODE) {
+                    highlight_string("<?php\n\$serializeObject =\n" . var_export($serializeObject, true) . ";\n?>");
+                }
+
+                return $serializeObject;
+            } else {
+                return $responseJson;
             }
-            return $responseJson;
         }
+
 
     }
 
