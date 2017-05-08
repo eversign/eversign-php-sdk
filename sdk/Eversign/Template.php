@@ -111,12 +111,16 @@ class Template {
      */
     private $fields;
 
-    public function __construct() {
+    public function __construct($templateId = null) {
         if (!class_exists('Doctrine\Common\Annotations\AnnotationRegistry', false) && class_exists('Doctrine\Common\Annotations\AnnotationRegistry')) {
             AnnotationRegistry::registerLoader('class_exists');
         }
         $this->signers = [];
         $this->recipients = [];
+
+        if($templateId !== null) {
+            $this->setTemplateId($templateId);
+        }
     }
 
     /**
