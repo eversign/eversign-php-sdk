@@ -47,6 +47,8 @@ class Client {
      */
     private $businesses;
 
+    private $businessId;
+
     /**
      * The selected Business which will be used for subsequent API requests
      * @var \Business $selectedBusiness
@@ -58,13 +60,18 @@ class Client {
       *
       * @param string $accessKey
       */
-     public function __construct($accessKey)
+     public function __construct($accessKey, $businessId = 0)
      {
         if (!class_exists('Doctrine\Common\Annotations\AnnotationRegistry', false) && class_exists('Doctrine\Common\Annotations\AnnotationRegistry')) {
             AnnotationRegistry::registerLoader('class_exists');
         }
         $this->accessKey = $accessKey;
+
+        if($businessId != 0) {
+            $this->businessId = $businessId;
+        }
         $this->fetchBusinesses();
+
      }
 
 
@@ -91,13 +98,32 @@ class Client {
 
         if ($setDefault && count($this->businesses) > 0) {
 
-            //Set the default Business to the primary Business of the Client
-            $this->selectedBusiness = array_filter(
-                $this->businesses,
-                function ($e) {
-                    return $e->getIsPrimary() == 1;
+            if (!$this->businessId) {
+                //Set the default Business to the primary Business of the Client
+                $this->selectedBusiness = array_filter(
+                    $this->businesses,
+                    function ($e) {
+                        return $e->getIsPrimary() == 1;
+                    }
+                )[0];
+            }
+            else {
+                //Search the Array for the specified BusinessId
+                $filteredBusinesses = array_filter(
+                    $this->businesses,
+                    function ($e) {
+                        return $e->getBusinessId() == $this->businessId;
+                    }
+                );
+
+                if(!$filteredBusinesses || count($filteredBusinesses) == 0) {
+                    throw new \Exception('No Business found with the specified Business Id');
                 }
-            )[0];
+                else {
+                    $this->selectedBusiness = $filteredBusinesses[0];
+                }
+            }
+
         }
 
 
@@ -136,7 +162,7 @@ class Client {
       * Returns all Documents which are still in Draft
       * @return \Document[]
       */
-     public function getDraftedDocuments() {
+     public function getDraftDocuments() {
          return $this->getDocuments("draft");
      }
 
@@ -237,7 +263,7 @@ class Client {
 
      }
 
-     public function createDocumentFromTemplate(Template $template) {
+     public function createDocumentFromTemplate(DocumentTemplate $template) {
         if (!$template->getTemplateId()) {
             throw new \Exception('Template needs a Template Id to create a document from it');
         }

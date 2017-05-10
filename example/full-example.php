@@ -3,7 +3,7 @@ require_once '../vendor/autoload.php';
 
 use Eversign\Client;
 use Eversign\Document;
-use Eversign\Template;
+use Eversign\DocumentTemplate;
 use Eversign\Field;
 use Eversign\Signer;
 use Eversign\File;
@@ -18,7 +18,9 @@ use Eversign\AttachmentField;
 
 
 echo "<h1>Create Client</h1>";
-$client = new Client("MY_API_KEY");
+//Use your API Key and the BusinessId of the Business to use to create a new Client
+//If you don't specify your BusinessId - the Default Primary
+$client = new Client("MY_API_KEY", 123456);
 
 echo "<h1>Check Documents</h1>";
 $documents = $client->getAllDocuments();
@@ -52,9 +54,13 @@ $document->appendSigner($signer);
 
 //Set Custom Meta Tags to the Document
 $document->setMeta([
-   "test" => "value"
+   "test" => "value",
+   "test1" => "value1"
 ]);
 
+//Appending and Removing Meta Tags
+$document->appendMeta("test2", "value2");
+$document->removeMeta("test");
 
 //Add a File to the Document
 $file = new File();
@@ -145,23 +151,25 @@ $document->appendFormField($dropdownField);
 //Saving the created document to the API.
 $client->createDocument($document);
 
-echo "<h1>Create Document from Template</h1>";
-$template = new Template();
-$template->setTitle("Form Test");
-$template->setMessage("Test Message ");
+echo "<h1>Create Document from a Document Template</h1>";
+$documentTemplate = new DocumentTemplate();
+$documentTemplate->setId("MY_TEMPLATE_ID");
+$documentTemplate->setTitle("Form Test");
+$documentTemplate->setMessage("Test Message ");
 
-//Create a Signer for the Document
+//Create a Signer for the Document via the Template Role
 $signer = new Signer();
-$signer->setName("John Doe");
 $signer->setRole("Testrole");
+$signer->setName("John Doe");
 $signer->setEmail("john.doe@eversign.com");
-$template->appendSigner($signer);
+$documentTemplate->appendSigner($signer);
 
+//Fill out Custom Fields
 $field = new Field();
 $field->setIdentifier("identifier1");
 $field->setValue("value 1");
 
-$template->appendField($field);
+$documentTemplate->appendField($field);
 
 //Creating a new Document from a Template
-$client->createDocumentFromTemplate($template);
+$newlyCreatedDocument = $client->createDocumentFromTemplate($documentTemplate);

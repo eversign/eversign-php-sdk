@@ -230,6 +230,7 @@ class Document {
         $this->recipients = [];
         $this->files = [];
         $this->fields = [];
+        $this->meta = [];
     }
 
     /**
@@ -258,7 +259,13 @@ class Document {
             throw new \Exception('File object needs a real File to be associated');
         }
         if(!$file->getName()) {
-            throw new \Exception('File object needs a name');
+            if($file->getFilePath()) {
+                $file->setName(basename($file->getFilePath()));
+            }
+            else {
+                throw new \Exception('File object needs a name');
+            }
+
         }
 
         $this->files[] = $file;
@@ -402,8 +409,16 @@ class Document {
 
     public function getMeta() {
         return $this->meta;
-     }
+    }
 
+    public function appendMeta($key, $value) {
+       $this->meta[$key] = $value;
+       echo var_dump($this->meta);
+    }
+
+    public function removeMeta($key) {
+        unset($this->meta[$key]);
+    }
 
     public function setDocumentHash($documentHash) {
         $this->documentHash = $documentHash;

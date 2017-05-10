@@ -53,6 +53,38 @@ $businesses = $client->getBusinesses();
 $client->setSelectedBusiness($client->getBusinesses()[2]);
 ```
 
+### Create Documents from Templates
+To created Documents based on already created Templates you can use the class Eversign\DocumentTemplate.
+You need to set the TemplateId in order to create Documents from it.
+With this class you can set Properties like Title and Message which your newly created Document will have.
+After filling out the required information you can create a Document on the API with the
+
+```
+$documentTemplate = new DocumentTemplate();
+$documentTemplate->setId("MY_TEMPLATE_ID");
+$documentTemplate->setTitle("Form Test");
+$documentTemplate->setMessage("Test Message ");
+```
+
+#### Add signers based on the role to the Document created by a template
+Templates may have different roles which can be set to correspond to specific Signers
+You can append the Signer to the Document like you do with "normally" created documents
+
+```
+$signer = new Signer();
+$signer->setRole("Testrole");
+$signer->setName("John Doe");
+$signer->setEmail("john.doe@eversign.com");
+$documentTemplate->appendSigner($signer);
+```
+
+#### Getting a created Document from the API based on a template
+After the template is created and all required information is set you can call the
+createDocumentFromTemplate Method on the Client to get a freshly created Document
+```
+$newlyCreatedDocument = $client->createDocumentFromTemplate($documentTemplate);
+```
+
 ### Creating Documents
 For creating documents via the API you need to instantiate an Eversign\Document object and set your desired properties with the setter Methods provided.
 
@@ -68,6 +100,7 @@ Ever document can have 1 or multiple signers which are required to sign the docu
 
 ```
 $signer = new Signer();
+$signer->setId("1"); // Can be ommited and will be set automatically when appendSigner is called.
 $signer->setName("John Doe");
 $signer->setEmail("john.doe@eversign.com");
 $signer->setRequired(true);
@@ -135,7 +168,7 @@ Getting a list of Document Objects based on the different states (all, completed
 ```
 $client->getAllDocuments();
 $client->getCompletedDocuments();
-$client->getDraftedDocuments();
+$client->getDraftDocuments();
 ```
 
 #### Delete or cancel a Document

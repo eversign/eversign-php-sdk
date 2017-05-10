@@ -60,7 +60,7 @@ class ApiRequest {
     public function __construct($httpType = "GET", $accessKey, $endPoint, $serializeClass = "", $parameters = NULL, $payLoad = NULL) {
         $this->httpType = $httpType;
         $this->accessKey = $accessKey;
-        $this->guzzleClient = new GuzzleClient(['base_uri' => Config::API_URL]);
+        $this->guzzleClient = new GuzzleClient(['base_uri' => Config::API_URL, 'headers' => ['User-Agent' => 'Eversign_PHP_SDK']]);
         $this->endPoint = $endPoint;
         $this->serializeClass = $serializeClass;
         $this->parameters = $parameters;
