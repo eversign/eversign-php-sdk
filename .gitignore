@@ -2,3 +2,4 @@ vendor
 nbproject/
 cache
 documentation/build
+example/*.pdf

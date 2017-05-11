@@ -241,6 +241,7 @@ class Client {
             "signer_id" => $signer->getId()
         ];
 
+        $payLoad = json_encode($payLoad);
         $request = new ApiRequest("POST", $this->accessKey, Config::REMINDER_URL, NULL, $parameters, $payLoad);
         return $request->startRequest()->success;
 

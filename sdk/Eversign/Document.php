@@ -413,7 +413,6 @@ class Document {
 
     public function appendMeta($key, $value) {
        $this->meta[$key] = $value;
-       echo var_dump($this->meta);
     }
 
     public function removeMeta($key) {
