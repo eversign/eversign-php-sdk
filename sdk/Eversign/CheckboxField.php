@@ -39,25 +39,25 @@ use JMS\Serializer\Annotation\Type;
  * @author Patrick Leeb
  */
 class CheckboxField extends FormField{
-    
+
     use Readable, Signable;
-    
+
      /**
      * The label of the Field
-     * @var string $name 
+     * @var string $name
      * @Type("string")
      */
     private $name;
-    
-    
+
+
     /**
      * Set to 0 or leave empty to mark unchecked; Set to 1 to mark checked
-     * @var string $value 
+     * @var string $value
      * @Type("string")
      */
     private $value;
-    
-    
+
+
     public function __construct() {
         parent::__construct();
         $this->width = 14;
@@ -65,7 +65,7 @@ class CheckboxField extends FormField{
         $this->setReadOnly(false);
         $this->setValue("0");
     }
-    
+
     public function getWidth() {
         return 14;
     }
@@ -73,22 +73,22 @@ class CheckboxField extends FormField{
     public function getHeight() {
         return 14;
     }
-    
+
     public function getValue() {
         return $this->value;
     }
-    
+
     public function getName() {
         return $this->name;
     }
-    
-    
+
+
     public function setValue($value) {
         if($value != "1" && $value != "0"){
             throw new \Exception('Checkbox Value can only be 0 or 1');
         }
     }
-    
+
     public function setWidth($width) {
         throw new \Exception('CheckboxFields have a fixed width and height of 14 that cannot be changed');
     }
@@ -96,7 +96,7 @@ class CheckboxField extends FormField{
     public function setHeight($height) {
         throw new \Exception('CheckboxFields have a fixed width and height of 14 that cannot be changed');
     }
-    
+
     public function setName($name) {
         $this->name = $name;
     }

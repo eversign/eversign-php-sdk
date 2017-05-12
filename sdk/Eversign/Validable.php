@@ -33,15 +33,15 @@ use JMS\Serializer\Annotation\Type;
  * @author Patrick Leeb
  */
 trait Validable {
-    
+
      /**
      * Set if the Validation Type - allowed options are
      * letters_only, numbers_only, email_address
-     * @var string $fieldValidation 
+     * @var string $fieldValidation
      * @Type("boolean")
      */
     private $fieldValidation;
-      
+
     public function getFieldValidation() {
         return $this->required;
     }

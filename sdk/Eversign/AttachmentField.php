@@ -39,14 +39,14 @@ use JMS\Serializer\Annotation\Type;
  */
 class AttachmentField extends FormField{
     use Signable, Requireable;
-    
+
      /**
      * The label of the Field
-     * @var string $name 
+     * @var string $name
      * @Type("string")
      */
     private $name;
-    
+
     public function __construct() {
         parent::__construct();
         $this->setName(" ");
@@ -54,7 +54,7 @@ class AttachmentField extends FormField{
         $this->setHeight(28);
         $this->setRequired(false);
     }
-    
+
     public function getName() {
         return $this->name;
     }
@@ -64,5 +64,5 @@ class AttachmentField extends FormField{
     }
 
 
-    
+
 }

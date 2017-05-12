@@ -38,26 +38,26 @@ use JMS\Serializer\Annotation\Type;
  * Note fields are used to place multi-line inputs/textareas or text paragraphs.
  *
  * @author Patrick Leeb
- * 
+ *
  */
 class NoteField extends TextFormField {
     use Signable, Requireable, Readable, Validable;
-    
+
      /**
      * The label of the Field
-     * @var string $name 
+     * @var string $name
      * @Type("string")
      */
     private $name;
-    
+
     /**
      * Specify text content to pre-fill field.
-     * @var string $value 
+     * @var string $value
      * @Type("string")
      */
     private $value;
-    
-    
+
+
     public function __construct() {
         parent::__construct();
         $this->setWidth(55);
@@ -65,7 +65,7 @@ class NoteField extends TextFormField {
         $this->setName("");
         $this->setValue("");
     }
-    
+
     public function getName() {
         return $this->name;
     }
@@ -83,5 +83,5 @@ class NoteField extends TextFormField {
     }
 
 
-    
+
 }

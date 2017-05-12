@@ -36,22 +36,22 @@ use JMS\Serializer\Annotation\Type;
  * @author Patrick Leeb
  */
 class LogEntry {
-    
+
      /**
-     * The event that occurred 
-     * @var string $event 
+     * The event that occurred
+     * @var string $event
      * @Type("string")
      */
     private $event;
-    
+
      /**
      * The id of the Signer, that triggered the event
      * Can be set to 0 if there was no signer involved i.e. document_create
-     * @var integer $signer 
+     * @var integer $signer
      * @Type("integer")
      */
     private $signer;
-    
+
      /**
      * The Date when the event occurred
      *
@@ -59,7 +59,7 @@ class LogEntry {
      * @Type("DateTime<'U'>")
      */
     private $timestamp;
-    
+
     public function getEvent() {
         return $this->event;
     }
@@ -68,7 +68,7 @@ class LogEntry {
         return $this->signer;
     }
 
-    public function getTimestamp(): \DateTime {
+    public function getTimestamp() {
         return $this->timestamp;
     }
 

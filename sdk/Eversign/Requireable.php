@@ -33,15 +33,15 @@ use JMS\Serializer\Annotation\Type;
  * @author Patrick Leeb
  */
 trait Requireable {
-    
+
      /**
      * Set if the SignatureField is required or not.
      * Defaults to false
-     * @var boolean $required 
+     * @var boolean $required
      * @Type("boolean")
      */
     private $required;
-      
+
     public function getRequired() {
         return $this->required;
     }

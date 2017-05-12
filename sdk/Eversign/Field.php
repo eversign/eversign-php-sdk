@@ -25,27 +25,46 @@
  */
 
 namespace Eversign;
-
 use JMS\Serializer\Annotation\Type;
 
 /**
- * Adds the Validable Trait to the FormFields which support it
+ * Field Object with identifier and value for the Template
+ *
  * @author Patrick Leeb
  */
-trait Readable {
+class Field {
+
+
+     /**
+     * The field's Field Identifier.
+     * @var string $identifier
+     * @Type("string")
+     */
+    private $identifier;
 
     /**
-     * Determines if the FormField is writable or not
-     * @var boolean $readOnly
-     * @Type("boolean")
+     * The field's value.
+     * @var string $value
+     * @Type("string")
      */
-    private $readOnly;
+    private $value;
 
-    public function setReadOnly($readOnly) {
-        $this->readOnly = $readOnly;
+
+    public function getIdentifier() {
+        return $this->identifier;
     }
 
-    public function getReadOnly() {
-        return $this->readOnly;
+    public function getValue() {
+        return $this->value;
     }
+
+    public function setIdentifier($identifier) {
+        $this->identifier = $identifier;
+    }
+
+    public function setValue($value) {
+        $this->value = $value;
+    }
+
+
 }
