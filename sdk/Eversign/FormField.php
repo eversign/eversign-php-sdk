@@ -28,6 +28,7 @@ namespace Eversign;
 
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\Annotation\Discriminator;
+use JMS\Serializer\Annotation\Exclude;
 
 
 /**
@@ -99,7 +100,16 @@ abstract class FormField {
     private $y;
 
 
+    /**
+     * The FormField's file index on which it will be placed
+     * @var integer
+     * @Exclude
+     */
+    private $fileIndex;
+
+
     public function __construct() {
+        $this->setFileIndex(0);
         $this->setPage(1);
         $this->setX(0);
         $this->setY(0);
@@ -145,6 +155,10 @@ abstract class FormField {
         return $this->y;
     }
 
+    public function getFileIndex() {
+        return $this->fileIndex;
+    }
+
     public function setIdentifier($identifier) {
         $this->identifier = $identifier;
     }
@@ -167,6 +181,10 @@ abstract class FormField {
 
     public function setY($y) {
         $this->y = $y;
+    }
+
+    public function setFileIndex($fileIndex) {
+        $this->fileIndex = $fileIndex;
     }
 
 

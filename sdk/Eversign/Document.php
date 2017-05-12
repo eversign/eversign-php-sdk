@@ -271,28 +271,35 @@ class Document {
         $this->files[] = $file;
     }
 
+    private function getTotalFieldCount() {
+        $fieldCountPerFile = array_map(function ($fileFields) { return count($fileFields); }, $this->getFields());
+        $fieldCount = array_reduce($fieldCountPerFile, function($countA, $countB) { return $countA + $countB; });
+        if(!$fieldCount) {
+            $fieldCount = 0;
+        }
+
+        return $fieldCount;
+    }
+
     /**
      * Appends a \Eversign\FormField subclass to the document. The second
      * parameter defines the Index of the File instance where the FormField lives.
      * @param FormField $formField
-     * @param type $fileIndex
      * @throws \Exception
      */
-    public function appendFormField(FormField $formField, $fileIndex = 0) {
-        if (count($this->getFiles()) == 0 || $fileIndex  > count($this->getFiles())) {
+    public function appendFormField(FormField $formField) {
+        if (count($this->getFiles()) == 0 || $formField->getFileIndex() > count($this->getFiles())) {
             throw new \Exception('Please check that at least 1 File was added and the fileIndex isn´t higher than the Amount of files');
         }
         if (!$formField->validate()) {
             throw new \Exception('Please check that all required FormField Properties are set');
         }
         if (!$formField->getIdentifier()) {
-            $fieldCountPerFile = array_map(function ($fileFields) { return count($fileFields); }, $this->getFields());
-            $fieldCount = array_reduce($fieldCountPerFile, function($countA, $countB) { return $countA + $countB; });
-            $formField->setIdentifier((new \ReflectionClass($formField))->getShortName() . "_" . $fieldCount);
+            $fieldIndex = $this->getTotalFieldCount();
+            $formField->setIdentifier((new \ReflectionClass($formField))->getShortName() . "_" . $fieldIndex);
         }
 
-
-        $this->fields[$fileIndex][] = $formField;
+        $this->fields[$formField->getFileIndex()][] = $formField;
     }
 
     /**

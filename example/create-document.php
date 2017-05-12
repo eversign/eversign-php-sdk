@@ -19,7 +19,7 @@ $client = new Client("MY_API_KEY", 123456);
 
 $document = new Document();
 $document->setTitle("Form Test");
-$document->setMessage("Test Message ");
+$document->setMessage("Test Message");
 
 //Create a Signer for the Document
 $signer = new Signer();
@@ -46,47 +46,53 @@ $document->appendFile($file);
 
 //Add FormFields to the Document
 $signatureField = new SignatureField();
+$signatureField->setFileIndex(0);
+$signatureField->setPage(1);
 $signatureField->setX(30);
 $signatureField->setY(150);
-$signatureField->setPage(2);
 $signatureField->setRequired(true);
 $signatureField->setSigner("1");
 $document->appendFormField($signatureField);
 
 $initialsField = new InitialsField();
+$signatureField->setFileIndex(0);
+$initialsField->setPage(1);
 $initialsField->setX(30);
 $initialsField->setY(250);
-$initialsField->setPage(2);
 $initialsField->setRequired(true);
 $initialsField->setSigner("1");
 $document->appendFormField($initialsField);
 
 $dateSignedField = new DateSignedField();
+$signatureField->setFileIndex(0);
+$dateSignedField->setPage(1);
 $dateSignedField->setX(30);
 $dateSignedField->setY(350);
-$dateSignedField->setPage(2);
 $dateSignedField->setSigner("1");
 $dateSignedField->setTextSize(16);
 $dateSignedField->setTextStyle("BU");
 $document->appendFormField($dateSignedField);
 
 $textField = new TextField();
+$signatureField->setFileIndex(0);
+$textField->setPage(1);
 $textField->setX(10);
 $textField->setY(50);
-$textField->setPage(2);
 $textField->setValue("Test Textfield");
 $document->appendFormField($textField);
 
 $checkboxField = new CheckboxField();
 $checkboxField->setName("Test Checkbox");
+$signatureField->setFileIndex(0);
 $checkboxField->setX(30);
+$checkboxField->setPage(1);
 $checkboxField->setY(150);
 $checkboxField->setValue("1");
-$checkboxField->setPage(2);
 $document->appendFormField($checkboxField);
 
 $radioboxField = new RadioField();
 $radioboxField->setName("Test Radio");
+$signatureField->setFileIndex(0);
 $radioboxField->setX(10);
 $radioboxField->setY(50);
 $radioboxField->setSigner("1");
@@ -96,6 +102,7 @@ $document->appendFormField($radioboxField);
 
 $radioboxField1 = new RadioField();
 $radioboxField1->setName("Test Radio 2");
+$signatureField->setFileIndex(0);
 $radioboxField1->setX(10);
 $radioboxField1->setY(70);
 $radioboxField1->setSigner("1");
@@ -105,6 +112,7 @@ $radioboxField1->setGroup("0");
 $document->appendFormField($radioboxField1);
 
 $attachmentField = new AttachmentField();
+$signatureField->setFileIndex(0);
 $attachmentField->setX(10);
 $attachmentField->setY(100);
 $attachmentField->setName("Test Attachment");
@@ -112,6 +120,7 @@ $attachmentField->setSigner("1");
 $document->appendFormField($attachmentField);
 
 $dropdownField = new DropdownField();
+$signatureField->setFileIndex(0);
 $dropdownField->setX(10);
 $dropdownField->setY(100);
 $dropdownField->setWidth(150);
