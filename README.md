@@ -1,7 +1,11 @@
 # eversign PHP SDK
 
-Eversign PHP SDK is the official PHP Wrapper around the eversign [API](https://eversign.com/api/documentation).
+eversign PHP SDK is the official PHP Wrapper around the eversign [API](https://eversign.com/api/documentation).
 
+**Quick Links:**
+  - [Create Document Example](/example/create-document.php)
+  - [Use Template Example](/example/create-document-from-template.php)
+  - [Document Operations](/example/document-operations.php)
 
 ## Requirements
 
@@ -38,37 +42,38 @@ require 'vendor/autoload.php';
 ```
 
 ## Usage
-All eversign API requests are made using the Eversign\Client class. This class must be initialized with your Authentication Token before using anything else. All available Methods for saving, retrieving ie. can all be found inside the Client class.
+All eversign API requests are made using the `Eversign\Client` class, which contains all methods for creating, retrieving and saving documents. This class must be initialized with your API access key string. [Where is my API access key?](https://eversign.com/api/documentation/intro#api-access-key)
+
+
+Please also specify the ID of the eversign business you would like this API request to affect. [Where is my Business ID?](https://eversign.com/api/documentation/intro#business-selection)
 
 ```
-$client = new Client("MY_API_KEY");
+$client = new Client("MY_API_KEY", $businessId);
 ```
 
-### Choose the business to be used
-As soon as a new Client is created all available Businesses for it will be fetched and saved. By default your primary Business will be selected for all requests.
-Selecting a different Business for consequent requests can be accomplished with the setSelectedBusiness Method. To see all available businesses use the getBusinesses Method.
+### Fetch businesses
+Using the `getBusinesses()` function all businesses on the eversign account will be fetched and listed along with their Business IDs.
 
 ```
 $businesses = $client->getBusinesses();
-$client->setSelectedBusiness($client->getBusinesses()[2]);
 ```
 
-### Create Documents from Templates
-To created Documents based on already created Templates you can use the class Eversign\DocumentTemplate.
-You need to set the TemplateId in order to create Documents from it.
-With this class you can set Properties like Title and Message which your newly created Document will have.
-After filling out the required information you can create a Document on the API with the
+### Create document from template [Method: Use Template]
+To create a document based on an already created template you can use the class `Eversign\DocumentTemplate`. In order to identify which template should be used, please pass the template's ID into the `setTemplateId("MY_TEMPLATE_ID")` function.
+
+
+Additionally, `setTitle()` and `setMessage()` can be used to set a title and message for the newly created document.
+
 
 ```
 $documentTemplate = new DocumentTemplate();
-$documentTemplate->setId("MY_TEMPLATE_ID");
+$documentTemplate->setTemplateId("MY_TEMPLATE_ID");
 $documentTemplate->setTitle("Form Test");
-$documentTemplate->setMessage("Test Message ");
+$documentTemplate->setMessage("Test Message");
 ```
 
-#### Add signers based on the role to the Document created by a template
-Templates may have different roles which can be set to correspond to specific Signers
-You can append the Signer to the Document like you do with "normally" created documents
+#### Fill signing roles [Method: Use Template]
+A template's signing and CC roles are filled just using the functions below. Each role is identified using the `setRole()` function, must carry a name and email address and is appended to the document using the `appendSigner()` function.
 
 ```
 $signer = new Signer();
@@ -78,37 +83,38 @@ $signer->setEmail("john.doe@eversign.com");
 $documentTemplate->appendSigner($signer);
 ```
 
-#### Getting a created Document from the API based on a template
-After the template is created and all required information is set you can call the
-createDocumentFromTemplate Method on the Client to get a freshly created Document
+#### Saving the document object [Method: Use Template]
+Your document object can now be saved using the `createDocumentFromTemplate()` function. Once this function has been called successfully, your document is created and the signing process is started.
+
+
 ```
 $newlyCreatedDocument = $client->createDocumentFromTemplate($documentTemplate);
+$newlyCreatedDocument->getDocumentHash();
 ```
 
-### Creating Documents
-For creating documents via the API you need to instantiate an Eversign\Document object and set your desired properties with the setter Methods provided.
+### Creating a document [Method: Create Document]
+A document is created by instantiating the `Eversign\Document` object and setting your preferred document properties. There is a series of `set` methods available used to specify options for your document. All available methods can be found inside our extensive [Create Document Example](/example/create-document.php).
+
 
 ```
 $document = new Document();
 $document->setTitle("My Title");
 $document->setMessage("My Message");
-// Set all other Properties defined in the API with Getters and Setters on the Document object.
 ```
 
-#### Adding signers to the Document
-Ever document can have 1 or multiple signers which are required to sign the document. You can add signers to an existing Document object by instantiating the Eversign\Signer object. You then append the Signer to the Document. AppendSigners Method will set a default Signer Id if it was not set previously. By default it takes the Index of the last element in the Signers array.
+#### Adding signers to a document [Method: Create Document]
+Signers are added to an existing document object by instantiating the `Eversign\Signer` object and appending each signer to the document object. Each signer object needs to come with a Signer ID, which is later used to assign fields to the respective signer. If no Signer ID is specified, the `appendSigner()` method will set a default incremented Signer ID. Each signer object also must contain a name and email address and is appended to the document using the `appendSigner()` method.
 
 ```
 $signer = new Signer();
-$signer->setId("1"); // Can be ommited and will be set automatically when appendSigner is called.
+$signer->setId("1");
 $signer->setName("John Doe");
 $signer->setEmail("john.doe@eversign.com");
-$signer->setRequired(true);
 $document->appendSigner($signer);
 ```
 
-#### Adding recipients to the Document
-Adding recipients is exactly the same as adding Signers. You use the Recipient class instead of the Signer class and append it to the Document.
+#### Adding recipients (CCs) to a document [Method: Create Document]
+Recipients (CCs) are added by instantiating the `Eversign\Recipient` object and appending each recipient to the document object. Just like signers, recipients must carry a name and email address.
 
 ```
 $recipient = new Recipient();
@@ -117,8 +123,9 @@ $recipient->setEmail("john.doe@eversign.com");
 $document->appendRecipient($recipient);  
 ```
 
-#### Adding files to the Document
-Adding files to a document is also made very easy. Just create a new Eversign\File object and set the filePath, fileId (if it already exists on the API) or your own Base 64 string of the file you want to create. After creation you can append the file to a document. When the document is saved the file is automatically uploaded for you.
+#### Adding files to the Document [Method: Create Document]
+Files are added to a document by instantiating an `Eversign\File` object. The standard way of choosing a file to upload is appending the file's path using the `setFilePath()` method and then appending your file using the `appendFile()` method.
+
 
 ```
 $file = new File();
@@ -127,63 +134,98 @@ $file->setFilePath(getcwd() . "/file.pdf");
 $document->appendFile($file);
 ```
 
-#### Adding FormFields
-There are quite a lot different FormFields you can add to your document. Every FormField has different fields which are required for eversign to know how to handle the Field. Please check the official [FormFields Documentation](https://eversign.com/api/documentation/fields). When creating Fields that require Signers to be set, please use your provided Signer id and NOT the Signer object. While appending with appendFormField you can also specify the Index of the file as the second Parameter where the FormField should be added. If left empty the FormField will be added to the first File of the Document.
+#### Adding fields [Method: Create Document]
+There is a number of fields that can be added to a document, each coming with different options and parameters. ([Viel Full list of fields »](https://eversign.com/api/documentation/fields))
+
+A field is appended to the document using the `appendFormField($signatureField, $fileIndex)` method. The first function parameter is the field object, and the second parameter must contain the index of the file it should be added to. If your field should be placed onto the first uploaded file, set this parameter to `0`. This parameter also default to `0`.
+
+Signature and Initials fields are required to be assigned to a specific signer. Fields are assigned to a signer by passing the **Signer ID** into the `setSigner()` function.
+
 
 ```
 $signatureField = new SignatureField();
+$signatureField->setFileIndex(0);
+$signatureField->setPage(2);
 $signatureField->setX(30);
 $signatureField->setY(150);
-$signatureField->setPage(2);
 $signatureField->setRequired(true);
 $signatureField->setSigner("1");
-$document->appendFormField($signatureField, 0);
+$document->appendFormField($signatureField, $fileIndex);
 ```
 
-#### Saving the Document
-Saving a new Document couldn't be simpler. Just call the createDocument Method on the client with the document to be saved. After successful saving of the document the method returns the document with everything added by the API.
+A full example containing instructions and methods for each available field type can be found here: [Create Document Example](/example/create-document.php)
+
+**Available field types**
+
+Please find below all available field types:
+
+| Field Type  | Class |
+| ------------- | ------------- |
+| date_signed  | Eversign\DateSignedField  |
+| signature  | Eversign\SignatureField  |
+| initials  | Eversign\InitialsField  |
+| note  | Eversign\NoteField  |
+| text  | Eversign\TextField  |
+| checkbox  | Eversign\CheckboxField  |
+| radio  | Eversign\RadioField  |
+| dropdown  | Eversign\DropdownField  |
+| attachment  | Eversign\AttachmentField  |
+
+
+#### Saving a document [Method: Create Document]
+A document is saved and sent out by passing the final document object into the `createDocument` method. The API will return the entire document object array in response.
 
 ```
-$client->createDocument($document);
+$newDocument = $client->createDocument($document);
+$newDocument->getDocumentHash();
 ```
 
 #### Loading a document
-Loading a document requires the documentHash to be known. If thats the case its a simple call to the client
+*Class: Document*
+
+A document is loaded by passing its document hash into the `getDocumentByHash()` method.
 
 ```
-$document = $client->getDocumentWithHash("MY_HASH");
+$document = $client->getDocumentByHash("MY_HASH");
 ```
 
-#### Downloading the raw or final Document
-There are 2 methods provided for you to download the Document, either in its signed or raw state. Just pass the Document object and a filePath where the document should be saved. Final Documents can also have an Audit Trail. Set the last parameter to true to have it attached automatically.
+#### Downloading the raw or final document
+*Class: Client*
+
+A document can be downloaded either in its raw or in its final (completed) state. In both cases, the respective method must contain the document object and a path to save the PDF document to. When downloading a final document, you can choose to attach the document's Audit Trail by setting the third parameter to `true`.
 
 ```
-$client->downloadFinalDocumentToPath($document, "final.pdf", true);
+$client->downloadFinalDocumentToPath($document, "final.pdf", $attachAuditTrail);
 $client->downloadRawDocumentToPath($document, "raw.pdf");
 ```
 
-#### Get a list of Documents
-Getting a list of Document Objects based on the different states (all, completed, draft, etc.) is also handled via the client. There are different distinct methods for you to choose from. The methods all return an array of Document classes
+#### Get a list of documents or templates
+*Class: Client*
+
+The Client class is also capable fo listing all available documents templates based on their status. Each method below returns an array of document objects.
 
 ```
 $client->getAllDocuments();
 $client->getCompletedDocuments();
 $client->getDraftDocuments();
+$client->getCanceledDocuments();
+$client->getActionRequiredDocuments();
+$client->getWaitingForOthersDocuments();
+
+$client->getTemplates();
+$client->getArchivedTemplates();
+$client->getDraftTemplates();
 ```
 
-#### Delete or cancel a Document
-As with all other methods to the API cancel and delete are also handled through the Client class.
+#### Delete or cancel a document
+*Class: Client*
+
+A document is cancelled or deleted using the methods below.
 
 ```
 $client->deleteDocument($document);
 $client->cancelDocument($document);
 ```
 
-### Disclaimer
-This is the very first version of our PHP SDK and therefore not 100% complete.
-We encourage you to help us advance the project in the future. If you would like to contribute please let us know.
-
-### Todos
-
- - Test the whole codebase
- - Add more field validation
+### Contact us
+Any feedback? Please feel free to [contact our support team](https://eversign.com/contact).

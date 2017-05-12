@@ -3,7 +3,6 @@ require_once '../vendor/autoload.php';
 
 use Eversign\Client;
 use Eversign\Document;
-use Eversign\DocumentTemplate;
 use Eversign\Field;
 use Eversign\Signer;
 use Eversign\File;
@@ -16,31 +15,8 @@ use Eversign\DropdownField;
 use Eversign\TextField;
 use Eversign\AttachmentField;
 
-
-echo "<h1>Create Client</h1>";
-//Use your API Key and the BusinessId of the Business to use to create a new Client
-//If you don't specify your BusinessId - the Default Primary
 $client = new Client("MY_API_KEY", 123456);
 
-echo "<h1>Check Documents</h1>";
-$documents = $client->getAllDocuments();
-
-echo "<h1>Load Document with Hash and download</h1>";
-$document = $client->getDocumentWithHash("MY_HASH");
-
-$client->downloadFinalDocumentToPath($document, getcwd() . "/final.pdf", true);
-$client->downloadRawDocumentToPath($document, getcwd() ."/raw.pdf");
-
-echo "<h1>Send Reminder</h1>";
-$client->sendReminderForDocument($document, $document->getSigners()[0]);
-
-echo "<h1>Delete Document</h2>";
-$client->deleteDocument($document);
-
-echo "<h1>Cancel Document</h2>";
-$client->cancelDocument($document);
-
-echo "<h1>Create Document</h1>";
 $document = new Document();
 $document->setTitle("Form Test");
 $document->setMessage("Test Message ");
@@ -64,8 +40,8 @@ $document->removeMeta("test");
 
 //Add a File to the Document
 $file = new File();
-$file->setName("GIS");
-$file->setFilePath(getcwd() . "/GIS.pdf");
+$file->setName("Contract");
+$file->setFilePath(getcwd() . "/contract.pdf");
 $document->appendFile($file);
 
 //Add FormFields to the Document
@@ -99,7 +75,6 @@ $textField->setX(10);
 $textField->setY(50);
 $textField->setPage(2);
 $textField->setValue("Test Textfield");
-
 $document->appendFormField($textField);
 
 $checkboxField = new CheckboxField();
@@ -108,7 +83,6 @@ $checkboxField->setX(30);
 $checkboxField->setY(150);
 $checkboxField->setValue("1");
 $checkboxField->setPage(2);
-
 $document->appendFormField($checkboxField);
 
 $radioboxField = new RadioField();
@@ -137,7 +111,6 @@ $attachmentField->setName("Test Attachment");
 $attachmentField->setSigner("1");
 $document->appendFormField($attachmentField);
 
-
 $dropdownField = new DropdownField();
 $dropdownField->setX(10);
 $dropdownField->setY(100);
@@ -149,27 +122,5 @@ $dropdownField->setValue("Test 1");
 $document->appendFormField($dropdownField);
 
 //Saving the created document to the API.
-$client->createDocument($document);
-
-echo "<h1>Create Document from a Document Template</h1>";
-$documentTemplate = new DocumentTemplate();
-$documentTemplate->setId("MY_TEMPLATE_ID");
-$documentTemplate->setTitle("Form Test");
-$documentTemplate->setMessage("Test Message ");
-
-//Create a Signer for the Document via the Template Role
-$signer = new Signer();
-$signer->setRole("Testrole");
-$signer->setName("John Doe");
-$signer->setEmail("john.doe@eversign.com");
-$documentTemplate->appendSigner($signer);
-
-//Fill out Custom Fields
-$field = new Field();
-$field->setIdentifier("identifier1");
-$field->setValue("value 1");
-
-$documentTemplate->appendField($field);
-
-//Creating a new Document from a Template
-$newlyCreatedDocument = $client->createDocumentFromTemplate($documentTemplate);
+$newlyCreatedDocument = $client->createDocument($document);
+echo $newlyCreatedDocument->getDocumentHash();

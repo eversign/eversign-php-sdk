@@ -3,3 +3,4 @@ nbproject/
 cache
 documentation/build
 example/*.pdf
+.DS_Store
