@@ -286,7 +286,9 @@ class Document {
             throw new \Exception('Please check that all required FormField Properties are set');
         }
         if (!$formField->getIdentifier()) {
-            $formField->setIdentifier((new \ReflectionClass($formField))->getShortName() . "_" . count($this->getFields()[$fileIndex]));
+            $fieldCountPerFile = array_map(function ($fileFields) { return count($fileFields); }, $this->getFields());
+            $fieldCount = array_reduce($fieldCountPerFile, function($countA, $countB) { return $countA + $countB; });
+            $formField->setIdentifier((new \ReflectionClass($formField))->getShortName() . "_" . $fieldCount);
         }
 
 
