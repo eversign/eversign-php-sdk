@@ -10,7 +10,7 @@ $documents = $client->getAllDocuments();
 print_r($documents);
 
 // Get a single document
-$document = $client->getDocumentWithHash("MY_DOCUMENT_HASH");
+$document = $client->getDocumentByHash("MY_DOCUMENT_HASH");
 
 // download said document
 $client->downloadFinalDocumentToPath($document, getcwd() . "/final.pdf", true);

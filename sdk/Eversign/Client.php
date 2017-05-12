@@ -252,7 +252,7 @@ class Client {
       * @param string $documentHash
       * @return \Eversign\Document
       */
-     public function getDocumentWithHash($documentHash) {
+     public function getDocumentByHash($documentHash) {
         $parameters = [
             "business_id" => $this->selectedBusiness->getBusinessId(),
             "document_hash" => $documentHash
