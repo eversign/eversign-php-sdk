@@ -134,10 +134,6 @@ class Signer extends Recipient {
         return $this->signed_timestamp;
     }
 
-    public function getRequired() {
-        return $this->required;
-    }
-
     public function getDeclined() {
         return $this->declined;
     }
@@ -176,10 +172,6 @@ class Signer extends Recipient {
 
     public function setSigned_timestamp($signed_timestamp) {
         $this->signed_timestamp = $signed_timestamp;
-    }
-
-    public function setRequired($required) {
-        $this->required = $required;
     }
 
     public function setDeclined($declined) {

@@ -52,13 +52,6 @@ class Recipient {
      */
     private $email;
 
-     /**
-     * True if the Signer is required to sign to make the Document complete
-     * @var boolean $required
-     * @Type("boolean")
-     */
-    private $required;
-
     /**
      * Roles are used when creating a document from a template.
      * Please note that all required roles must be specified in order to use a template.
@@ -75,10 +68,6 @@ class Recipient {
         return $this->email;
     }
 
-    public function getRequired() {
-        return $this->required;
-    }
-
     public function getRole() {
         return $this->role;
     }
@@ -89,10 +78,6 @@ class Recipient {
 
     public function setEmail($mail) {
         $this->email = $mail;
-    }
-
-    public function setRequired($required) {
-        $this->required = $required;
     }
 
     public function setRole($role) {

@@ -25,7 +25,6 @@ $document->setMessage("Test Message");
 $signer = new Signer();
 $signer->setName("John Doe");
 $signer->setEmail("john.doe@eversign.com");
-$signer->setRequired(true);
 $document->appendSigner($signer);
 
 //Set Custom Meta Tags to the Document
