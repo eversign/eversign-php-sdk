@@ -22,7 +22,7 @@ curl -sS https://getcomposer.org/installer | php
 - Add the eversign PHP SDK as a dependency using the composer.phar CLI:
 
 ```
-php composer.phar require apilayer/eversign-php-sdk:~1.0
+php composer.phar require eversign/eversign-php-sdk:~1.0
 ```
 
   or add it directly to your composer.json
@@ -30,7 +30,7 @@ php composer.phar require apilayer/eversign-php-sdk:~1.0
 ```
 {
   "require": {
-    "apilayer/eversign-php-sdk": "~1.0"
+    "eversign/eversign-php-sdk": "~1.0"
   }
 }
 ```
