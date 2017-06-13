@@ -120,7 +120,7 @@ class Client {
                     throw new \Exception('No Business found with the specified Business Id');
                 }
                 else {
-                    $this->selectedBusiness = $filteredBusinesses[0];
+                    $this->selectedBusiness = array_values($filteredBusinesses)[0];
                 }
             }
 
