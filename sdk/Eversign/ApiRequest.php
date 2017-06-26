@@ -144,22 +144,24 @@ class ApiRequest {
            echo "<div style='background-color: #eee; padding: 20px; border: solid 1px #333; margin: 10px 0; word-break:break-all;'><h3 style='margin-top: 0;'>Response</h3>".$response->getBody()."</div>";
         }
 
+        $body = $response->getBody();
+
         if($this->payLoad && is_array($this->payLoad) &&  array_key_exists("sink", $this->payLoad)) {
             return file_exists($this->payLoad["sink"]);
         } else {
-            $responseJson = json_decode($response->getBody());
-            if($responseJson->error) {
-                throw new \Exception('Webservice Error No ' . $responseJson->error->code . ' - Type: ' . $responseJson->error->type);
-            } else if($this->serializeClass) {
+            $responseJson = json_decode($body, true);
+            if($responseJson && array_key_exists('error', $responseJson)) {
+                throw new \Exception('Webservice Error No ' . $responseJson['error']['code'] . ' - Type: ' . $responseJson['error']['type']);
+            } else if($responseJson && $this->serializeClass) {
                 $serializer = SerializerBuilder::create()->build();
-                $serializeObject = $serializer->deserialize($response->getBody(), $this->serializeClass, 'json');
+                $serializeObject = $serializer->deserialize($body, $this->serializeClass, 'json');
                 if(Config::DEBUG_MODE) {
                     highlight_string("<?php\n\$serializeObject =\n" . var_export($serializeObject, true) . ";\n?>");
                 }
 
                 return $serializeObject;
             } else {
-                return $responseJson;
+                throw new \Exception('Webservice Error No 999 - Type: parsing_exception');
             }
         }
 
