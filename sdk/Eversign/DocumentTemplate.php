@@ -38,7 +38,7 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
  *
  * @author Patrick Leeb
  */
-class Template {
+class DocumentTemplate {
 
      /**
      * Set to the Template ID of the template you would like to use
