@@ -154,6 +154,14 @@ class Document {
      */
     private $redirect;
 
+    /**
+     * This parameter is used to specify a custom decline redirect URL.
+     * If empty the default Decline URL of the current Business will be used
+     * @var string $redirectDecline
+     * @Type("string")
+     */
+    private $redirectDecline;
+
      /**
      * This parameter is used to specify an internal reference for your application,
      * such as an identification string of the server or client making the API request.
@@ -388,6 +396,10 @@ class Document {
         return $this->redirect;
     }
 
+    public function getRedirectDecline() {
+        return $this->redirectDecline;
+    }
+
     public function getClient() {
         return $this->client;
     }
@@ -466,6 +478,10 @@ class Document {
 
     public function setRedirect($redirect) {
         $this->redirect = $redirect;
+    }
+
+    public function setRedirectDecline($redirectDecline) {
+        $this->redirectDecline = $redirectDecline;
     }
 
     public function setClient($client) {
