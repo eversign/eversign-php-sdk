@@ -1,29 +1,31 @@
 <?php
 require_once '../vendor/autoload.php';
 
+$config = require('./config.php');
+
 use Eversign\Client;
 use Eversign\DocumentTemplate;
 use Eversign\Field;
 use Eversign\Signer;
 
-$client = new Client("MY_API_KEY", 123456);
+$client = new Client($config['accessKey'], $config['businessId']);
 
 $documentTemplate = new DocumentTemplate();
-$documentTemplate->setId("MY_TEMPLATE_ID");
-$documentTemplate->setTitle("Form Test");
-$documentTemplate->setMessage("Test Message ");
+$documentTemplate->setTemplateId($config['templateId']);
+$documentTemplate->setTitle('Form Test');
+$documentTemplate->setMessage('Test Message ');
 
 // Create a signer for the document via the role specified in the template
 $signer = new Signer();
-$signer->setRole("Testrole");
-$signer->setName("John Doe");
-$signer->setEmail("john.doe@eversign.com");
+$signer->setRole('Client');
+$signer->setName('John Doe');
+$signer->setEmail($config['signerEmail']);
 $documentTemplate->appendSigner($signer);
 
 //Fill out custom fields
 $field = new Field();
-$field->setIdentifier("identifier1");
-$field->setValue("value 1");
+$field->setIdentifier($config['fieldIdentifier']);
+$field->setValue('value 1');
 
 $documentTemplate->appendField($field);
 

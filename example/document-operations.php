@@ -1,20 +1,22 @@
 <?php
 require_once '../vendor/autoload.php';
 
+$config = require('./config.php');
+
 use Eversign\Client;
 
-$client = new Client("MY_API_KEY", 123456);
+$client = new Client($config['accessKey'], $config['businessId']);
 
 // Get all documents
 $documents = $client->getAllDocuments();
-print_r($documents);
+echo sizeof($documents) . ' documents found';
 
 // Get a single document
-$document = $client->getDocumentByHash("MY_DOCUMENT_HASH");
+$document = $client->getDocumentByHash($config['documentHash']);
 
 // download said document
-$client->downloadFinalDocumentToPath($document, getcwd() . "/final.pdf", true);
-$client->downloadRawDocumentToPath($document, getcwd() ."/raw.pdf");
+$client->downloadFinalDocumentToPath($document, getcwd() . '/final.pdf', true);
+$client->downloadRawDocumentToPath($document, getcwd() .'/raw.pdf');
 
 // send a reminder for a signer
 $signers = $document->getSigners();

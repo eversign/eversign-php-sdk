@@ -1,6 +1,8 @@
 <?php
 require_once '../vendor/autoload.php';
 
+$config = require('./config.php');
+
 use Eversign\Client;
 use Eversign\Document;
 use Eversign\Field;
@@ -15,7 +17,7 @@ use Eversign\DropdownField;
 use Eversign\TextField;
 use Eversign\AttachmentField;
 
-$client = new Client("MY_API_KEY", 123456);
+$client = new Client($config['accessKey'], $config['businessId']);
 
 $document = new Document();
 $document->setTitle("Form Test");
@@ -24,7 +26,7 @@ $document->setMessage("Test Message");
 //Create a Signer for the Document
 $signer = new Signer();
 $signer->setName("John Doe");
-$signer->setEmail("john.doe@eversign.com");
+$signer->setEmail($config['signerEmail']);
 $document->appendSigner($signer);
 
 //Set Custom Meta Tags to the Document
@@ -40,7 +42,7 @@ $document->removeMeta("test");
 //Add a File to the Document
 $file = new File();
 $file->setName("Contract");
-$file->setFilePath(getcwd() . "/contract.pdf");
+$file->setFilePath(getcwd() . "/raw.pdf");
 $document->appendFile($file);
 
 //Add FormFields to the Document
