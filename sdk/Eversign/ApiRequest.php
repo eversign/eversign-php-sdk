@@ -58,20 +58,67 @@ class ApiRequest {
      * @param [] $parameters
      * @param [] $payLoad
      */
+
     public function __construct($httpType = "GET", $accessKey, $endPoint, $serializeClass = "", $parameters = NULL, $payLoad = NULL) {
+        $headers = ['User-Agent' => 'Eversign_PHP_SDK'];
+
+        if(substr($accessKey, 0, strlen('Bearer ')) === 'Bearer ') {
+            $headers['Authorization'] = $accessKey;
+            if(Config::DEBUG_MODE) {
+               echo 'authorization via oauth header: Authorization: ' . $accessKey . '<br />';
+            }
+        } else {
+            $this->accessKey = $accessKey;
+        }
+
         $this->httpType = $httpType;
-        $this->accessKey = $accessKey;
-        $this->guzzleClient = new GuzzleClient(['base_uri' => Config::API_URL, 'headers' => ['User-Agent' => 'Eversign_PHP_SDK']]);
+        $this->guzzleClient = new GuzzleClient(['base_uri' => Config::API_URL, 'headers' => $headers]);
         $this->endPoint = $endPoint;
         $this->serializeClass = $serializeClass;
         $this->parameters = $parameters;
         $this->payLoad = $payLoad;
     }
 
+    public function requestOAuthToken($token_request) {
+        $effectiveUrl = null;
+
+        $guzzleClient = new GuzzleClient([
+            'base_uri' => Config::OAUTH_URL,
+            'headers' => ['User-Agent' => 'Eversign_PHP_SDK'],
+            'on_stats' => function (TransferStats $stats) use (&$effectiveUrl) {
+                $effectiveUrl = $stats->getEffectiveUri();
+            }
+        ]);
+
+        $response = $guzzleClient->request('POST', 'token', [
+            'form_params' => $token_request->toArray(),
+        ]);
+
+        if(Config::DEBUG_MODE) {
+            echo "<div style='background-color: #eee; padding: 20px; border: solid 1px #333; margin: 10px 0; word-break:break-all;'>";
+            echo "[" . $this->httpType . "] " . $effectiveUrl ."<hr /><br />";
+            echo "<h3 style='margin-top: 0;'>Response</h3><pre>".json_encode(json_decode($response->getBody()), JSON_PRETTY_PRINT)."</pre></div>";
+        }
+
+        $body = (string)$response->getBody();
+
+        try {
+            $data = json_decode($body, true);
+            if($data['success'] === true) {
+                return $data['access_token'];
+            } else {
+                throw \Exception('no success');
+            }
+        } catch(\Exception $e) {
+            throw new \Exception('Could not generate token.');
+        }
+    }
+
     private function createQuery() {
-        $query = [
-            'access_key' => $this->accessKey
-        ];
+        $query = [];
+        if($this->accessKey) {
+            $query['access_key'] = $this->accessKey;
+        }
 
         if($this->parameters != NULL) {
             $query = array_merge($query, $this->parameters);
@@ -86,11 +133,7 @@ class ApiRequest {
      * @throws \Exception
      */
     public function startMultipartUpload() {
-        if(Config::DEBUG_MODE) {
-           echo "<hr>" . Config::API_URL . $this->endPoint ."<br />";
-        }
-
-
+        $effectiveUrl = null;
         $response = $this->guzzleClient->request($this->httpType, $this->endPoint, [
             'query' => $this->createQuery(),
             'multipart' => [
@@ -98,13 +141,17 @@ class ApiRequest {
                     'name'     => 'upload',
                     'contents' => fopen($this->payLoad, 'r')
                 ]
-            ]
+            ],
+            'on_stats' => function (TransferStats $stats) use (&$effectiveUrl) {
+                $effectiveUrl = $stats->getEffectiveUri();
+            }
         ]);
 
 
         if(Config::DEBUG_MODE) {
-           echo "<div style='background-color: #eee; padding: 20px; border: solid 1px #333; margin: 10px 0; word-break:break-all;'><h3 style='margin-top: 0;'>Response</h3>".$response->getBody()."</div>";
-
+            echo "<div style='background-color: #eee; padding: 20px; border: solid 1px #333; margin: 10px 0; word-break:break-all;'>";
+            echo "[" . $this->httpType . "] " . $effectiveUrl ."<hr /><br />";
+            echo "<h3 style='margin-top: 0;'>Response</h3><pre>".json_encode(json_decode($response->getBody()), JSON_PRETTY_PRINT)."</pre></div>";
         }
 
 
