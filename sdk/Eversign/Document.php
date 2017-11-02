@@ -179,6 +179,13 @@ class Document {
      */
     private $expires;
 
+    /**
+     * Whether the Document is embedded signable
+     * @var boolean $embeddedSigningEnabled
+     * @Type("boolean")
+     */
+    private $embeddedSigningEnabled;
+
      /**
      * Array of Signer Objects which are associated with the Document
      *
@@ -396,6 +403,10 @@ class Document {
         return $this->redirect;
     }
 
+    public function getEmbeddedSigningEnabled() {
+        return $this->embeddedSigningEnabled;
+    }
+
     public function getRedirectDecline() {
         return $this->redirectDecline;
     }
@@ -478,6 +489,10 @@ class Document {
 
     public function setRedirect($redirect) {
         $this->redirect = $redirect;
+    }
+
+    public function setEmbeddedSigningEnabled($embeddedSigningEnabled) {
+        return $this->embeddedSigningEnabled = $embeddedSigningEnabled;
     }
 
     public function setRedirectDecline($redirectDecline) {

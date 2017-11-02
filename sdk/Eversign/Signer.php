@@ -100,18 +100,18 @@ class Signer extends Recipient {
     private $viewed;
 
     /**
-     * URL of the Signing Request that is sent to the Signer
-     * @var string $signingUrl
-     * @Type("string")
-     */
-    private $signingUrl;
-
-    /**
      * Status of the Signer
      * @var string $status
      * @Type("string")
      */
     private $status;
+
+    /**
+     * Embedded Signer URL
+     * @var string $embeddedSigningUrl
+     * @Type("string")
+     */
+    private $embeddedSigningUrl;
 
 
     public function getId() {
@@ -146,12 +146,12 @@ class Signer extends Recipient {
         return $this->viewed;
     }
 
-    public function getSigningUrl() {
-        return $this->signingUrl;
-    }
-
     public function getStatus() {
         return $this->status;
+    }
+
+    public function getEmbeddedSigningUrl() {
+        return $this->embeddedSigningUrl;
     }
 
     public function setId($id) {
@@ -186,13 +186,12 @@ class Signer extends Recipient {
         $this->viewed = $viewed;
     }
 
-    public function setSigningUrl($signingUrl) {
-        $this->signingUrl = $signingUrl;
-    }
-
     public function setStatus($status) {
         $this->status = $status;
     }
 
+    public function setEmbeddedSigningUrl($embeddedSigningUrl) {
+        return $this->embeddedSigningUrl = $embeddedSigningUrl;
+    }
 
 }
