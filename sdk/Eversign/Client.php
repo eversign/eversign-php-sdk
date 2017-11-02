@@ -83,6 +83,25 @@ class Client {
          $this->selectedBusiness = $selectedBusiness;
      }
 
+    /**
+    * Sets the Business from which all subsequent API requests will be called
+    * @param Integer $businessId
+    */
+    public function setSelectedBusinessById($businessId) {
+        $filteredBusinesses = array_filter(
+            $this->businesses,
+            function ($e) use ($businessId) {
+                return $e->getBusinessId() == $businessId;
+            }
+        );
+
+        if(!$filteredBusinesses || count($filteredBusinesses) == 0) {
+            throw new \Exception('No Business found with the specified Business Id');
+        } else {
+            $this->selectedBusiness = array_values($filteredBusinesses)[0];
+        }
+    }
+
      public function getBusinesses() {
          return $this->businesses;
      }

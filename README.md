@@ -56,6 +56,15 @@ Using the `getBusinesses()` function all businesses on the eversign account will
 
 ```
 $businesses = $client->getBusinesses();
+echo $businesses[0]->getBusinessId();
+
+$client->setSelectedBusiness($businesses[0]);
+```
+
+If you know the `businessId` beforehand you can also set it with `setSelectedBusinessById(businessId)`
+
+```
+$client->setSelectedBusinessById(1337);
 ```
 
 ### Create document from template [Method: Use Template]
