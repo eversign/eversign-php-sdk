@@ -15,6 +15,5 @@ class Config {
     const REMINDER_URL = "send_reminder";
 
     const DEBUG_MODE = false;
-    const SHOW_API_RESPONSE = false;
 
 }

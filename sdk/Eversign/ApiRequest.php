@@ -28,6 +28,7 @@ namespace Eversign;
 
 use Eversign\Config;
 use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\TransferStats;
 use JMS\Serializer\SerializerBuilder;
 
 
@@ -101,7 +102,7 @@ class ApiRequest {
         ]);
 
 
-        if(Config::SHOW_API_RESPONSE) {
+        if(Config::DEBUG_MODE) {
            echo "<div style='background-color: #eee; padding: 20px; border: solid 1px #333; margin: 10px 0; word-break:break-all;'><h3 style='margin-top: 0;'>Response</h3>".$response->getBody()."</div>";
 
         }
@@ -123,26 +124,38 @@ class ApiRequest {
      * @throws \Exception
      */
     public function startRequest() {
-        if(Config::DEBUG_MODE) {
-           echo "<hr>" . Config::API_URL . $this->endPoint ."<br />";
-        }
-
+        $effectiveUrl = null;
         if($this->payLoad && is_array($this->payLoad) && array_key_exists("sink", $this->payLoad)) {
             $response = $this->guzzleClient->request($this->httpType, $this->endPoint, [
                 'query' => $this->createQuery(),
-                'sink' => $this->payLoad["sink"]
+                'sink' => $this->payLoad["sink"],
+                'on_stats' => function (TransferStats $stats) use (&$effectiveUrl) {
+                    $effectiveUrl = $stats->getEffectiveUri();
+                }
             ]);
         }
         else {
             $response = $this->guzzleClient->request($this->httpType, $this->endPoint, [
                 'query' => $this->createQuery(),
-                'body' => $this->payLoad
+                'body' => $this->payLoad,
+                'on_stats' => function (TransferStats $stats) use (&$effectiveUrl) {
+                    $effectiveUrl = $stats->getEffectiveUri();
+                }
             ]);
         }
 
-        if(Config::SHOW_API_RESPONSE && $this->endPoint != Config::DOCUMENT_FINAL_URL && $this->endPoint != Config::DOCUMENT_RAW_URL) {
-           echo "<div style='background-color: #eee; padding: 20px; border: solid 1px #333; margin: 10px 0; word-break:break-all;'><h3 style='margin-top: 0;'>Response</h3>".$response->getBody()."</div>";
-        }
+        if(Config::DEBUG_MODE && $this->endPoint != Config::DOCUMENT_FINAL_URL && $this->endPoint != Config::DOCUMENT_RAW_URL) {
+            echo "<div style='background-color: #eee; padding: 20px; border: solid 1px #333; margin: 10px 0; word-break:break-all;'>";
+            echo "[" . $this->httpType . "] " . $effectiveUrl ."<hr /><br />";
+
+            if(!$this->payLoad || !is_array($this->payLoad) || !array_key_exists("sink", $this->payLoad)) {
+               echo "<h3 style='margin-top: 0;'>Request</h3><pre>".json_encode(json_decode($this->payLoad), JSON_PRETTY_PRINT)."</pre>";
+            }
+
+            if($this->endPoint != Config::DOCUMENT_FINAL_URL && $this->endPoint != Config::DOCUMENT_RAW_URL) {
+               echo "<h3 style='margin-top: 0;'>Response</h3><pre>".json_encode(json_decode($response->getBody()), JSON_PRETTY_PRINT)."</pre></div>";
+           }
+       }
 
         $body = $response->getBody();
 
