@@ -7,4 +7,6 @@ return array(
     'signerEmail' => 'jondoe@eversign.com',
     'templateId' => 'xxx',
     'fieldIdentifier' => 'identifier1_xxx',
+    'oauth_client_id' => 'xxx',
+    'oauth_client_secret' => 'xxx',
 );

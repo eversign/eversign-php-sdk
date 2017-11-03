@@ -27,9 +27,11 @@
 namespace Eversign;
 
 use Eversign\ApiRequest;
+use Eversign\OAuthTokenRequest;
 use Eversign\Business;
 use Eversign\Config;
 use Doctrine\Common\Annotations\AnnotationRegistry;
+use GuzzleHttp\Client as GuzzleClient;
 use JMS\Serializer\SerializerBuilder;
 
 class Client {
@@ -60,7 +62,7 @@ class Client {
       *
       * @param string $accessKey
       */
-     public function __construct($accessKey, $businessId = 0)
+     public function __construct($accessKey = null, $businessId = 0)
      {
         if (!class_exists('Doctrine\Common\Annotations\AnnotationRegistry', false) && class_exists('Doctrine\Common\Annotations\AnnotationRegistry')) {
             AnnotationRegistry::registerLoader('class_exists');
@@ -106,43 +108,84 @@ class Client {
          return $this->businesses;
      }
 
+
+    /**
+    * Requests a OAuth Access Token
+    *
+    * @return $oauthAccessToken
+    */
+    public function generateOAuthAuthorizationUrl($obj) {
+        if(!array_key_exists('client_id', $obj)) {
+            throw new \Exception('Please specify client_id');
+        }
+
+        if(!array_key_exists('state', $obj)) {
+            throw new \Exception('Please specify state');
+        }
+
+        return Config::OAUTH_URL . 'authorize?client_id=' . $obj['client_id'] . '&state=' . $obj['state'];
+    }
+
+     /**
+      * Requests a OAuth Access Token
+      *
+      * @return $oauthAccessToken
+      */
+     public function requestOAuthToken(OAuthTokenRequest $token_request) {
+        $request = new ApiRequest('POST', 'oauth', 'oauth');
+        $oauthToken = $request->requestOAuthToken($token_request);
+        return $oauthToken;
+     }
+
+     /**
+      * Sets a OAuth Access Token to beeing used as the access_key
+      *
+      * @return $oauthAccessToken
+      */
+     public function setOAuthAccessToken($oauthToken) {
+         $this->accessKey = 'Bearer ' . $oauthToken;
+         $this->fetchBusinesses();
+     }
+
      /**
       * Retrieves all available Business for the current Client
       *
       * @return \Business[]
       */
      public function fetchBusinesses($setDefault = true) {
-        $request = new ApiRequest("GET", $this->accessKey, Config::BUSINESS_URL, "array<Eversign\Business>");
-        $this->businesses = $request->startRequest();
+        if($this->accessKey) {
+            $request = new ApiRequest("GET", $this->accessKey, Config::BUSINESS_URL, "array<Eversign\Business>");
+            $this->businesses = $request->startRequest();
 
-        if ($setDefault && count($this->businesses) > 0) {
+            if ($setDefault && count($this->businesses) > 0) {
 
-            if (!$this->businessId) {
-                //Set the default Business to the primary Business of the Client
-                $this->selectedBusiness = array_filter(
-                    $this->businesses,
-                    function ($e) {
-                        return $e->getIsPrimary() == 1;
-                    }
-                )[0];
-            }
-            else {
-                //Search the Array for the specified BusinessId
-                $filteredBusinesses = array_filter(
-                    $this->businesses,
-                    function ($e) {
-                        return $e->getBusinessId() == $this->businessId;
-                    }
-                );
-
-                if(!$filteredBusinesses || count($filteredBusinesses) == 0) {
-                    throw new \Exception('No Business found with the specified Business Id');
+                if (!$this->businessId) {
+                    //Set the default Business to the primary Business of the Client
+                    $this->selectedBusiness = array_filter(
+                        $this->businesses,
+                        function ($e) {
+                            return $e->getIsPrimary() == 1;
+                        }
+                    )[0];
                 }
                 else {
-                    $this->selectedBusiness = array_values($filteredBusinesses)[0];
-                }
-            }
+                    //Search the Array for the specified BusinessId
+                    $filteredBusinesses = array_filter(
+                        $this->businesses,
+                        function ($e) {
+                            return $e->getBusinessId() == $this->businessId;
+                        }
+                    );
 
+                    if(!$filteredBusinesses || count($filteredBusinesses) == 0) {
+                        throw new \Exception('No Business found with the specified Business Id');
+                    }
+                    else {
+                        $this->selectedBusiness = array_values($filteredBusinesses)[0];
+                    }
+                }
+
+            }
         }
 
 

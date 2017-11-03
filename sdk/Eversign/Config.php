@@ -5,6 +5,7 @@ namespace Eversign;
 class Config {
 
     const API_URL = "https://api.eversign.com/api/";
+    const OAUTH_URL = "https://eversign.com/oauth/";
 
     const BUSINESS_URL = "business";
     const DOCUMENT_URL = "document";
@@ -14,6 +15,6 @@ class Config {
     const FILE_URL = "file";
     const REMINDER_URL = "send_reminder";
 
-    const DEBUG_MODE = false;
+    const DEBUG_MODE = true;
 
 }
