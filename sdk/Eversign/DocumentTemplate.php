@@ -119,6 +119,14 @@ class DocumentTemplate {
      */
     private $fields;
 
+
+    /**
+     * Whether the Document is embedded signable
+     * @var boolean $embeddedSigningEnabled
+     * @Type("boolean")
+     */
+    private $embeddedSigningEnabled;
+
     public function __construct($templateId = null) {
         if (!class_exists('Doctrine\Common\Annotations\AnnotationRegistry', false) && class_exists('Doctrine\Common\Annotations\AnnotationRegistry')) {
             AnnotationRegistry::registerLoader('class_exists');
@@ -206,6 +214,10 @@ class DocumentTemplate {
         return $this->fields;
     }
 
+    public function getEmbeddedSigningEnabled() {
+        return $this->embeddedSigningEnabled;
+    }
+
     public function setTemplateId($templateId) {
         $this->templateId = $templateId;
     }
@@ -244,6 +256,10 @@ class DocumentTemplate {
 
     public function setFields($fields) {
         $this->fields = $fields;
+    }
+
+    public function setEmbeddedSigningEnabled($embeddedSigningEnabled) {
+        return $this->embeddedSigningEnabled = $embeddedSigningEnabled;
     }
 
      /**

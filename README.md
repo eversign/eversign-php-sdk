@@ -6,6 +6,8 @@ eversign PHP SDK is the official PHP Wrapper around the eversign [API](https://e
   - [Create Document Example](/example/create-document.php)
   - [Use Template Example](/example/create-document-from-template.php)
   - [Document Operations](/example/document-operations.php)
+  - [Create Iframe Signature](/example/iframe.php)
+  - [Create Iframe Signature From Template](/example/iframe-template.php)
 
 ## Requirements
 

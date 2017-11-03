@@ -63,16 +63,16 @@ eversign.open({
     height: 600,
     events: {
         loaded: function () {
-            console.log('loaded callback');
+            alert('loaded callback');
         },
         signed: function () {
-            console.log('signed callback');
+            alert('signed callback');
         },
         declined: function () {
-            console.log('declined callback');
+            alert('declined callback');
         },
         error: function () {
-            console.log('error callback');
+            alert('error callback');
         }
     }
 });
