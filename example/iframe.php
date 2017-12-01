@@ -26,6 +26,7 @@ $document->setTitle('Embedded Test');
 $signer = new Signer();
 $signer->setName('John Doe');
 $signer->setEmail($config['signerEmail']);
+$signer->setDeliverEmail(false); // false is the default. set this to true to send an additional email to the signer
 $document->appendSigner($signer);
 
 // Enable embedded signing

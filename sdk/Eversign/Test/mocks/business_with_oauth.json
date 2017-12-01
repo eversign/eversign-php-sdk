@@ -1,0 +1,25 @@
+{
+    "request": {
+        "method": "GET",
+        "url": "https://api.eversign.com/api/business",
+        "headers": {
+            "User-Agent": ["Eversign_PHP_SDK"],
+            "Authorization": ["Bearer test_oauth_access_token"],
+            "Host": ["api.eversign.com"]
+        }
+    },
+    "response": {
+        "statusCode": 200,
+        "body": [
+            {
+                "business_id": 1337,
+                "business_status": 1,
+                "business_identifier": "apilayer",
+                "business_name": "apilayer",
+                "creation_time_stamp": 1490258207,
+                "business_connection_id": "",
+                "is_primary": 1
+            }
+        ]
+    }
+}

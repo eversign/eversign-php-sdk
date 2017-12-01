@@ -113,6 +113,12 @@ class Signer extends Recipient {
      */
     private $embeddedSigningUrl;
 
+    /**
+     * If true and embedded singing is enabled than the user will also get an mail
+      * @var boolean $deliverEmail
+      * @Type("boolean")
+      */
+    private $deliverEmail = false;
 
     public function getId() {
         return $this->id;
@@ -154,6 +160,10 @@ class Signer extends Recipient {
         return $this->embeddedSigningUrl;
     }
 
+    public function getDeliverEmail() {
+        return $this->deliverEmail;
+    }
+
     public function setId($id) {
         $this->id = $id;
     }
@@ -192,6 +202,10 @@ class Signer extends Recipient {
 
     public function setEmbeddedSigningUrl($embeddedSigningUrl) {
         return $this->embeddedSigningUrl = $embeddedSigningUrl;
+    }
+
+    public function setDeliverEmail($deliverEmail) {
+        return $this->deliverEmail = $deliverEmail;
     }
 
 }

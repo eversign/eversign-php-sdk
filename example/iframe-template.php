@@ -21,8 +21,9 @@ $documentTemplate->setEmbeddedSigningEnabled(true);
 // Create a signer for the document via the role specified in the template
 $signer = new Signer();
 $signer->setRole('Client');
-$signer->setName('John Doe');
+$signer->setName('John Doe ' . (new DateTime())->format('Y-m-d H:i:s'));
 $signer->setEmail($config['signerEmail']);
+$signer->setDeliverEmail(0); // false is the default. set this to true to send an additional email to the signer
 $documentTemplate->appendSigner($signer);
 
 //Fill out custom fields

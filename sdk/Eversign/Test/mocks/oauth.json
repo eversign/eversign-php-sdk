@@ -1,0 +1,15 @@
+{
+    "request": {
+        "method": "POST",
+        "url": "https://eversign.com/oauth/token"
+    },
+    "response": {
+        "body": {
+            "success": true,
+            "access_token": "test_oauth_access_token",
+            "token_type": "Bearer",
+            "expires_in": "",
+            "state": "mystate"
+        }
+    }
+}

@@ -1,0 +1,17 @@
+version: '3'
+services:
+  eversign-sdk-php:
+    image: php:7.1.12-cli
+    volumes:
+      - ./:/opt/eversign-php-sdk
+    ports:
+      - 8080:8080
+    working_dir: /opt/eversign-php-sdk
+    networks:
+      - apilayer-network
+    command: php -S 0.0.0.0:8080
+
+networks:
+  apilayer-network:
+    external:
+      name: apilayer-network

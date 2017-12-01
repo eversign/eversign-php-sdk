@@ -133,7 +133,7 @@ Recipients (CCs) are added by instantiating the `Eversign\Recipient` object and 
 $recipient = new Recipient();
 $recipient->setName("John Doe");
 $recipient->setEmail("john.doe@eversign.com");
-$document->appendRecipient($recipient);  
+$document->appendRecipient($recipient);
 ```
 
 #### Adding files to the Document [Method: Create Document]
@@ -242,3 +242,15 @@ $client->cancelDocument($document);
 
 ### Contact us
 Any feedback? Please feel free to [contact our support team](https://eversign.com/contact).
+
+### Development
+```
+# Install composer dependencies
+docker run --rm -v $(pwd):/app composer/composer install
+
+# run docker compose
+docker-compose up -d
+
+# point your browser to localhost:8080
+curl http://localhost:8080
+```

@@ -1,0 +1,16 @@
+{
+    "request": {
+        "method": "GET",
+        "url": "https://api.eversign.com/api/document?business_id=1337&type=all",
+        "headers": {
+            "User-Agent": ["Eversign_PHP_SDK"],
+            "Authorization": ["Bearer test_oauth_access_token"],
+            "Host": ["api.eversign.com"]
+        }
+    },
+    "response": {
+        "body": [{
+            "document_hash": "fake_document"
+        }]
+    }
+}

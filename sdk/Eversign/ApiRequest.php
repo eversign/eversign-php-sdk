@@ -30,6 +30,7 @@ use Eversign\Config;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\TransferStats;
 use JMS\Serializer\SerializerBuilder;
+use Exception;
 
 
 class ApiRequest {
@@ -59,7 +60,7 @@ class ApiRequest {
      * @param [] $payLoad
      */
 
-    public function __construct($httpType = "GET", $accessKey, $endPoint, $serializeClass = "", $parameters = NULL, $payLoad = NULL) {
+    public function __construct($httpType = "GET", $accessKey, $endPoint, $serializeClass = "", $parameters = NULL, $payLoad = NULL, $guzzleHandler = null) {
         $headers = ['User-Agent' => 'Eversign_PHP_SDK'];
 
         if(substr($accessKey, 0, strlen('Bearer ')) === 'Bearer ') {
@@ -72,11 +73,12 @@ class ApiRequest {
         }
 
         $this->httpType = $httpType;
-        $this->guzzleClient = new GuzzleClient(['base_uri' => Config::API_URL, 'headers' => $headers]);
+        $this->guzzleClient = new GuzzleClient(['base_uri' => Config::API_URL, 'headers' => $headers, 'handler' => $guzzleHandler]);
         $this->endPoint = $endPoint;
         $this->serializeClass = $serializeClass;
         $this->parameters = $parameters;
         $this->payLoad = $payLoad;
+        $this->guzzleHandler = $guzzleHandler;
     }
 
     public function requestOAuthToken($token_request) {
@@ -87,7 +89,8 @@ class ApiRequest {
             'headers' => ['User-Agent' => 'Eversign_PHP_SDK'],
             'on_stats' => function (TransferStats $stats) use (&$effectiveUrl) {
                 $effectiveUrl = $stats->getEffectiveUri();
-            }
+            },
+            'handler' => $this->guzzleHandler,
         ]);
 
         $response = $guzzleClient->request('POST', 'token', [
@@ -107,10 +110,10 @@ class ApiRequest {
             if($data['success'] === true) {
                 return $data['access_token'];
             } else {
-                throw \Exception('no success');
+                throw new \Exception('no success');
             }
         } catch(\Exception $e) {
-            throw new \Exception('Could not generate token.');
+            throw new \Exception('Could not generate token: ' . $body);
         }
     }
 
@@ -147,18 +150,16 @@ class ApiRequest {
             }
         ]);
 
-
         if(Config::DEBUG_MODE) {
             echo "<div style='background-color: #eee; padding: 20px; border: solid 1px #333; margin: 10px 0; word-break:break-all;'>";
             echo "[" . $this->httpType . "] " . $effectiveUrl ."<hr /><br />";
             echo "<h3 style='margin-top: 0;'>Response</h3><pre>".json_encode(json_decode($response->getBody()), JSON_PRETTY_PRINT)."</pre></div>";
         }
 
-
         $responseJson = json_decode($response->getBody());
-            if(isset($responseJson->success)) {
-                throw new \Exception('Webservice Error No ' . $responseJson->code . ' - Type: ' . $responseJson->type);
-            }
+        if(isset($responseJson->success)) {
+            throw new \Exception('Webservice Error No ' . $responseJson->code . ' - Type: ' . $responseJson->type);
+        }
         return $responseJson;
 
     }
@@ -221,7 +222,7 @@ class ApiRequest {
 
                 return $serializeObject;
             } else {
-                throw new \Exception('Webservice Error No 999 - Type: parsing_exception');
+                throw new \Exception('Webservice Error No 999 - Type: parsing_exception: ' . $body);
             }
         }
 
