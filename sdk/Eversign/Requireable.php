@@ -37,16 +37,16 @@ trait Requireable {
      /**
      * Set if the SignatureField is required or not.
      * Defaults to false
-     * @var boolean $required
-     * @Type("boolean")
+     * @var integer $required
+     * @Type("integer")
      */
     private $required;
 
     public function getRequired() {
-        return $this->required;
+        return !!$this->required;
     }
 
     public function setRequired($required) {
-        $this->required = $required;
+        $this->required = !!$required;
     }
 }

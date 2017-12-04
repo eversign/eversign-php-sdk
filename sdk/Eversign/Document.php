@@ -57,50 +57,50 @@ class Document {
 
     /**
      * Set to true in order to save this document as a draft.
-     * @var boolean $isDraft
-     * @Type("boolean")
+     * @var integer $isDraft
+     * @Type("integer")
      */
     private $isDraft;
 
     /**
      * Check if the document is completed.
-     * @var boolean $isCompleted
-     * @Type("boolean")
+     * @var integer $isCompleted
+     * @Type("integer")
      */
     private $isCompleted;
 
     /**
      * Check if the document is archived.
-     * @var boolean $isArchived
-     * @Type("boolean")
+     * @var integer $isArchived
+     * @Type("integer")
      */
     private $isArchived;
 
      /**
      * Check if the document is deleted.
-     * @var boolean $isDeleted
-     * @Type("boolean")
+     * @var integer $isDeleted
+     * @Type("integer")
      */
     private $isDeleted;
 
      /**
      * Check if the document is in the trash.
-     * @var boolean $isTrashed
-     * @Type("boolean")
+     * @var integer $isTrashed
+     * @Type("integer")
      */
     private $isTrashed;
 
     /**
      * Check if the document has been canceled.
-     * @var boolean $isCancelled
-     * @Type("boolean")
+     * @var integer $isCancelled
+     * @Type("integer")
      */
     private $isCanceled;
 
     /**
      *
-     * @var boolean $embedded
-     * @Type("boolean")
+     * @var integer $embedded
+     * @Type("integer")
      */
     private $embedded;
 
@@ -120,29 +120,29 @@ class Document {
 
     /**
      * Set to true to define a specific order of the Signers
-     * @var boolean $embedded
-     * @Type("boolean")
+     * @var integer $embedded
+     * @Type("integer")
      */
     private $useSignerOrder;
 
     /**
      * Whether the Document is a Template or not
-     * @var boolean $isTemplate
-     * @Type("boolean")
+     * @var integer $isTemplate
+     * @Type("integer")
      */
     private $isTemplate;
 
     /**
      * Set to true to enable Auto Reminders for this Document
-     * @var boolean $embedded
-     * @Type("boolean")
+     * @var integer $embedded
+     * @Type("integer")
      */
     private $reminders;
 
     /**
      * Set to true requires all signers to sign the document to complete it
-     * @var boolean $embedded
-     * @Type("boolean")
+     * @var integer $embedded
+     * @Type("integer")
      */
     private $requireAllSigners;
 
@@ -181,8 +181,8 @@ class Document {
 
     /**
      * Whether the Document is embedded signable
-     * @var boolean $embeddedSigningEnabled
-     * @Type("boolean")
+     * @var integer $embeddedSigningEnabled
+     * @Type("integer")
      */
     private $embeddedSigningEnabled;
 
@@ -348,31 +348,31 @@ class Document {
     }
 
     public function getIsDraft() {
-        return $this->isDraft;
+        return !!$this->isDraft;
     }
 
     public function getIsCompleted() {
-        return $this->isCompleted;
+        return !!$this->isCompleted;
     }
 
     public function getIsArchived() {
-        return $this->isArchived;
+        return !!$this->isArchived;
     }
 
     public function getIsDeleted() {
-        return $this->isDeleted;
+        return !!$this->isDeleted;
     }
 
     public function getIsTrashed() {
-        return $this->isTrashed;
+        return !!$this->isTrashed;
     }
 
     public function getIsCanceled() {
-        return $this->isCanceled;
+        return !!$this->isCanceled;
     }
 
     public function getEmbedded() {
-        return $this->embedded;
+        return !!$this->embedded;
     }
 
     public function getTitle() {
@@ -384,19 +384,19 @@ class Document {
     }
 
     public function getUseSignerOrder() {
-        return $this->useSignerOrder;
+        return !!$this->useSignerOrder;
     }
 
     public function getIsTemplate() {
-        return $this->isTemplate;
+        return !!$this->isTemplate;
     }
 
     public function getReminders() {
-        return $this->reminders;
+        return !!$this->reminders;
     }
 
     public function getRequireAllSigners() {
-        return $this->requireAllSigners;
+        return !!$this->requireAllSigners;
     }
 
     public function getRedirect() {
@@ -404,7 +404,7 @@ class Document {
     }
 
     public function getEmbeddedSigningEnabled() {
-        return $this->embeddedSigningEnabled;
+        return !!$this->embeddedSigningEnabled;
     }
 
     public function getRedirectDecline() {
@@ -460,11 +460,11 @@ class Document {
     }
 
     public function setIsDraft($isDraft) {
-        $this->isDraft = $isDraft;
+        $this->isDraft = !!$isDraft;
     }
 
     public function setEmbedded($embedded) {
-        $this->embedded = $embedded;
+        $this->embedded = !!$embedded;
     }
 
     public function setTitle($title) {
@@ -476,15 +476,15 @@ class Document {
     }
 
     public function setUseSignerOrder($useSignerOrder) {
-        $this->useSignerOrder = $useSignerOrder;
+        $this->useSignerOrder = !!$useSignerOrder;
     }
 
     public function setReminders($reminders) {
-        $this->reminders = $reminders;
+        $this->reminders = !!$reminders;
     }
 
     public function setRequireAllSigners($requireAllSigners) {
-        $this->requireAllSigners = $requireAllSigners;
+        $this->requireAllSigners = !!$requireAllSigners;
     }
 
     public function setRedirect($redirect) {
@@ -492,7 +492,7 @@ class Document {
     }
 
     public function setEmbeddedSigningEnabled($embeddedSigningEnabled) {
-        return $this->embeddedSigningEnabled = $embeddedSigningEnabled;
+        return $this->embeddedSigningEnabled = !!$embeddedSigningEnabled;
     }
 
     public function setRedirectDecline($redirectDecline) {

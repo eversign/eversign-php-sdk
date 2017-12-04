@@ -3,18 +3,18 @@
         "method": "POST",
         "url": "https://api.eversign.com/api/document?access_key=test_access_key&business_id=1337",
         "body": {
-            "is_draft": false,
+            "is_draft": 0,
             "title": "test_title",
             "message": "test_message",
-            "use_signer_order": false,
-            "reminders": false,
-            "require_all_signers": false,
+            "use_signer_order": 0,
+            "reminders": 0,
+            "require_all_signers": 0,
             "signers": [
                 {
                     "name": "test_name",
                     "email": "test_email",
                     "id": 1,
-                    "deliver_email": false
+                    "deliver_email": 0
                 }
             ],
             "recipients": [],
@@ -28,7 +28,7 @@
                         "x": 30,
                         "y": 150,
                         "signer": "1",
-                        "required": true,
+                        "required": 1,
                         "type": "signature"
                     },
                     {
@@ -39,7 +39,7 @@
                         "x": 30,
                         "y": 250,
                         "signer": "1",
-                        "required": true,
+                        "required": 1,
                         "type": "initials"
                     },
                     {
@@ -78,7 +78,7 @@
                         "x": 30,
                         "y": 150,
                         "name": "Test Checkbox",
-                        "read_only": false,
+                        "read_only": 0,
                         "signer": "OWNER",
                         "type": "checkbox"
                     },
@@ -88,7 +88,7 @@
                         "x": 10,
                         "y": 50,
                         "name": "Radio 1",
-                        "read_only": false,
+                        "read_only": 0,
                         "signer": "1",
                         "type": "radio",
                         "group": 0
@@ -99,7 +99,7 @@
                         "x": 10,
                         "y": 70,
                         "name": "Radio 2",
-                        "read_only": false,
+                        "read_only": 0,
                         "signer": "1",
                         "type": "radio",
                         "group": 0
@@ -113,7 +113,7 @@
                         "y": 100,
                         "name": "Test Attachment",
                         "signer": "1",
-                        "required": false,
+                        "required": 0,
                         "type": "attachment"
                     },
                     {

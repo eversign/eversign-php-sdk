@@ -122,8 +122,8 @@ class DocumentTemplate {
 
     /**
      * Whether the Document is embedded signable
-     * @var boolean $embeddedSigningEnabled
-     * @Type("boolean")
+     * @var integer $embeddedSigningEnabled
+     * @Type("integer")
      */
     private $embeddedSigningEnabled;
 
@@ -189,7 +189,7 @@ class DocumentTemplate {
     public function getRedirect() {
         return $this->redirect;
     }
-    
+
     public function getRedirectDecline() {
         return $this->redirectDecline;
     }
@@ -215,7 +215,7 @@ class DocumentTemplate {
     }
 
     public function getEmbeddedSigningEnabled() {
-        return $this->embeddedSigningEnabled;
+        return !!$this->embeddedSigningEnabled;
     }
 
     public function setTemplateId($templateId) {
@@ -259,7 +259,7 @@ class DocumentTemplate {
     }
 
     public function setEmbeddedSigningEnabled($embeddedSigningEnabled) {
-        return $this->embeddedSigningEnabled = $embeddedSigningEnabled;
+        return $this->embeddedSigningEnabled = !!$embeddedSigningEnabled;
     }
 
      /**

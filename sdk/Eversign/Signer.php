@@ -64,8 +64,8 @@ class Signer extends Recipient {
 
      /**
      * True if the Signer has signed the associated Document
-     * @var boolean $signed
-     * @Type("boolean")
+     * @var integer $signed
+     * @Type("integer")
      */
     private $signed;
 
@@ -80,22 +80,22 @@ class Signer extends Recipient {
 
      /**
      * True if the Signer declined to sign the Document
-     * @var boolean $declined
-     * @Type("boolean")
+     * @var integer $declined
+     * @Type("integer")
      */
     private $declined;
 
     /**
      * True if the Document has been sent to the Signer
-     * @var boolean $sent
-     * @Type("boolean")
+     * @var integer $sent
+     * @Type("integer")
      */
     private $sent;
 
     /**
      * True if the Document has been viewed to the Signer
-     * @var boolean $sent
-     * @Type("boolean")
+     * @var integer $sent
+     * @Type("integer")
      */
     private $viewed;
 
@@ -115,8 +115,8 @@ class Signer extends Recipient {
 
     /**
      * If true and embedded singing is enabled than the user will also get an mail
-      * @var boolean $deliverEmail
-      * @Type("boolean")
+      * @var integer $deliverEmail
+      * @Type("integer")
       */
     private $deliverEmail = false;
 
@@ -133,7 +133,7 @@ class Signer extends Recipient {
     }
 
     public function getSigned() {
-        return $this->signed;
+        return !!$this->signed;
     }
 
     public function getSigned_timestamp() {
@@ -141,15 +141,15 @@ class Signer extends Recipient {
     }
 
     public function getDeclined() {
-        return $this->declined;
+        return !!$this->declined;
     }
 
     public function getSent() {
-        return $this->sent;
+        return !!$this->sent;
     }
 
     public function getViewed() {
-        return $this->viewed;
+        return !!$this->viewed;
     }
 
     public function getStatus() {
@@ -161,7 +161,7 @@ class Signer extends Recipient {
     }
 
     public function getDeliverEmail() {
-        return $this->deliverEmail;
+        return !!$this->deliverEmail;
     }
 
     public function setId($id) {
@@ -177,7 +177,7 @@ class Signer extends Recipient {
     }
 
     public function setSigned($signed) {
-        $this->signed = $signed;
+        $this->signed = !!$signed;
     }
 
     public function setSigned_timestamp($signed_timestamp) {
@@ -185,15 +185,15 @@ class Signer extends Recipient {
     }
 
     public function setDeclined($declined) {
-        $this->declined = $declined;
+        $this->declined = !!$declined;
     }
 
     public function setSent($sent) {
-        $this->sent = $sent;
+        $this->sent = !!$sent;
     }
 
     public function setViewed($viewed) {
-        $this->viewed = $viewed;
+        $this->viewed = !!$viewed;
     }
 
     public function setStatus($status) {
@@ -205,7 +205,7 @@ class Signer extends Recipient {
     }
 
     public function setDeliverEmail($deliverEmail) {
-        return $this->deliverEmail = $deliverEmail;
+        return $this->deliverEmail = !!$deliverEmail;
     }
 
 }

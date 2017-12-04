@@ -66,8 +66,8 @@ class Business {
     /**
      * Check if this business is the primary Business of the Client
      *
-     * @var bool $isPrimary
-     * @Type("boolean")
+     * @var integer $isPrimary
+     * @Type("integer")
      */
     private $isPrimary;
 
@@ -139,11 +139,11 @@ class Business {
      * @return bool
      */
     public function getIsPrimary() {
-        return $this->isPrimary;
+        return !!$this->isPrimary;
     }
 
     public function setIsPrimary($isPrimary) {
-        $this->isPrimary = $isPrimary;
+        $this->isPrimary = !!$isPrimary;
     }
 
     /**

@@ -10,14 +10,14 @@
                 "name": "test_name",
                 "email": "test_email",
                 "role": "test_role",
-                "deliver_email": true
+                "deliver_email": 1
             }],
             "recipients": [],
             "fields": [{
                 "identifier": "test_identifier",
                 "value": "test_value"
             }],
-            "embedded_signing_enabled": true
+            "embedded_signing_enabled": 1
         }
     },
     "response": {
