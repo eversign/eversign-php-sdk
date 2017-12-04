@@ -253,4 +253,7 @@ docker-compose up -d
 
 # point your browser to localhost:8080
 curl http://localhost:8080
+
+# run tests
+docker-compose exec eversign-sdk-php vendor/bin/phpunit sdk/Eversign/Test/ClientTest.php --colors=never
 ```

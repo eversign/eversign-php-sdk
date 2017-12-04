@@ -96,13 +96,12 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             if (array_key_exists('body', $mock['request'])) {
                 $requestBody = (string)$currentRequest['request']->getBody();
                 $requestData = json_decode($requestBody, true);
-
-                $this->assertEquals($requestData, $mock['request']['body']);
+                $this->assertSame($requestData, $mock['request']['body']);
             }
 
             if (array_key_exists('headers', $mock['request'])) {
                 $requestHeaders = $currentRequest['request']->getHeaders();
-                $this->assertEquals($requestHeaders, $mock['request']['headers']);
+                $this->assertSame($requestHeaders, $mock['request']['headers']);
             }
 
             $i++;
