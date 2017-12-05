@@ -56,6 +56,13 @@ class Document {
     private $requesterEmail;
 
     /**
+     * Set to true in order to do a sandbox document.
+     * @var integer $sandbox
+     * @Type("integer")
+     */
+    private $sandbox;
+
+    /**
      * Set to true in order to save this document as a draft.
      * @var integer $isDraft
      * @Type("integer")
@@ -237,6 +244,7 @@ class Document {
     public function __construct() {
         AnnotationRegistry::registerLoader('class_exists');
 
+        $this->setSandbox(false);
         $this->setIsDraft(false);
         $this->setUseSignerOrder(false);
         $this->setReminders(false);
@@ -345,6 +353,10 @@ class Document {
 
     public function getRequesterEmail() {
         return $this->requesterEmail;
+    }
+
+    public function getSandbox() {
+        return !!$this->sandbox;
     }
 
     public function getIsDraft() {
@@ -457,6 +469,10 @@ class Document {
 
     public function setRequesterEmail($requesterEmail) {
         $this->requesterEmail = $requesterEmail;
+    }
+
+    public function setSandbox($sandbox) {
+        $this->sandbox = !!$sandbox;
     }
 
     public function setIsDraft($isDraft) {

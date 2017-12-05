@@ -20,6 +20,7 @@ use Eversign\AttachmentField;
 $client = new Client($config['accessKey'], $config['businessId']);
 
 $document = new Document();
+// $document->setSandbox(true);
 $document->setTitle("Form Test");
 $document->setMessage("Test Message");
 

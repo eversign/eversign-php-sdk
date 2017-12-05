@@ -130,5 +130,3 @@ $document->appendFormField($dropdownField);
 
 //Saving the created document to the API.
 $newlyCreatedDocument = $client->createDocument($document);
-
-var_dump($newlyCreatedDocument->getIsCompleted());

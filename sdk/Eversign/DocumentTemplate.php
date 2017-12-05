@@ -40,6 +40,14 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
  */
 class DocumentTemplate {
 
+    /**
+     * Sets the sandbox parameter
+     * @var integer $sandbox
+     * @Type("integer")
+     */
+    private $sandbox;
+
+
      /**
      * Set to the Template ID of the template you would like to use
      * @var string $templateId
@@ -133,6 +141,7 @@ class DocumentTemplate {
         }
         $this->signers = [];
         $this->recipients = [];
+        $this->setSandbox(false);
 
         if($templateId !== null) {
             $this->setTemplateId($templateId);
@@ -172,6 +181,10 @@ class DocumentTemplate {
      */
     public function appendField(Field $field) {
         $this->fields[] = $field;
+    }
+
+    public function getSandbox() {
+        return !!$this->sandbox;
     }
 
     public function getTemplateId() {
@@ -218,6 +231,9 @@ class DocumentTemplate {
         return !!$this->embeddedSigningEnabled;
     }
 
+    public function setSandbox($sandbox) {
+        $this->sandbox = !!$sandbox;
+    }
     public function setTemplateId($templateId) {
         $this->templateId = $templateId;
     }
@@ -259,7 +275,7 @@ class DocumentTemplate {
     }
 
     public function setEmbeddedSigningEnabled($embeddedSigningEnabled) {
-        return $this->embeddedSigningEnabled = !!$embeddedSigningEnabled;
+        $this->embeddedSigningEnabled = !!$embeddedSigningEnabled;
     }
 
      /**

@@ -11,6 +11,7 @@ use Eversign\Signer;
 $client = new Client($config['accessKey'], $config['businessId']);
 
 $documentTemplate = new DocumentTemplate();
+// $documentTemplate->setSandbox(true);
 $documentTemplate->setTemplateId($config['templateId']);
 $documentTemplate->setTitle('Form Test');
 $documentTemplate->setMessage('Test Message ');

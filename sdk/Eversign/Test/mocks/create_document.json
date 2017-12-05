@@ -3,6 +3,7 @@
         "method": "POST",
         "url": "https://api.eversign.com/api/document?access_key=test_access_key&business_id=1337",
         "body": {
+            "sandbox": 0,
             "is_draft": 0,
             "title": "test_title",
             "message": "test_message",
