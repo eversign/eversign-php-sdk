@@ -18,5 +18,11 @@ before_script:
 - php composer.phar install
 
 test:
+  stage: test
   script:
-  - vendor/bin/phpunit sdk/Eversign/Test/ClientTest.php --colors=never
+    - MOCK_PID=$(docker run -d registry.gitlab.com/apilayer/eversign/sdk-testing-mock)
+
+    - docker exec -ti $MOCK_PID ./send_command set_test_case create_document_from_template
+    - vendor/bin/phpunit sdk/Eversign/Test/CreateDocumentFromTemplateTest.php
+
+    - docker kill $MOCK_PID

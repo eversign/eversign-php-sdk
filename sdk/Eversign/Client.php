@@ -31,10 +31,16 @@ use Eversign\OAuthTokenRequest;
 use Eversign\Business;
 use Eversign\Config;
 use Doctrine\Common\Annotations\AnnotationRegistry;
-use GuzzleHttp\Client as GuzzleClient;
 use JMS\Serializer\SerializerBuilder;
 
 class Client {
+
+    /**
+     * The API base url
+     *
+     * @var Url $apiBaseUrl
+     */
+    protected $apiBaseUrl;
 
     /**
      * Reference to the Access Key
@@ -57,29 +63,26 @@ class Client {
      */
     private $selectedBusiness;
 
-    private $guzzleHandler;
-
     /**
       * Constructor
       *
       * @param string $accessKey
       */
-     public function __construct($accessKey = null, $businessId = 0, $guzzleHandler = null)
+     public function __construct($accessKey = null, $businessId = 0, $apiBaseUrl = null)
      {
         if (!class_exists('Doctrine\Common\Annotations\AnnotationRegistry', false) && class_exists('Doctrine\Common\Annotations\AnnotationRegistry')) {
             AnnotationRegistry::registerLoader('class_exists');
         }
         $this->accessKey = $accessKey;
-        $this->guzzleHandler = $guzzleHandler;
 
         if($businessId != 0) {
             $this->businessId = $businessId;
         }
+        $this->apiBaseUrl = $apiBaseUrl;
         $this->fetchBusinesses();
 
 
      }
-
 
      /**
       * Sets the Business from which all subsequent API requests will be called
@@ -136,7 +139,7 @@ class Client {
       * @return $oauthAccessToken
       */
      public function requestOAuthToken(OAuthTokenRequest $token_request) {
-        $request = new ApiRequest('POST', 'oauth', 'oauth', null, null, null, $this->guzzleHandler);
+        $request = new ApiRequest('POST', 'oauth', 'oauth', null, null, null, $this->apiBaseUrl);
         $oauthToken = $request->requestOAuthToken($token_request);
         return $oauthToken;
      }
@@ -158,7 +161,7 @@ class Client {
       */
      public function fetchBusinesses($setDefault = true) {
         if($this->accessKey) {
-            $request = new ApiRequest("GET", $this->accessKey, Config::BUSINESS_URL, "array<Eversign\Business>", null, null, $this->guzzleHandler);
+            $request = new ApiRequest("GET", $this->accessKey, Config::BUSINESS_URL, "array<Eversign\Business>", null, null, $this->apiBaseUrl);
             $this->businesses = $request->startRequest();
 
             if ($setDefault && count($this->businesses) > 0) {
@@ -202,7 +205,7 @@ class Client {
             "type" => $type
         ];
 
-        $request = new ApiRequest("GET", $this->accessKey, Config::DOCUMENT_URL, "array<Eversign\Document>", $parameters, null, $this->guzzleHandler);
+        $request = new ApiRequest("GET", $this->accessKey, Config::DOCUMENT_URL, "array<Eversign\Document>", $parameters, null, $this->apiBaseUrl);
         return $request->startRequest();
 
      }
@@ -308,7 +311,7 @@ class Client {
         ];
 
         $payLoad = json_encode($payLoad);
-        $request = new ApiRequest("POST", $this->accessKey, Config::REMINDER_URL, NULL, $parameters, $payLoad, $this->guzzleHandler);
+        $request = new ApiRequest("POST", $this->accessKey, Config::REMINDER_URL, NULL, $parameters, $payLoad, $this->apiBaseUrl);
         return $request->startRequest()->success;
 
      }
@@ -324,7 +327,7 @@ class Client {
             "document_hash" => $documentHash
         ];
 
-        $request = new ApiRequest("GET", $this->accessKey, Config::DOCUMENT_URL, "Eversign\Document", $parameters, null, $this->guzzleHandler);
+        $request = new ApiRequest("GET", $this->accessKey, Config::DOCUMENT_URL, "Eversign\Document", $parameters, null, $this->apiBaseUrl);
         return $request->startRequest();
 
 
@@ -345,7 +348,7 @@ class Client {
         $serializer = SerializerBuilder::create()->build();
         $payLoad = $serializer->serialize($template, 'json');
 
-        $request = new ApiRequest("POST", $this->accessKey, Config::DOCUMENT_URL, "Eversign\Document", $parameters, $payLoad, $this->guzzleHandler);
+        $request = new ApiRequest("POST", $this->accessKey, Config::DOCUMENT_URL, "Eversign\Document", $parameters, $payLoad, $this->apiBaseUrl);
         return $request->startRequest();
      }
 
@@ -374,7 +377,7 @@ class Client {
         $serializer = SerializerBuilder::create()->build();
         $payLoad = $serializer->serialize($document, 'json');
 
-        $request = new ApiRequest("POST", $this->accessKey, Config::DOCUMENT_URL, "Eversign\Document", $parameters, $payLoad, $this->guzzleHandler);
+        $request = new ApiRequest("POST", $this->accessKey, Config::DOCUMENT_URL, "Eversign\Document", $parameters, $payLoad, $this->apiBaseUrl);
         return $request->startRequest();
 
      }
@@ -395,7 +398,7 @@ class Client {
         ];
 
 
-        $request = new ApiRequest("POST", $this->accessKey, Config::FILE_URL, NULL, $parameters, $file->getFilePath(), $this->guzzleHandler);
+        $request = new ApiRequest("POST", $this->accessKey, Config::FILE_URL, NULL, $parameters, $file->getFilePath(), $this->apiBaseUrl);
         $response = $request->startMultipartUpload();
 
         if(isset($response->file_id)) {
@@ -447,7 +450,7 @@ class Client {
             "sink" => $path
         ];
 
-        $request = new ApiRequest("GET", $this->accessKey, $type, "Eversign\Document", $parameters, $payLoad, $this->guzzleHandler);
+        $request = new ApiRequest("GET", $this->accessKey, $type, "Eversign\Document", $parameters, $payLoad, $this->apiBaseUrl);
         return $request->startRequest();
 
 
@@ -480,7 +483,7 @@ class Client {
             $parameters[$type] = 1;
         }
 
-        $request = new ApiRequest("DELETE", $this->accessKey, Config::DOCUMENT_URL, NULL, $parameters, $this->guzzleHandler);
+        $request = new ApiRequest("DELETE", $this->accessKey, Config::DOCUMENT_URL, NULL, $parameters, $this->apiBaseUrl);
         return $request->startRequest()->success;
 
      }

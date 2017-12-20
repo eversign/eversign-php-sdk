@@ -24,7 +24,7 @@
     "response": {
         "statusCode": 200,
         "body": {
-            "document_hash": "073Q3FY7ua8q3D",
+            "document_hash": "test_document_hash",
             "requester_email": "dominik@apilayer.com",
             "is_draft": 0,
             "is_template": 0,

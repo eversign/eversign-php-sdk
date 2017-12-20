@@ -157,8 +157,8 @@
     },
     "response": {
         "body": {
-            "document_hash": "v4CgtTHVYQhd7T",
-            "requester_email": "dominik@apilayer.com",
+            "document_hash": "test_document_hash",
+            "requester_email": "test_email",
             "is_draft": 0,
             "is_template": 0,
             "is_completed": 0,

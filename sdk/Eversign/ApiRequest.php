@@ -35,7 +35,7 @@ use Exception;
 
 class ApiRequest {
 
-    private $guzzleClient;
+    private $apiBaseUrl;
 
     private $accessKey;
 
@@ -60,7 +60,7 @@ class ApiRequest {
      * @param [] $payLoad
      */
 
-    public function __construct($httpType = "GET", $accessKey, $endPoint, $serializeClass = "", $parameters = NULL, $payLoad = NULL, $guzzleHandler = null) {
+    public function __construct($httpType = "GET", $accessKey, $endPoint, $serializeClass = "", $parameters = NULL, $payLoad = NULL, $apiBaseUrl = null) {
         $headers = ['User-Agent' => 'Eversign_PHP_SDK'];
 
         if(substr($accessKey, 0, strlen('Bearer ')) === 'Bearer ') {
@@ -72,13 +72,19 @@ class ApiRequest {
             $this->accessKey = $accessKey;
         }
 
+        if($apiBaseUrl === null) {
+            $this->apiBaseUrl = Config::API_URL;
+        } else {
+            $this->apiBaseUrl = $apiBaseUrl;
+        }
+
         $this->httpType = $httpType;
-        $this->guzzleClient = new GuzzleClient(['base_uri' => Config::API_URL, 'headers' => $headers, 'handler' => $guzzleHandler]);
+        $this->guzzleClient = new GuzzleClient(['base_uri' => $this->apiBaseUrl, 'headers' => $headers]);
         $this->endPoint = $endPoint;
         $this->serializeClass = $serializeClass;
         $this->parameters = $parameters;
         $this->payLoad = $payLoad;
-        $this->guzzleHandler = $guzzleHandler;
+        $this->apiB = $apiBaseUrl;
     }
 
     public function requestOAuthToken($token_request) {
@@ -90,7 +96,6 @@ class ApiRequest {
             'on_stats' => function (TransferStats $stats) use (&$effectiveUrl) {
                 $effectiveUrl = $stats->getEffectiveUri();
             },
-            'handler' => $this->guzzleHandler,
         ]);
 
         $response = $guzzleClient->request('POST', 'token', [
@@ -183,13 +188,20 @@ class ApiRequest {
             ]);
         }
         else {
-            $response = $this->guzzleClient->request($this->httpType, $this->endPoint, [
+            $requestOptions = [
                 'query' => $this->createQuery(),
-                'body' => $this->payLoad,
                 'on_stats' => function (TransferStats $stats) use (&$effectiveUrl) {
                     $effectiveUrl = $stats->getEffectiveUri();
                 }
-            ]);
+            ];
+
+            try {
+                $requestOptions['json'] = json_decode($this->payLoad);
+            } catch (\Exception $e) {
+                $requestOptions['body'] = $this->payLoad;
+            }
+
+            $response = $this->guzzleClient->request($this->httpType, $this->endPoint, $requestOptions);
         }
 
         if(Config::DEBUG_MODE && $this->endPoint != Config::DOCUMENT_FINAL_URL && $this->endPoint != Config::DOCUMENT_RAW_URL) {
