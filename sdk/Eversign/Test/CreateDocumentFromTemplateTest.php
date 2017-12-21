@@ -17,7 +17,7 @@ class CreateDocumentFromTemplateTest extends \PHPUnit_Framework_TestCase
 
         // $this->assertSame(true, true);
 
-        $client = new Client('test_access_key', 1337, 'http://localhost:8888/api/');
+        $client = new Client('test_access_key', 1337, getenv('SDK_TESTING_MOCK_URL', 'http://localhost:8888/api/'));
 
         $documentTemplate = new DocumentTemplate();
         $documentTemplate->setTemplateId('test_template_id');

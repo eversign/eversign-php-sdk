@@ -1,28 +1,16 @@
-image: php:7.1.12
+image: docker
 
-# Select what we should cache between builds
 cache:
   paths:
   - vendor/
 
-before_script:
-- apt-get update -yqq
-- apt-get install -yqq git libmcrypt-dev libpq-dev libcurl4-gnutls-dev libicu-dev libvpx-dev libjpeg-dev libpng-dev libxpm-dev zlib1g-dev libfreetype6-dev libxml2-dev libexpat1-dev libbz2-dev libgmp3-dev libldap2-dev unixodbc-dev libsqlite3-dev libaspell-dev libsnmp-dev libpcre3-dev libtidy-dev
-# Install PHP extensions
-- docker-php-ext-install mbstring mcrypt pdo_pgsql curl json intl gd xml zip bz2 opcache
-# Install & enable Xdebug for code coverage reports
-- pecl install xdebug
-- docker-php-ext-enable xdebug
-# Install and run Composer
-- curl -sS https://getcomposer.org/installer | php
-- php composer.phar install
-
 test:
   stage: test
   script:
-    - MOCK_PID=$(docker run -d registry.gitlab.com/apilayer/eversign/sdk-testing-mock)
+    - MOCK_PID=$(docker run -d --name sdk-testing-mock registry.gitlab.com/apilayer/eversign/sdk-testing-mock)
 
     - docker exec -ti $MOCK_PID ./send_command set_test_case create_document_from_template
-    - vendor/bin/phpunit sdk/Eversign/Test/CreateDocumentFromTemplateTest.php
+    - docker run -ti -v $(pwd):/opt/php -w /opt/php --link sdk-testing-mock:sdk-testing-mock thomsch98/php7-composer sh -c 'composer install && SDK_TESTING_MOCK_URL="http://sdk-testing-mock:8888/api/" vendor/bin/phpunit sdk/Eversign/Test/CreateDocumentFromTemplateTest.php'
 
-    - docker kill $MOCK_PID
+    - docker exec -ti $MOCK_PID ./send_command get_test_results
+    - docker rm -f $MOCK_PID
