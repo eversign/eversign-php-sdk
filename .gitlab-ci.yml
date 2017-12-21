@@ -9,8 +9,8 @@ test:
   script:
     - MOCK_PID=$(docker run -d --name sdk-testing-mock registry.gitlab.com/apilayer/eversign/sdk-testing-mock)
 
-    - docker exec -ti $MOCK_PID ./send_command set_test_case create_document_from_template
-    - docker run -ti -v $(pwd):/opt/php -w /opt/php --link sdk-testing-mock:sdk-testing-mock thomsch98/php7-composer sh -c 'composer install && SDK_TESTING_MOCK_URL="http://sdk-testing-mock:8888/api/" vendor/bin/phpunit sdk/Eversign/Test/CreateDocumentFromTemplateTest.php'
+    - docker exec $MOCK_PID ./send_command set_test_case create_document_from_template
+    - docker run -v $(pwd):/opt/php -w /opt/php --link sdk-testing-mock:sdk-testing-mock thomsch98/php7-composer sh -c 'composer install && SDK_TESTING_MOCK_URL="http://sdk-testing-mock:8888/api/" vendor/bin/phpunit sdk/Eversign/Test/CreateDocumentFromTemplateTest.php'
 
-    - docker exec -ti $MOCK_PID ./send_command get_test_results
+    - docker exec $MOCK_PID ./send_command get_test_results
     - docker rm -f $MOCK_PID
