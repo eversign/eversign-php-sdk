@@ -30,6 +30,9 @@ test:
     - docker exec sdk-testing-mock ./send_command set_test_case create_document
     - docker exec eversign-php-sdk sh -c 'SDK_TESTING_MOCK_URL="http://sdk-testing-mock:8888/api/" vendor/bin/phpunit sdk/Eversign/Test/CreateDocumentTest.php'
 
+    - docker exec sdk-testing-mock ./send_command set_test_case oauth
+    - docker exec eversign-php-sdk sh -c 'SDK_TESTING_MOCK_URL="http://sdk-testing-mock:8888/api/" vendor/bin/phpunit sdk/Eversign/Test/OAuthTest.php'
+
     - docker exec sdk-testing-mock ./send_command get_test_results
 
 after_script:
