@@ -19,7 +19,7 @@ class OAuthTest extends \PHPUnit_Framework_TestCase
         $client->setSelectedBusinessById(1337);
 
         $documents = $client->getAllDocuments();
-        echo 'found ' . sizeof($documents) . ' documents';
+        $this->assertSame(sizeof($documents), 1);
 
     }
 }
