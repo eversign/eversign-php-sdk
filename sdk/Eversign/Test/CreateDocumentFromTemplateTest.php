@@ -107,7 +107,13 @@ class CreateDocumentFromTemplateTest extends \PHPUnit_Framework_TestCase
             $this->assertSame(get_class($field), 'Eversign\SignatureField');
             $this->assertSame($field->getIdentifier(), 'test_signature_identifier');
             $this->assertSame($field->getSigner(), '1');
-            $this->assertSame($field->getHeight(), '1');
+
+            $this->assertSame($field->getPage(), 1);
+            $this->assertSame($field->getWidth(), 13);
+            $this->assertSame($field->getHeight(), 37);
+            $this->assertSame($field->getX(), 13.37);
+            $this->assertSame($field->getY(), 13.37);
+            $this->assertSame($field->getFileIndex(), null);
         }
 
         $this->assertArrayHasKey('test1', $createdDocument->getMeta());
