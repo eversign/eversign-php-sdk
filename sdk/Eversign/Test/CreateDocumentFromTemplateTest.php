@@ -15,9 +15,7 @@ class CreateDocumentFromTemplateTest extends \PHPUnit_Framework_TestCase
     public function testCall()
     {
 
-        // $this->assertSame(true, true);
-
-        $client = new Client('test_access_key', 1337, getenv('SDK_TESTING_MOCK_URL', 'http://localhost:8888/api/'));
+        $client = new Client('test_access_key', 1337, getenv('SDK_TESTING_MOCK_URL') ? getenv('SDK_TESTING_MOCK_URL') : 'http://localhost:8888/api/');
 
         $documentTemplate = new DocumentTemplate();
         $documentTemplate->setTemplateId('test_template_id');
@@ -96,18 +94,25 @@ class CreateDocumentFromTemplateTest extends \PHPUnit_Framework_TestCase
             $this->assertSame($log->getEvent(), 'document_created');
             $this->assertSame($log->getSigner(), 0);
             $this->assertEquals($log->getTimestamp(), (new \DateTime())->setTimestamp(1337133713));
-
         }
 
-        $this->assertSame($createdDocument->getRecipients(), []); // TODO: insert recipients
+        foreach ($createdDocument->getRecipients() as $resipient) {
+            $this->assertSame($resipient->getName(), 'test_name');
+            $this->assertSame($resipient->getEmail(), 'test_email');
+            $this->assertSame($resipient->getRole(), '');
+        }
 
         foreach ($createdDocument->getFields()[0] as $field) {
             // $this->assertSame($field->getValue(), '');
             $this->assertSame(get_class($field), 'Eversign\SignatureField');
             $this->assertSame($field->getIdentifier(), 'test_signature_identifier');
             $this->assertSame($field->getSigner(), '1');
+            $this->assertSame($field->getHeight(), '1');
         }
 
-        $this->assertSame($createdDocument->getMeta(), []); // TODO: insert meta
+        $this->assertArrayHasKey('test1', $createdDocument->getMeta());
+        $this->assertArrayHasKey('test2', $createdDocument->getMeta());
+        $this->assertSame($createdDocument->getMeta()['test1'], 'value1');
+        $this->assertSame($createdDocument->getMeta()['test2'], 'value2');
     }
 }
