@@ -6,7 +6,6 @@ RUN apt-get update -y && \
     unzip
 
 RUN curl -s https://getcomposer.org/installer | php && \
-  ls -lisa && \
   mv composer.phar /usr/local/bin/composer
 
 WORKDIR /opt/eversign-php-sdk
