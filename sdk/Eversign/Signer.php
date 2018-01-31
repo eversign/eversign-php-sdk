@@ -120,6 +120,14 @@ class Signer extends Recipient {
       */
     private $deliverEmail = false;
 
+    /**
+     * Display language of Signer
+     * @var string $language
+     * @Type("string")
+     */
+    private $language = 'en';
+
+
     public function getId() {
         return $this->id;
     }
@@ -164,6 +172,10 @@ class Signer extends Recipient {
         return !!$this->deliverEmail;
     }
 
+    public function getLanguage() {
+        return $this->language;
+    }
+
     public function setId($id) {
         $this->id = $id;
     }
@@ -206,6 +218,13 @@ class Signer extends Recipient {
 
     public function setDeliverEmail($deliverEmail) {
         return $this->deliverEmail = !!$deliverEmail;
+    }
+
+    public function setLanguage($language) {
+        if(!in_array($language, Config::AVAILABLE_LANGUAGES)) {
+            throw new \Exception('language not supported');
+        }
+        return $this->language = $language;
     }
 
 }

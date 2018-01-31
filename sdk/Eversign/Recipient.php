@@ -60,6 +60,13 @@ class Recipient {
      */
     private $role;
 
+    /**
+     * Display language of the recipient. Defaults to en
+     * @var string $language
+     * @Type("string")
+     */
+    private $language = 'en';
+
     public function getName() {
         return $this->name;
     }
@@ -70,6 +77,10 @@ class Recipient {
 
     public function getRole() {
         return $this->role;
+    }
+
+    public function getLanguage() {
+        return $this->language;
     }
 
     public function setName($name) {
@@ -84,5 +95,11 @@ class Recipient {
         $this->role = $role;
     }
 
+    public function setLanguage($language) {
+        if(!in_array($language, Config::AVAILABLE_LANGUAGES)) {
+            throw new \Exception('language not supported');
+        }
+        $this->language = $language;
+    }
 
 }

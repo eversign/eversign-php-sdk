@@ -7,6 +7,7 @@ use Eversign\Client;
 use Eversign\Document;
 use Eversign\Field;
 use Eversign\Signer;
+use Eversign\Recipient;
 use Eversign\File;
 use Eversign\SignatureField;
 use Eversign\InitialsField;
@@ -36,7 +37,15 @@ $document->setExpires($date);
 $signer = new Signer();
 $signer->setName('John Doe');
 $signer->setEmail($config['signerEmail']);
+$signer->setLanguage('de');
 $document->appendSigner($signer);
+
+//Create a Recipient for the Document
+$recipient = new Recipient();
+$recipient->setName('John Doe Recipient');
+$recipient->setEmail($config['recipientEmail']);
+$recipient->setLanguage('de');
+$document->appendRecipient($recipient);
 
 //Set Custom Meta Tags to the Document
 $document->setMeta([

@@ -17,4 +17,19 @@ class Config {
 
     const DEBUG_MODE = false;
 
+    const AVAILABLE_LANGUAGES = [
+        'en',
+        'da',
+        'nl',
+        'fr',
+        'de',
+        'hi',
+        'it',
+        'pl',
+        'ru',
+        'es',
+        'se',
+        'tr',
+    ];
+
 }

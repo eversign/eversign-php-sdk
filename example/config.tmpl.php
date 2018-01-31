@@ -5,6 +5,7 @@ return array(
     'businessId' => 123456,
     'documentHash' => 'MY_DOCUMENT_HASH',
     'signerEmail' => 'jondoe@eversign.com',
+    'recipientEmail' => 'jondoe+recipient@eversign.com',
     'templateId' => 'xxx',
     'fieldIdentifier' => 'identifier1_xxx',
     'oauth_client_id' => 'xxx',
