@@ -241,6 +241,21 @@ class Document {
      */
     private $meta;
 
+    /**
+     * Set to true if flexible signing should be allowed
+     * @var integer $flexibleSigning
+     * @Type("integer")
+     */
+    private $flexibleSigning;
+
+    /**
+     * Set to true if you want to enable hidden_tags
+     * @var integer $useHiddenTags
+     * @Type("integer")
+     */
+    private $useHiddenTags;
+
+
     public function __construct() {
         AnnotationRegistry::registerLoader('class_exists');
 
@@ -455,6 +470,10 @@ class Document {
         return $this->meta;
     }
 
+    public function getFlexibleSigning() {
+        return $this->getFlexibleSigning;
+    }
+
     public function appendMeta($key, $value) {
        $this->meta[$key] = $value;
     }
@@ -525,6 +544,14 @@ class Document {
 
     public function setMeta($meta) {
         $this->meta = $meta;
+    }
+
+    public function setFlexibleSigning($flexibleSigning) {
+        return $this->flexibleSigning = !!$flexibleSigning;
+    }
+
+    public function setUseHiddenTags($useHiddenTags) {
+        return $this->useHiddenTags = !!$useHiddenTags;
     }
 
 }

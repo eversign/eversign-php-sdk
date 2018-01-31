@@ -24,6 +24,13 @@ $document = new Document();
 $document->setTitle('Form Test');
 $document->setSandbox(true);
 $document->setMessage('Test Message');
+$document->setEmbeddedSigningEnabled(true);
+$document->setFlexibleSigning(false); // remove all fields to try this
+$document->setUseHiddenTags(true);
+
+$date = new DateTime();
+$date->add(new DateInterval('P14D'));
+$document->setExpires($date);
 
 //Create a Signer for the Document
 $signer = new Signer();
