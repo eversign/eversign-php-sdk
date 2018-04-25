@@ -56,6 +56,20 @@ class Document {
     private $requesterEmail;
 
     /**
+     * Custom E-Mail address of the requester
+     * @var string $customRequesterEmail
+     * @Type("string")
+     */
+    private $customRequesterEmail;
+
+    /**
+     * Custom name of the requester
+     * @var string $customRequesterName
+     * @Type("string")
+     */
+    private $customRequesterName;
+
+    /**
      * Set to true in order to do a sandbox document.
      * @var integer $sandbox
      * @Type("integer")
@@ -370,6 +384,14 @@ class Document {
         return $this->requesterEmail;
     }
 
+    public function getCustomRequesterEmail() {
+        return $this->customRequesterEmail;
+    }
+
+    public function getCustomRequesterName() {
+        return $this->customRequesterName;
+    }
+
     public function getSandbox() {
         return !!$this->sandbox;
     }
@@ -488,6 +510,14 @@ class Document {
 
     public function setRequesterEmail($requesterEmail) {
         $this->requesterEmail = $requesterEmail;
+    }
+
+    public function setCustomRequesterEmail($customRequesterEmail) {
+        $this->customRequesterEmail = $customRequesterEmail;
+    }
+
+    public function setCustomRequesterName($customRequesterName) {
+        $this->customRequesterName = $customRequesterName;
     }
 
     public function setSandbox($sandbox) {

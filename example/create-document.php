@@ -28,6 +28,8 @@ $document->setMessage('Test Message');
 $document->setEmbeddedSigningEnabled(true);
 $document->setFlexibleSigning(false); // remove all fields to try this
 $document->setUseHiddenTags(true);
+$document->setCustomRequesterName('My Custom Requester Name');
+$document->setCustomRequesterEmail($config['requesterEmail']);
 
 $date = new DateTime();
 $date->add(new DateInterval('P14D'));
