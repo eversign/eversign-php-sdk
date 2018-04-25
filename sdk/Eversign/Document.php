@@ -298,6 +298,9 @@ class Document {
         if(!$signer->getId()) {
             $signer->setId(count($this->signers) +1);
         }
+        if(!$signer->getOrder()) {
+            $signer->setOrder(count($this->signers) +1);
+        }
         $this->signers[] = $signer;
     }
 

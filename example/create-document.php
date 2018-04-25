@@ -28,6 +28,8 @@ $document->setMessage('Test Message');
 $document->setEmbeddedSigningEnabled(true);
 $document->setFlexibleSigning(false); // remove all fields to try this
 $document->setUseHiddenTags(true);
+$document->setRequireAllSigners(true);
+$document->setUseSignerOrder(true);
 $document->setCustomRequesterName('My Custom Requester Name');
 $document->setCustomRequesterEmail($config['requesterEmail']);
 
@@ -39,6 +41,7 @@ $document->setExpires($date);
 $signer = new Signer();
 $signer->setName('John Doe');
 $signer->setEmail($config['signerEmail']);
+$signer->setDeliverEmail(true); // only used if embedded_signing_enabled is used
 $signer->setLanguage('de');
 $document->appendSigner($signer);
 
