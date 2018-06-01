@@ -467,7 +467,7 @@ class Client {
         if (!$document->getDocumentHash()) {
             throw new \Exception('Deleting the Document requires the Document Hash');
         }
-        if (!$document->getIsDraft() && !$document->getIsCanceled()) {
+        if (!$document->getIsDraft() && !$document->getIsCancelled()) {
             throw new \Exception('Only Drafts and cancelled Documents can be deleted');
         }
         if ($document->getIsDeleted()) {

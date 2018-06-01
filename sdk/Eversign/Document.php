@@ -116,7 +116,7 @@ class Document {
      * @var integer $isCancelled
      * @Type("integer")
      */
-    private $isCanceled;
+    private $isCancelled;
 
     /**
      *
@@ -419,8 +419,8 @@ class Document {
         return !!$this->isTrashed;
     }
 
-    public function getIsCanceled() {
-        return !!$this->isCanceled;
+    public function getIsCancelled() {
+        return !!$this->isCancelled;
     }
 
     public function getEmbedded() {

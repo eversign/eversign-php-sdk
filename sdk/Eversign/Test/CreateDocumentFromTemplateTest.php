@@ -51,7 +51,7 @@ class CreateDocumentFromTemplateTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($createdDocument->getIsArchived(), false);
         $this->assertSame($createdDocument->getIsDeleted(), false);
         $this->assertSame($createdDocument->getIsTrashed(), false);
-        $this->assertSame($createdDocument->getIsCanceled(), false);
+        $this->assertSame($createdDocument->getIsCancelled(), false);
         $this->assertSame($createdDocument->getEmbedded(), false);
         $this->assertSame($createdDocument->getTitle(), 'test_title');
         $this->assertSame($createdDocument->getMessage(), 'test_message');
