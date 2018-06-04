@@ -311,7 +311,7 @@ class Client {
         ];
 
         $payLoad = json_encode($payLoad);
-        $request = new ApiRequest("POST", $this->accessKey, Config::REMINDER_URL, NULL, $parameters, $payLoad, $this->apiBaseUrl);
+        $request = new ApiRequest("POST", $this->accessKey, Config::REMINDER_URL, "Eversign\Result", $parameters, $payLoad, $this->apiBaseUrl);
         return $request->startRequest()->success;
 
      }
@@ -465,9 +465,9 @@ class Client {
       */
      public function deleteDocument(Document $document, $type=NULL) {
         if (!$document->getDocumentHash()) {
-            throw new \Exception('Deleting the Document requires the Document Hash');
+            throw new \Exception('Deleting/Cancelling the Document requires the Document Hash');
         }
-        if (!$document->getIsDraft() && !$document->getIsCancelled()) {
+        if ($type !== 'cancel' && !$document->getIsDraft() && !$document->getIsCancelled()) {
             throw new \Exception('Only Drafts and cancelled Documents can be deleted');
         }
         if ($document->getIsDeleted()) {
@@ -479,11 +479,11 @@ class Client {
             "document_hash" => $document->getDocumentHash()
         ];
 
-        if(!$type) {
+        if($type) {
             $parameters[$type] = 1;
         }
 
-        $request = new ApiRequest("DELETE", $this->accessKey, Config::DOCUMENT_URL, NULL, $parameters, $this->apiBaseUrl);
+        $request = new ApiRequest("DELETE", $this->accessKey, Config::DOCUMENT_URL, "Eversign\Result", $parameters, $this->apiBaseUrl);
         return $request->startRequest()->success;
 
      }
