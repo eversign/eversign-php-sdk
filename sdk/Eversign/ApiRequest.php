@@ -223,7 +223,9 @@ class ApiRequest {
             return file_exists($this->payLoad["sink"]);
         } else {
             $responseJson = json_decode($body, true);
-            if($responseJson && array_key_exists('error', $responseJson)) {
+            if(json_last_error() !== JSON_ERROR_NONE) {
+                throw new \Exception('Webservice Error No 999 - Type: parsing_exception: ' . $body);
+            } else if($responseJson && array_key_exists('error', $responseJson)) {
                 throw new \Exception('Webservice Error No ' . $responseJson['error']['code'] . ' - Type: ' . $responseJson['error']['type']);
             } else if($responseJson && $this->serializeClass) {
                 $serializer = SerializerBuilder::create()->build();
