@@ -60,8 +60,8 @@ class CheckboxField extends FormField{
 
     public function __construct() {
         parent::__construct();
-        $this->width = 14;
-        $this->height = 14;
+        parent::setWidth(14);
+        parent::setHeight(14);
         $this->setReadOnly(false);
         $this->setValue("0");
     }
