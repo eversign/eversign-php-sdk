@@ -73,14 +73,14 @@ abstract class FormField {
      * @var integer $width
      * @Type("integer")
      */
-    private $width;
+    protected $width;
 
     /**
      * The height of the FormField in pixels.
      * @var integer $height
      * @Type("integer")
      */
-    private $height;
+    protected $height;
 
 
     /**
