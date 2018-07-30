@@ -63,6 +63,13 @@ class Document {
     private $customRequesterEmail;
 
     /**
+     * The Document creation UNIX timestamp.
+     * @param int $created
+     * @Type("int")
+     */
+    private $created;
+
+    /**
      * Custom name of the requester
      * @var string $customRequesterName
      * @Type("string")
@@ -292,7 +299,7 @@ class Document {
      * @throws \Exception
      */
     public function appendSigner(Signer $signer) {
-        if (!$signer->getName() || !$signer->getEmail()) {
+        if (!$this->getIsTemplate() && (!$signer->getName() || !$signer->getEmail())) {
             throw new \Exception('Signer needs at least a Name and an E-Mail address');
         }
         if(!$signer->getId()) {
@@ -363,7 +370,7 @@ class Document {
      * @throws \Exception
      */
     public function appendRecipient(Recipient $recipient) {
-        if (!$recipient->getName() || !$recipient->getEmail()) {
+        if (!$this->getIsTemplate() && (!$recipient->getName() || !$recipient->getEmail())) {
             throw new \Exception('Recipient needs at least a Name and an E-Mail address');
         }
 
@@ -529,6 +536,11 @@ class Document {
 
     public function setIsDraft($isDraft) {
         $this->isDraft = !!$isDraft;
+    }
+
+    public function setIsTemplate($isTemplate)
+    {
+        $this->isTemplate = !!$isTemplate;
     }
 
     public function setEmbedded($embedded) {
