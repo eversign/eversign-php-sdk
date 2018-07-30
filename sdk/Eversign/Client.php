@@ -498,4 +498,34 @@ class Client {
          return $this->deleteDocument($document, "cancel");
      }
 
+    /**
+     * Sends the Document instance to the API and returns it with properties
+     * filled out by the API.
+     * @param \Eversign\Document $document
+     * @return mixed
+     * @throws \Exception
+     */
+    public function updateDocument(Document $document)
+    {
+        if (!$document->getSigners() || count($document->getSigners()) == 0) {
+            throw new \Exception('Document needs at least 1 Signer to be created');
+        }
+
+        $parameters = [
+            "business_id" => $this->selectedBusiness->getBusinessId(),
+        ];
+
+        foreach ($document->getFiles() as $file) {
+            if ($file->getFilePath()) {
+                $this->uploadFile($file);
+            }
+        }
+
+        $serializer = SerializerBuilder::create()->build();
+        $payLoad = $serializer->serialize($document, 'json');
+
+        $request = new ApiRequest("PUT", $this->accessKey, Config::DOCUMENT_URL, "Eversign\Document", $parameters, $payLoad, $this->apiBaseUrl);
+
+        return $request->startRequest();
+    }
 }

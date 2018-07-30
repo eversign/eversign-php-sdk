@@ -62,6 +62,13 @@ class Signer extends Recipient {
      */
     private $pin;
 
+    /**
+     * Sets the required attribute of the Signer.
+     * @param int $required
+     * @Type("int")
+     */
+    private $required;
+
      /**
      * True if the Signer has signed the associated Document
      * @var integer $signed
@@ -227,4 +234,8 @@ class Signer extends Recipient {
         return $this->language = $language;
     }
 
+    public function setRequired($required)
+    {
+        $this->required = $required;
+    }
 }
