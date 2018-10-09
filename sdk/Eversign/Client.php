@@ -198,6 +198,17 @@ class Client {
 
      }
 
+    public function getInfo() {
+        if($this->accessKey) {
+            $parameters = [
+                "business_id" => $this->selectedBusiness->getBusinessId(),
+            ];
+
+            $request = new ApiRequest('GET', $this->accessKey, 'info', "Eversign\Info", $parameters, null, $this->apiBaseUrl);
+            return $request->startRequest();
+        }
+    }
+
 
      private function getDocuments($type = "all") {
         $parameters = [
