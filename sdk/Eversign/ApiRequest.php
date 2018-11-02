@@ -162,8 +162,8 @@ class ApiRequest {
         }
 
         $responseJson = json_decode($response->getBody());
-        if(isset($responseJson->success)) {
-            throw new \Exception('Webservice Error No ' . $responseJson->code . ' - Type: ' . $responseJson->type);
+        if(isset($responseJson->success) && $responseJson->success === false) {
+            throw new \Exception('Webservice Error No ' . $responseJson->error->code . ' - Type: ' . $responseJson->error->type);
         }
         return $responseJson;
 
