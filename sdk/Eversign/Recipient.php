@@ -96,7 +96,7 @@ class Recipient {
     }
 
     public function setLanguage($language) {
-        if(!in_array($language, Config::AVAILABLE_LANGUAGES)) {
+        if(!in_array($language, Config::$AVAILABLE_LANGUAGES)) {
             throw new \Exception('language not supported');
         }
         $this->language = $language;
