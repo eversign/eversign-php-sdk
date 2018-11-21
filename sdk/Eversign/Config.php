@@ -17,7 +17,7 @@ class Config {
 
     const DEBUG_MODE = false;
 
-    const AVAILABLE_LANGUAGES = [
+    public static $AVAILABLE_LANGUAGES = [
         'en',
         'da',
         'nl',
