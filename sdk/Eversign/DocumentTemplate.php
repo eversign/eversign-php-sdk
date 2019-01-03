@@ -47,14 +47,12 @@ class DocumentTemplate {
      */
     private $sandbox;
 
-
      /**
      * Set to the Template ID of the template you would like to use
      * @var string $templateId
      * @Type("string")
      */
     private $templateId;
-
 
     /**
      * Sets the title of the Document.
@@ -70,7 +68,7 @@ class DocumentTemplate {
      */
     private $message;
 
-        /**
+    /**
      * This parameter is used to specify a custom completion redirect URL.
      * If empty the default Post-Sign Completion URL of the current Business will be used
      * @var string $redirect
@@ -93,7 +91,6 @@ class DocumentTemplate {
      * @Type("string")
      */
     private $client;
-
 
     /**
      * Expiration Time of the Document, default expiration time will be used if unset
@@ -127,13 +124,26 @@ class DocumentTemplate {
      */
     private $fields;
 
-
     /**
      * Whether the Document is embedded signable
      * @var integer $embeddedSigningEnabled
      * @Type("integer")
      */
     private $embeddedSigningEnabled;
+
+    /**
+     * Custom E-Mail address of the requester
+     * @var string $customRequesterEmail
+     * @Type("string")
+     */
+    private $customRequesterEmail;
+
+    /**
+     * Custom name of the requester
+     * @var string $customRequesterName
+     * @Type("string")
+     */
+    private $customRequesterName;
 
     public function __construct($templateId = null) {
         if (!class_exists('Doctrine\Common\Annotations\AnnotationRegistry', false) && class_exists('Doctrine\Common\Annotations\AnnotationRegistry')) {
@@ -230,6 +240,14 @@ class DocumentTemplate {
     public function getEmbeddedSigningEnabled() {
         return !!$this->embeddedSigningEnabled;
     }
+    
+    public function getCustomRequesterEmail() {
+        return $this->customRequesterEmail;
+    }
+
+    public function getCustomRequesterName() {
+        return $this->customRequesterName;
+    }
 
     public function setSandbox($sandbox) {
         $this->sandbox = !!$sandbox;
@@ -276,6 +294,14 @@ class DocumentTemplate {
 
     public function setEmbeddedSigningEnabled($embeddedSigningEnabled) {
         $this->embeddedSigningEnabled = !!$embeddedSigningEnabled;
+    }
+
+    public function setCustomRequesterEmail($customRequesterEmail) {
+        $this->customRequesterEmail = $customRequesterEmail;
+    }
+
+    public function setCustomRequesterName($customRequesterName) {
+        $this->customRequesterName = $customRequesterName;
     }
 
      /**
