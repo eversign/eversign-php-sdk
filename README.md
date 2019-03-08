@@ -13,7 +13,7 @@ eversign PHP SDK is the official PHP Wrapper around the eversign [API](https://e
 
 ## Requirements
 
-  - The latest version of the SDK requires PHP version 5.5 or higher.
+  - The latest version of the SDK requires PHP version 7.1 or higher.
   - Installation via [Composer](https://getcomposer.org/) is recommended
 
 ## Installation
