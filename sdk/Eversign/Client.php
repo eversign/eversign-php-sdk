@@ -243,7 +243,7 @@ class Client {
       * @return \Document[]
       */
      public function getDraftDocuments() {
-         return $this->getDocuments("draft");
+         return $this->getDocuments("drafts");
      }
 
      /**
