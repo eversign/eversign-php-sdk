@@ -429,6 +429,10 @@ class Document {
     public function getIsCancelled() {
         return !!$this->isCancelled;
     }
+    
+    public function getCreated() {
+        return $this->created;
+    }
 
     public function getEmbedded() {
         return !!$this->embedded;
