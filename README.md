@@ -139,6 +139,7 @@ $document->appendRecipient($recipient);
 #### Adding files to the Document [Method: Create Document]
 Files are added to a document by instantiating an `Eversign\File` object. The standard way of choosing a file to upload is appending the file's path using the `setFilePath()` method and then appending your file using the `appendFile()` method.
 
+Uploading a file is mandatory without which the createDocument method will fail. As an alternative you may upload a blank PDF and add 'note' or 'text' field types.
 
 ```
 $file = new File();
@@ -148,7 +149,7 @@ $document->appendFile($file);
 ```
 
 #### Adding fields [Method: Create Document]
-There is a number of fields that can be added to a document, each coming with different options and parameters. ([Viel Full list of fields »](https://eversign.com/api/documentation/fields))
+There is a number of fields that can be added to a document, each coming with different options and parameters. ([View Full list of fields »](https://eversign.com/api/documentation/fields))
 
 A field is appended to the document using the `appendFormField($signatureField, $fileIndex)` method. The first function parameter is the field object, and the second parameter must contain the index of the file it should be added to. If your field should be placed onto the first uploaded file, set this parameter to `0`. This parameter also default to `0`.
 
