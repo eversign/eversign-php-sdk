@@ -29,6 +29,7 @@ namespace Eversign;
 use Eversign\FormField;
 use Eversign\Readable;
 use Eversign\Signable;
+use Eversign\Requireable;
 
 use JMS\Serializer\Annotation\Type;
 
@@ -40,7 +41,7 @@ use JMS\Serializer\Annotation\Type;
  */
 class CheckboxField extends FormField{
 
-    use Readable, Signable;
+    use Readable, Signable, Requireable;
 
      /**
      * The label of the Field
