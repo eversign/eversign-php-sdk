@@ -393,6 +393,10 @@ class Document {
     public function getRequesterEmail() {
         return $this->requesterEmail;
     }
+    
+    public function getCreated() {
+        return $this->created;
+    }
 
     public function getCustomRequesterEmail() {
         return $this->customRequesterEmail;
