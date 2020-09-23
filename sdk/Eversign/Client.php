@@ -442,11 +442,11 @@ class Client {
      * @param string $path
      * return boolean success
      */
-     public function downloadAuditTrail(Document $document, $path, $auditTrail = true){
+     public function downloadAuditTrail(Document $document, $path, $auditTrail = false){
         if (!$document->getIsCompleted()) {
             throw new \Exception('To Download the final File the Document needs to be completed first');
         }
-        return $this->downloadDocumentToPath($document, $path, $auditTrail, "AT");
+        return $this->downloadDocumentToPath($document, $path, $auditTrail, $type = Config::DOCUMENT_FINAL_URL, "AT");
      }
 
      /**
