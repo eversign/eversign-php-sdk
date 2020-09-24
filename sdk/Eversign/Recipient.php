@@ -66,6 +66,14 @@ class Recipient {
      * @Type("string")
      */
     private $language = 'en';
+    
+    /**
+     * This parameter can be used to specify a custom message (upon document delivery) for the current recipient.
+     * Please note that for the current recipient the general document message will be overriden by this parameter.
+     * @var string $message
+     * @Type("string")
+     */
+    private $message;    
 
     public function getName() {
         return $this->name;
@@ -101,5 +109,13 @@ class Recipient {
         }
         $this->language = $language;
     }
+    
+    public function getMessage() {
+        return $this->message;
+    }	
+	
+    public function setMessage($message) {
+        $this->message = $message;
+    }    
 
 }
