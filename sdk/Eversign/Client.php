@@ -434,6 +434,20 @@ class Client {
         }
         return $this->downloadDocumentToPath($document, $path, $auditTrail);
      }
+    
+    /**
+     * Downloads the Audit Trail to the specified Path.
+     * Returns true if saving was successful, otherwise false.
+     * @param \Eversign\Document $document
+     * @param string $path
+     * return boolean success
+     */
+     public function downloadAuditTrail(Document $document, $path, $auditTrail = true){
+        if (!$document->getIsCompleted()) {
+            throw new \Exception('To Download the final File the Document needs to be completed first');
+        }
+        return $this->downloadDocumentToPath($document, $path, $auditTrail, $type = Config::DOCUMENT_FINAL_URL, "AT");
+     }
 
      /**
       * Downloads the raw Document to the specified Path.
@@ -446,7 +460,7 @@ class Client {
          return $this->downloadDocumentToPath($document, $path, 0, Config::DOCUMENT_RAW_URL);
      }
 
-     private function downloadDocumentToPath(Document $document, $path, $auditTrail = 0, $type = Config::DOCUMENT_FINAL_URL) {
+    private function downloadDocumentToPath(Document $document, $path, $auditTrail = 0, $type = Config::DOCUMENT_FINAL_URL, $documentId = "") {
         if (!$path || !$document) {
             throw new \Exception('To Download the Document you need to set a path and the document');
         }
@@ -454,7 +468,8 @@ class Client {
         $parameters = [
             "business_id" => $this->selectedBusiness->getBusinessId(),
             "document_hash" => $document->getDocumentHash(),
-            "audit_trail" => $auditTrail
+            "audit_trail" => $auditTrail,
+            "document_id" => $documentId
         ];
 
         $payLoad = [
