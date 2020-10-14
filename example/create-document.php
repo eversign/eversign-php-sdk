@@ -49,7 +49,7 @@ $document->appendSigner($signer);
 $recipient = new Recipient();
 $recipient->setName('John Doe Recipient');
 $recipient->setEmail($config['recipientEmail']);
-$recipient->setLanguage('de');
+$recipient->setLanguage('pt');
 $document->appendRecipient($recipient);
 
 //Set Custom Meta Tags to the Document
