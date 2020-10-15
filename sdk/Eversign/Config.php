@@ -30,6 +30,7 @@ class Config {
         'es',
         'se',
         'tr',
+        'pt',
     ];
 
 }
