@@ -46,7 +46,8 @@ use JMS\Serializer\Annotation\Exclude;
  *    "checkbox": "Eversign\CheckboxField",
  *    "radio": "Eversign\RadioField",
  *    "dropdown": "Eversign\DropdownField",
- *    "attachment": "Eversign\AttachmentField"
+ *    "attachment": "Eversign\AttachmentField",
+ *    "checkboxGroup": "Eversign\CheckboxGroupField"
  *
  * })
  */
