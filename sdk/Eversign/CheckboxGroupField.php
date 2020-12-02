@@ -33,12 +33,12 @@ use JMS\Serializer\Annotation\Type;
  * Radio Button fields come with a fixed pixel width and height of 14x14.
  * The additional group parameter is used to identify radio button groups
  *
- * @author Patrick Leeb
+ * @author Alex K.
  */
 class CheckboxGroupField extends CheckboxField {
 
      /**
-     * This parameter is used to identify checkboxGroup button groups.
+     * This parameter is used to identify CheckboxGroup button groups.
      * CheckboxGroupFields belonging to the same group must carry the same group parameter.
      * @var integer $group
      * @Type("integer")
