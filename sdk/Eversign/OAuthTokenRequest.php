@@ -31,7 +31,7 @@ use GuzzleHttp\Client as GuzzleClient;
 use JMS\Serializer\SerializerBuilder;
 
 
-class OauthTokenRequest {
+class OAuthTokenRequest {
 
     /**
      * The client id of your app
@@ -81,7 +81,8 @@ class OauthTokenRequest {
         }
     }
 
-    public function toArray() {
+    public function toArray(): array
+    {
         return array(
             'client_id' => $this->client_id,
             'client_secret' => $this->client_secret,
