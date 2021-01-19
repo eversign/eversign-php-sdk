@@ -23,7 +23,7 @@
     },
     "require": {
         "php": "^7.1",
-        "guzzlehttp/guzzle": "^6.2.3",
+        "guzzlehttp/guzzle": "^6.2.3|^7.0.0",
         "jms/serializer": "^1.6.2"
     }
 }
