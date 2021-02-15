@@ -36,16 +36,16 @@ trait Readable {
 
     /**
      * Determines if the FormField is writable or not
-     * @var integer $readOnly
+     * @var integer $readonly
      * @Type("integer")
      */
-    private $readOnly;
+    private $readonly;
 
-    public function setReadOnly($readOnly) {
-        $this->readOnly = !!$readOnly;
+    public function setReadonly($readonly) {
+        $this->readonly = !!$readonly;
     }
 
-    public function getReadOnly() {
-        return !!$this->readOnly;
+    public function getReadonly() {
+        return !!$this->readonly;
     }
 }

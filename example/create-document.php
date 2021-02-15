@@ -99,6 +99,8 @@ $document->appendFormField($dateSignedField);
 
 $textField = new TextField();
 $signatureField->setFileIndex(0);
+$textField->setSigner(1);
+$textField->setReadOnly(0);
 $textField->setPage(1);
 $textField->setX(10);
 $textField->setY(50);
