@@ -290,6 +290,7 @@ class Document {
         $this->files = [];
         $this->fields = [];
         $this->meta = [];
+        $this->setClient('php-sdk');
     }
 
     /**
@@ -393,7 +394,7 @@ class Document {
     public function getRequesterEmail() {
         return $this->requesterEmail;
     }
-    
+
     public function getCreated() {
         return $this->created;
     }
