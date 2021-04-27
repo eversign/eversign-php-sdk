@@ -60,7 +60,7 @@ class ApiRequest {
      * @param [] $payLoad
      */
 
-    public function __construct($httpType = "GET", $accessKey, $endPoint, $serializeClass = "", $parameters = NULL, $payLoad = NULL, $apiBaseUrl = null) {
+    public function __construct($httpType, $accessKey, $endPoint, $serializeClass = "", $parameters = NULL, $payLoad = NULL, $apiBaseUrl = null) {
         $headers = ['User-Agent' => 'Eversign_PHP_SDK'];
 
         if(substr($accessKey, 0, strlen('Bearer ')) === 'Bearer ') {
