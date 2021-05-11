@@ -133,6 +133,13 @@ class Document {
     private $embedded;
 
     /**
+     *
+     * @var string $embeddedClaimUrl
+     * @Type("string")
+     */
+    private $embeddedClaimUrl;
+
+    /**
      * Sets the title of the Document.
      * @var string $title
      * @Type("string")
@@ -604,4 +611,12 @@ class Document {
         return $this->useHiddenTags = !!$useHiddenTags;
     }
 
+    public function getEmbeddedClaimUrl()
+    {
+        return $this->embeddedClaimUrl;
+    }
+
+    public function setEmbeddedClaimUrl($embeddedClaimUrl) {
+        $this->embeddedClaimUrl = $embeddedClaimUrl;
+    }
 }
