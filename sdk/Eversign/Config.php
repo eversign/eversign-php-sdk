@@ -15,7 +15,7 @@ class Config {
     const FILE_URL = "file";
     const REMINDER_URL = "send_reminder";
 
-    const DEBUG_MODE = true;
+    const DEBUG_MODE = false;
 
     const GUZZLE_TIMEOUT = 15;
 
