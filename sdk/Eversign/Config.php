@@ -15,7 +15,9 @@ class Config {
     const FILE_URL = "file";
     const REMINDER_URL = "send_reminder";
 
-    const DEBUG_MODE = false;
+    const DEBUG_MODE = true;
+
+    const GUZZLE_TIMEOUT = 15;
 
     public static $AVAILABLE_LANGUAGES = [
         'en',
