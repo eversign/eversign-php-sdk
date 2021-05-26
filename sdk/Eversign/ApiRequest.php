@@ -46,7 +46,7 @@ class ApiRequest {
 
     private $payLoad;
 
-    private GuzzleClient $guzzleClient;
+    private $guzzleClient;
 
     /**
      * Creating a blank Request with the Access Key and specific Endpoint
