@@ -26,12 +26,9 @@
 
 namespace Eversign;
 
-use Eversign\Config;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\TransferStats;
 use JMS\Serializer\SerializerBuilder;
-use Exception;
-
 
 class ApiRequest {
 
@@ -48,6 +45,8 @@ class ApiRequest {
     private $parameters;
 
     private $payLoad;
+
+    private GuzzleClient $guzzleClient;
 
     /**
      * Creating a blank Request with the Access Key and specific Endpoint
@@ -99,6 +98,7 @@ class ApiRequest {
         ]);
 
         $response = $guzzleClient->request('POST', 'token', [
+            'timeout' => Config::GUZZLE_TIMEOUT,
             'form_params' => $token_request->toArray(),
         ]);
 
@@ -143,6 +143,7 @@ class ApiRequest {
     public function startMultipartUpload() {
         $effectiveUrl = null;
         $response = $this->guzzleClient->request($this->httpType, $this->endPoint, [
+            'timeout' => Config::GUZZLE_TIMEOUT,
             'query' => $this->createQuery(),
             'multipart' => [
                 [
@@ -180,6 +181,7 @@ class ApiRequest {
         $effectiveUrl = null;
         if($this->payLoad && is_array($this->payLoad) && array_key_exists("sink", $this->payLoad)) {
             $response = $this->guzzleClient->request($this->httpType, $this->endPoint, [
+                'timeout' => Config::GUZZLE_TIMEOUT,
                 'query' => $this->createQuery(),
                 'sink' => $this->payLoad["sink"],
                 'on_stats' => function (TransferStats $stats) use (&$effectiveUrl) {
@@ -189,6 +191,7 @@ class ApiRequest {
         }
         else {
             $requestOptions = [
+                'timeout' => Config::GUZZLE_TIMEOUT,
                 'query' => $this->createQuery(),
                 'on_stats' => function (TransferStats $stats) use (&$effectiveUrl) {
                     $effectiveUrl = $stats->getEffectiveUri();
