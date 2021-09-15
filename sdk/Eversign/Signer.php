@@ -61,6 +61,20 @@ class Signer extends Recipient {
      * @Type("string")
      */
     private $pin;
+    
+     /**
+     * True if the signer authentication via SMS is enabled
+     * @var integer $signer_authentication_sms_enabled
+     * @Type("integer")
+     */
+    private $signer_authentication_sms_enabled;
+
+    /**
+     * Phone number of the signer for signer authentication via SMS
+     * @var string $signer_authentication_phone_number
+     * @Type("string")
+     */
+    private $signer_authentication_phone_number;
 
     /**
      * Sets the required attribute of the Signer.
@@ -146,6 +160,14 @@ class Signer extends Recipient {
     public function getPin() {
         return $this->pin;
     }
+    
+    public function getSignerAuthEnabled() {
+        return $this->signer_authentication_sms_enabled;
+    }
+    
+    public function getSignerAuthPhoneNumber() {
+        return $this->signer_authentication_phone_number;
+    }
 
     public function getSigned() {
         return !!$this->signed;
@@ -193,6 +215,14 @@ class Signer extends Recipient {
 
     public function setPin($pin) {
         $this->pin = $pin;
+    }
+    
+    public function setSignerAuthEnabled($signer_authentication_sms_enabled) {
+        $this->signer_authentication_sms_enabled = $signer_authentication_sms_enabled;
+    }
+    
+    public function setSignerAuthPhoneNumber($signer_authentication_phone_number) {
+        $this->signer_authentication_phone_number = $signer_authentication_phone_number;
     }
 
     public function setSigned($signed) {
