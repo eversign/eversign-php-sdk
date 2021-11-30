@@ -1,7 +1,7 @@
 version: '3'
 services:
   eversign-sdk-php:
-    image: php:7.1.12-cli
+    image: php:7.4-cli
     volumes:
       - ./:/opt/eversign-php-sdk
     ports:

@@ -1,4 +1,4 @@
-FROM php:7.1.12
+FROM php:7.4
 
 RUN apt-get update -y && \
   apt-get install -y \
