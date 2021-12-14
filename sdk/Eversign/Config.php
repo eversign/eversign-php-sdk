@@ -17,7 +17,7 @@ class Config {
 
     const DEBUG_MODE = false;
 
-    const GUZZLE_TIMEOUT = 15;
+    const GUZZLE_TIMEOUT = 30;
 
     public static $AVAILABLE_LANGUAGES = [
         'en',
