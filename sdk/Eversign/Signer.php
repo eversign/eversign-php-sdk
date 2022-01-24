@@ -61,7 +61,7 @@ class Signer extends Recipient {
      * @Type("string")
      */
     private $pin;
-    
+
      /**
      * True if the signer authentication via SMS is enabled
      * @var integer $signer_authentication_sms_enabled
@@ -148,6 +148,12 @@ class Signer extends Recipient {
      */
     private $language = 'en';
 
+    /**
+     * Decline reason of Signer
+     * @var string
+     * @Type("string")
+     */
+    private $declinedReason = "";
 
     public function getId() {
         return $this->id;
@@ -160,11 +166,11 @@ class Signer extends Recipient {
     public function getPin() {
         return $this->pin;
     }
-    
+
     public function getSignerAuthEnabled() {
         return $this->signer_authentication_sms_enabled;
     }
-    
+
     public function getSignerAuthPhoneNumber() {
         return $this->signer_authentication_phone_number;
     }
@@ -216,11 +222,11 @@ class Signer extends Recipient {
     public function setPin($pin) {
         $this->pin = $pin;
     }
-    
+
     public function setSignerAuthEnabled($signer_authentication_sms_enabled) {
         $this->signer_authentication_sms_enabled = $signer_authentication_sms_enabled;
     }
-    
+
     public function setSignerAuthPhoneNumber($signer_authentication_phone_number) {
         $this->signer_authentication_phone_number = $signer_authentication_phone_number;
     }
@@ -267,5 +273,15 @@ class Signer extends Recipient {
     public function setRequired($required)
     {
         $this->required = $required;
+    }
+
+    public function setDeclinedReason($declinedReason)
+    {
+        $this->declinedReason = $declinedReason;
+    }
+
+    public function getDeclinedReason()
+    {
+        return $this->declinedReason;
     }
 }
