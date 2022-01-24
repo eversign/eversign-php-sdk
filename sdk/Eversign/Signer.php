@@ -150,7 +150,7 @@ class Signer extends Recipient {
 
     /**
      * Decline reason of Signer
-     * @var string
+     * @var string $declinedReason
      * @Type("string")
      */
     private $declinedReason = "";
