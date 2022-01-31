@@ -434,7 +434,7 @@ class Client {
         }
         return $this->downloadDocumentToPath($document, $path, $auditTrail);
      }
-    
+
     /**
      * Downloads the Audit Trail to the specified Path.
      * Returns true if saving was successful, otherwise false.
@@ -460,7 +460,7 @@ class Client {
          return $this->downloadDocumentToPath($document, $path, 0, Config::DOCUMENT_RAW_URL);
      }
 
-    private function downloadDocumentToPath(Document $document, $path, $auditTrail = 0, $type = Config::DOCUMENT_FINAL_URL, $documentId = "") {
+    public function downloadDocumentToPath(Document $document, $path, $auditTrail = 0, $type = Config::DOCUMENT_FINAL_URL, $documentId = "") {
         if (!$path || !$document) {
             throw new \Exception('To Download the Document you need to set a path and the document');
         }
