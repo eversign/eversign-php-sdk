@@ -388,7 +388,8 @@ class Client {
             $this->accessKey,
             Config::DOCUMENT_URL,
             "Eversign\Document",
-            $parameters, null,
+            $parameters,
+            null,
             $this->apiBaseUrl,
             $this->apiRequestTimeout
         );

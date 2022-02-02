@@ -22,7 +22,7 @@ use Eversign\AttachmentField;
 // $client = new Client($config['accessKey'], $config['businessId']);
 
 // Client with custom API request timeout
-$client = new Client($config['accessKey'], $config['businessId'], null, 100);
+$client = new Client($config['accessKey'], $config['businessId'], null, $config['api_request_timeout']);
 
 // Create new Document
 $document = new Document();
