@@ -63,12 +63,14 @@ class Client {
      */
     private $selectedBusiness;
 
+    private $apiRequestTimeout;
+
     /**
       * Constructor
       *
       * @param string $accessKey
       */
-     public function __construct($accessKey = null, $businessId = 0, $apiBaseUrl = null)
+     public function __construct($accessKey = null, $businessId = 0, $apiBaseUrl = null, int $apiRequestTimeout = Config::GUZZLE_TIMEOUT)
      {
         if (!class_exists('Doctrine\Common\Annotations\AnnotationRegistry', false) && class_exists('Doctrine\Common\Annotations\AnnotationRegistry')) {
             AnnotationRegistry::registerLoader('class_exists');
@@ -81,7 +83,7 @@ class Client {
         $this->apiBaseUrl = $apiBaseUrl;
         $this->fetchBusinesses();
 
-
+        $this->apiRequestTimeout = $apiRequestTimeout;
      }
 
      /**
@@ -139,9 +141,18 @@ class Client {
       * @return $oauthAccessToken
       */
      public function requestOAuthToken(OAuthTokenRequest $token_request) {
-        $request = new ApiRequest('POST', 'oauth', 'oauth', null, null, null, $this->apiBaseUrl);
-        $oauthToken = $request->requestOAuthToken($token_request);
-        return $oauthToken;
+        $request = new ApiRequest(
+            'POST',
+            'oauth',
+            'oauth',
+            null,
+            null,
+            null,
+            $this->apiBaseUrl,
+            $this->apiRequestTimeout
+        );
+
+        return $request->requestOAuthToken($token_request);
      }
 
      /**
@@ -161,7 +172,16 @@ class Client {
       */
      public function fetchBusinesses($setDefault = true) {
         if($this->accessKey) {
-            $request = new ApiRequest("GET", $this->accessKey, Config::BUSINESS_URL, "array<Eversign\Business>", null, null, $this->apiBaseUrl);
+            $request = new ApiRequest(
+                "GET",
+                $this->accessKey,
+                Config::BUSINESS_URL,
+                "array<Eversign\Business>",
+                null,
+                null,
+                $this->apiBaseUrl,
+                $this->apiRequestTimeout
+            );
             $this->businesses = $request->startRequest();
 
             if ($setDefault && count($this->businesses) > 0) {
@@ -191,11 +211,8 @@ class Client {
                         $this->selectedBusiness = array_values($filteredBusinesses)[0];
                     }
                 }
-
             }
         }
-
-
      }
 
     public function getInfo() {
@@ -204,7 +221,17 @@ class Client {
                 "business_id" => $this->selectedBusiness->getBusinessId(),
             ];
 
-            $request = new ApiRequest('GET', $this->accessKey, 'info', "Eversign\Info", $parameters, null, $this->apiBaseUrl);
+            $request = new ApiRequest(
+                'GET',
+                $this->accessKey,
+                'info',
+                "Eversign\Info",
+                $parameters,
+                null,
+                $this->apiBaseUrl,
+                $this->apiRequestTimeout
+            );
+
             return $request->startRequest();
         }
     }
@@ -216,9 +243,18 @@ class Client {
             "type" => $type
         ];
 
-        $request = new ApiRequest("GET", $this->accessKey, Config::DOCUMENT_URL, "array<Eversign\Document>", $parameters, null, $this->apiBaseUrl);
-        return $request->startRequest();
+        $request = new ApiRequest(
+            "GET",
+            $this->accessKey,
+            Config::DOCUMENT_URL,
+            "array<Eversign\Document>",
+            $parameters,
+            null,
+            $this->apiBaseUrl,
+            $this->apiRequestTimeout
+        );
 
+        return $request->startRequest();
      }
 
      /**
@@ -322,9 +358,18 @@ class Client {
         ];
 
         $payLoad = json_encode($payLoad);
-        $request = new ApiRequest("POST", $this->accessKey, Config::REMINDER_URL, "Eversign\Result", $parameters, $payLoad, $this->apiBaseUrl);
-        return $request->startRequest()->success;
+        $request = new ApiRequest(
+            "POST",
+            $this->accessKey,
+            Config::REMINDER_URL,
+            "Eversign\Result",
+            $parameters,
+            $payLoad,
+            $this->apiBaseUrl,
+            $this->apiRequestTimeout
+        );
 
+        return $request->startRequest()->success;
      }
 
      /**
@@ -338,10 +383,18 @@ class Client {
             "document_hash" => $documentHash
         ];
 
-        $request = new ApiRequest("GET", $this->accessKey, Config::DOCUMENT_URL, "Eversign\Document", $parameters, null, $this->apiBaseUrl);
+        $request = new ApiRequest(
+            "GET",
+            $this->accessKey,
+            Config::DOCUMENT_URL,
+            "Eversign\Document",
+            $parameters,
+            null,
+            $this->apiBaseUrl,
+            $this->apiRequestTimeout
+        );
+
         return $request->startRequest();
-
-
      }
 
      public function createDocumentFromTemplate(DocumentTemplate $template) {
@@ -359,7 +412,16 @@ class Client {
         $serializer = SerializerBuilder::create()->build();
         $payLoad = $serializer->serialize($template, 'json');
 
-        $request = new ApiRequest("POST", $this->accessKey, Config::DOCUMENT_URL, "Eversign\Document", $parameters, $payLoad, $this->apiBaseUrl);
+        $request = new ApiRequest("POST",
+            $this->accessKey,
+            Config::DOCUMENT_URL,
+            "Eversign\Document",
+            $parameters,
+            $payLoad,
+            $this->apiBaseUrl,
+            $this->apiRequestTimeout
+        );
+
         return $request->startRequest();
      }
 
@@ -388,9 +450,18 @@ class Client {
         $serializer = SerializerBuilder::create()->build();
         $payLoad = $serializer->serialize($document, 'json');
 
-        $request = new ApiRequest("POST", $this->accessKey, Config::DOCUMENT_URL, "Eversign\Document", $parameters, $payLoad, $this->apiBaseUrl);
-        return $request->startRequest();
+        $request = new ApiRequest(
+            "POST",
+            $this->accessKey,
+            Config::DOCUMENT_URL,
+            "Eversign\Document",
+            $parameters,
+            $payLoad,
+            $this->apiBaseUrl,
+            $this->apiRequestTimeout
+        );
 
+        return $request->startRequest();
      }
 
      /**
@@ -409,7 +480,17 @@ class Client {
         ];
 
 
-        $request = new ApiRequest("POST", $this->accessKey, Config::FILE_URL, NULL, $parameters, $file->getFilePath(), $this->apiBaseUrl);
+        $request = new ApiRequest(
+            "POST",
+            $this->accessKey,
+            Config::FILE_URL,
+            NULL,
+            $parameters,
+            $file->getFilePath(),
+            $this->apiBaseUrl,
+            $this->apiRequestTimeout
+        );
+
         $response = $request->startMultipartUpload();
 
         if(isset($response->file_id)) {
@@ -476,10 +557,18 @@ class Client {
             "sink" => $path
         ];
 
-        $request = new ApiRequest("GET", $this->accessKey, $type, "Eversign\Document", $parameters, $payLoad, $this->apiBaseUrl);
+        $request = new ApiRequest(
+            "GET",
+            $this->accessKey,
+            $type,
+            "Eversign\Document",
+            $parameters,
+            $payLoad,
+            $this->apiBaseUrl,
+            $this->apiRequestTimeout
+        );
+
         return $request->startRequest();
-
-
      }
 
      /**
@@ -509,9 +598,17 @@ class Client {
             $parameters[$type] = 1;
         }
 
-        $request = new ApiRequest("DELETE", $this->accessKey, Config::DOCUMENT_URL, "Eversign\Result", $parameters, $this->apiBaseUrl);
-        return $request->startRequest()->success;
+        $request = new ApiRequest(
+            "DELETE",
+            $this->accessKey,
+            Config::DOCUMENT_URL,
+            "Eversign\Result",
+            $parameters,
+            $this->apiBaseUrl,
+            $this->apiRequestTimeout
+        );
 
+        return $request->startRequest()->success;
      }
 
      /**
@@ -550,7 +647,16 @@ class Client {
         $serializer = SerializerBuilder::create()->build();
         $payLoad = $serializer->serialize($document, 'json');
 
-        $request = new ApiRequest("PUT", $this->accessKey, Config::DOCUMENT_URL, "Eversign\Document", $parameters, $payLoad, $this->apiBaseUrl);
+        $request = new ApiRequest(
+            "PUT",
+            $this->accessKey,
+            Config::DOCUMENT_URL,
+            "Eversign\Document",
+            $parameters,
+            $payLoad,
+            $this->apiBaseUrl,
+            $this->apiRequestTimeout
+        );
 
         return $request->startRequest();
     }

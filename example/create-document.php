@@ -18,8 +18,13 @@ use Eversign\DropdownField;
 use Eversign\TextField;
 use Eversign\AttachmentField;
 
-$client = new Client($config['accessKey'], $config['businessId']);
+// Client with default API request timeout
+// $client = new Client($config['accessKey'], $config['businessId']);
 
+// Client with custom API request timeout
+$client = new Client($config['accessKey'], $config['businessId'], null, $config['api_request_timeout']);
+
+// Create new Document
 $document = new Document();
 // $document->setSandbox(true);
 $document->setTitle('Form Test');

@@ -48,6 +48,8 @@ class ApiRequest {
 
     private $guzzleClient;
 
+    private $guzzleRequestTimeout;
+
     /**
      * Creating a blank Request with the Access Key and specific Endpoint
      *
@@ -59,7 +61,16 @@ class ApiRequest {
      * @param [] $payLoad
      */
 
-    public function __construct($httpType, $accessKey, $endPoint, $serializeClass = "", $parameters = NULL, $payLoad = NULL, $apiBaseUrl = null) {
+    public function __construct(
+        $httpType,
+        $accessKey,
+        $endPoint,
+        $serializeClass = "",
+        $parameters = null,
+        $payLoad = null,
+        $apiBaseUrl = null,
+        $apiRequestTimeout = Config::GUZZLE_TIMEOUT
+    ) {
         $headers = ['User-Agent' => 'Eversign_PHP_SDK'];
 
         if(substr($accessKey, 0, strlen('Bearer ')) === 'Bearer ') {
@@ -84,6 +95,8 @@ class ApiRequest {
         $this->parameters = $parameters;
         $this->payLoad = $payLoad;
         $this->apiB = $apiBaseUrl;
+
+        $this->guzzleRequestTimeout = $apiRequestTimeout;
     }
 
     public function requestOAuthToken($token_request) {
@@ -98,7 +111,7 @@ class ApiRequest {
         ]);
 
         $response = $guzzleClient->request('POST', 'token', [
-            'timeout' => Config::GUZZLE_TIMEOUT,
+            'timeout' => $this->guzzleRequestTimeout,
             'form_params' => $token_request->toArray(),
         ]);
 
@@ -143,7 +156,7 @@ class ApiRequest {
     public function startMultipartUpload() {
         $effectiveUrl = null;
         $response = $this->guzzleClient->request($this->httpType, $this->endPoint, [
-            'timeout' => Config::GUZZLE_TIMEOUT,
+            'timeout' => $this->guzzleRequestTimeout,
             'query' => $this->createQuery(),
             'multipart' => [
                 [
@@ -181,7 +194,7 @@ class ApiRequest {
         $effectiveUrl = null;
         if($this->payLoad && is_array($this->payLoad) && array_key_exists("sink", $this->payLoad)) {
             $response = $this->guzzleClient->request($this->httpType, $this->endPoint, [
-                'timeout' => Config::GUZZLE_TIMEOUT,
+                'timeout' => $this->guzzleRequestTimeout,
                 'query' => $this->createQuery(),
                 'sink' => $this->payLoad["sink"],
                 'on_stats' => function (TransferStats $stats) use (&$effectiveUrl) {
@@ -191,7 +204,7 @@ class ApiRequest {
         }
         else {
             $requestOptions = [
-                'timeout' => Config::GUZZLE_TIMEOUT,
+                'timeout' => $this->guzzleRequestTimeout,
                 'query' => $this->createQuery(),
                 'on_stats' => function (TransferStats $stats) use (&$effectiveUrl) {
                     $effectiveUrl = $stats->getEffectiveUri();
@@ -242,10 +255,5 @@ class ApiRequest {
                 throw new \Exception('Webservice Error No 999 - Type: parsing_exception: ' . $body);
             }
         }
-
-
     }
-
-
-
 }
