@@ -11,4 +11,5 @@ return array(
     'fieldIdentifier' => 'identifier1_xxx',
     'oauth_client_id' => 'xxx',
     'oauth_client_secret' => 'xxx',
+    'api_request_timeout' => 30
 );
