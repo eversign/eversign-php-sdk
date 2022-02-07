@@ -412,7 +412,8 @@ class Client {
         $serializer = SerializerBuilder::create()->build();
         $payLoad = $serializer->serialize($template, 'json');
 
-        $request = new ApiRequest("POST",
+        $request = new ApiRequest(
+            "POST",
             $this->accessKey,
             Config::DOCUMENT_URL,
             "Eversign\Document",
@@ -604,6 +605,7 @@ class Client {
             Config::DOCUMENT_URL,
             "Eversign\Result",
             $parameters,
+            null,
             $this->apiBaseUrl,
             $this->apiRequestTimeout
         );
