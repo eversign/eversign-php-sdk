@@ -179,7 +179,7 @@ class Signer extends Recipient {
         return !!$this->signed;
     }
 
-    public function getSigned_timestamp() {
+    public function getSignedTimestamp() {
         return $this->signed_timestamp;
     }
 
@@ -235,7 +235,7 @@ class Signer extends Recipient {
         $this->signed = !!$signed;
     }
 
-    public function setSigned_timestamp($signed_timestamp) {
+    public function setSignedTimestamp($signed_timestamp) {
         $this->signed_timestamp = $signed_timestamp;
     }
 

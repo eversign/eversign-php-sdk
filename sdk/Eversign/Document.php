@@ -515,7 +515,7 @@ class Document {
     }
 
     public function getFlexibleSigning() {
-        return $this->getFlexibleSigning;
+        return $this->flexibleSigning;
     }
 
     public function appendMeta($key, $value) {
