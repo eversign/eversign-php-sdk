@@ -582,7 +582,7 @@ class Client {
             "url_only" => $onlyUrl
         ];
 
-        $payLoad = $onlyUrl ? null : ["sink" => 'stream'];
+        $payLoad = $onlyUrl ? null : ["stream" => false];
 
         $request = new ApiRequest(
             "GET",
