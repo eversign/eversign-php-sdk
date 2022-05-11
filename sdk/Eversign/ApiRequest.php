@@ -202,6 +202,16 @@ class ApiRequest {
                 }
             ]);
         }
+        else if($this->payLoad && is_array($this->payLoad) && array_key_exists("stream", $this->payLoad)) {
+            $response = $this->guzzleClient->request($this->httpType, $this->endPoint, [
+                'timeout' => $this->guzzleRequestTimeout,
+                'query' => $this->createQuery(),
+                'stream' => $this->payLoad["stream"],
+                'on_stats' => function (TransferStats $stats) use (&$effectiveUrl) {
+                    $effectiveUrl = $stats->getEffectiveUri();
+                }
+            ]);
+        }
         else {
             $requestOptions = [
                 'timeout' => $this->guzzleRequestTimeout,
@@ -236,11 +246,10 @@ class ApiRequest {
         $body = $response->getBody();
 
         if($this->payLoad && is_array($this->payLoad) &&  array_key_exists("sink", $this->payLoad)) {
-            if('stream' === $this->payLoad["sink"]){
-                return $body;
-            }else{
-                return file_exists($this->payLoad["sink"]);
-            }
+           return file_exists($this->payLoad["sink"]);
+
+        } else if($this->payLoad && is_array($this->payLoad) &&  array_key_exists("stream", $this->payLoad)) {
+            return $body;
         } else {
             $responseJson = json_decode($body, true);
             if(json_last_error() !== JSON_ERROR_NONE) {
