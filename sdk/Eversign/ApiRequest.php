@@ -236,7 +236,11 @@ class ApiRequest {
         $body = $response->getBody();
 
         if($this->payLoad && is_array($this->payLoad) &&  array_key_exists("sink", $this->payLoad)) {
-            return file_exists($this->payLoad["sink"]);
+            if('stream' === $this->payLoad["sink"]){
+                return $body;
+            }else{
+                return file_exists($this->payLoad["sink"]);
+            }
         } else {
             $responseJson = json_decode($body, true);
             if(json_last_error() !== JSON_ERROR_NONE) {
