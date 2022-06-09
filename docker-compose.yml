@@ -8,10 +8,10 @@ services:
       - 8080:8080
     working_dir: /opt/eversign-php-sdk
     networks:
-      - apilayer-network
+      - stack-holdings-network
     command: php -S 0.0.0.0:8080
 
 networks:
-  apilayer-network:
+  stack-holdings-network:
     external:
-      name: apilayer-network
+      name: stack-holdings-network
