@@ -572,6 +572,32 @@ class Client {
         return $request->startRequest();
      }
 
+    public function downloadFinalDocument(Document $document, $auditTrail = 0, $onlyUrl = false, $documentId = "") {
+
+        $parameters = [
+            "business_id" => $this->selectedBusiness->getBusinessId(),
+            "document_hash" => $document->getDocumentHash(),
+            "audit_trail" => $auditTrail,
+            "document_id" => $documentId,
+            "url_only" => $onlyUrl
+        ];
+
+        $payLoad = $onlyUrl ? null : ["stream" => false];
+
+        $request = new ApiRequest(
+            "GET",
+            $this->accessKey,
+            'download_final_document',
+            $onlyUrl ? "Eversign\Url" : "",
+            $parameters,
+            $payLoad,
+            $this->apiBaseUrl,
+            $this->apiRequestTimeout
+        );
+
+        return $request->startRequest();
+    }
+
      /**
       * Deletes the specified Document. Only works on Drafts and canceled Documents
       * @param \Eversign\Document $document
