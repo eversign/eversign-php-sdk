@@ -587,7 +587,7 @@ class Client {
         $request = new ApiRequest(
             "GET",
             $this->accessKey,
-            'download_final_document',
+            Config::DOCUMENT_FINAL_URL,
             $onlyUrl ? "Eversign\Url" : "",
             $parameters,
             $payLoad,
