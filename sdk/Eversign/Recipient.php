@@ -69,7 +69,7 @@ class Recipient {
     
     /**
      * This parameter can be used to specify a custom message (upon document delivery) for the current recipient.
-     * Please note that for the current recipient the general document message will be overriden by this parameter.
+     * Please note that for the current recipient the general document message will be overridden by this parameter.
      * @var string $message
      * @Type("string")
      */
