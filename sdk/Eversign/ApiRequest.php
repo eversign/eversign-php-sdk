@@ -57,8 +57,8 @@ class ApiRequest {
      * @param string $accessKey
      * @param string $endPoint
      * @param string $serializeClass
-     * @param [] $parameters
-     * @param [] $payLoad
+     * @param array $parameters
+     * @param array $payLoad
      */
 
     public function __construct(
@@ -94,7 +94,6 @@ class ApiRequest {
         $this->serializeClass = $serializeClass;
         $this->parameters = $parameters;
         $this->payLoad = $payLoad;
-        $this->apiB = $apiBaseUrl;
 
         $this->guzzleRequestTimeout = $apiRequestTimeout;
     }
@@ -150,7 +149,7 @@ class ApiRequest {
 
     /**
      * Starts a MultiPart Upload Request to the API
-     * @return []
+     * @return object
      * @throws \Exception
      */
     public function startMultipartUpload() {
@@ -187,7 +186,7 @@ class ApiRequest {
      * Starts the configured API Request of the ApiRequest instance.
      * Returns different objects based on the request sent. Consult the Eversign API
      * documentation for more information.
-     * @return stdClass
+     * @return \stdClass
      * @throws \Exception
      */
     public function startRequest() {

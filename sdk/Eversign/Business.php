@@ -148,7 +148,7 @@ class Business {
 
     /**
      * Returns the Creation Date of the Business
-     * @return DateTime
+     * @return \DateTime
      */
     public function getCreationTimeStamp() {
         return $this->creationTimeStamp;

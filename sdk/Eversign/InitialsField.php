@@ -44,7 +44,6 @@ class InitialsField extends FormField{
 
     public function __construct() {
         parent::__construct();
-        $this->type = "initials";
         $this->setWidth(43);
         $this->setHeight(43);
         $this->setRequired(false);

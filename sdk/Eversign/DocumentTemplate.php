@@ -103,7 +103,7 @@ class DocumentTemplate {
      /**
      * Array of Signer Objects which are associated with the Document
      *
-     * @var array<Eversign\Signer> $signers
+     * @var array<\Eversign\Signer> $signers
      * @Type("array<Eversign\Signer>")
      */
     private $signers;
@@ -111,7 +111,7 @@ class DocumentTemplate {
      /**
      * Array of Recipient Objects which are associated with the Document
      *
-     * @var array<Eversign\Recipient> $signers
+     * @var array<\Eversign\Recipient> $signers
      * @Type("array<Eversign\Recipient>")
      */
     private $recipients;
@@ -119,7 +119,7 @@ class DocumentTemplate {
      /**
      * This object must contain a sub array for each Merge Field of this template.
      *
-     * @var array<Eversign\Field> $fields
+     * @var array<\Eversign\Field> $fields
      * @Type("array<Eversign\Field>")
      */
     private $fields;
