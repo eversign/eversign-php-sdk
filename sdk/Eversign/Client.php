@@ -45,7 +45,7 @@ class Client {
     /**
      * Reference to the Access Key
      *
-     * @var Access Key $accessKey
+     * @var string $accessKey
      */
     protected $accessKey;
 
@@ -59,7 +59,7 @@ class Client {
 
     /**
      * The selected Business which will be used for subsequent API requests
-     * @var \Business $selectedBusiness
+     * @var \Eversign\Business $selectedBusiness
      */
     private $selectedBusiness;
 
@@ -121,7 +121,7 @@ class Client {
     /**
     * Requests a OAuth Access Token
     *
-    * @return $oauthAccessToken
+    * @return string
     */
     public function generateOAuthAuthorizationUrl($obj) {
         if(!array_key_exists('client_id', $obj)) {
@@ -138,7 +138,7 @@ class Client {
      /**
       * Requests a OAuth Access Token
       *
-      * @return $oauthAccessToken
+      * @return string
       */
      public function requestOAuthToken(OAuthTokenRequest $token_request) {
         $request = new ApiRequest(
@@ -158,7 +158,7 @@ class Client {
      /**
       * Sets a OAuth Access Token to beeing used as the access_key
       *
-      * @return $oauthAccessToken
+      * @return void
       */
      public function setOAuthAccessToken($oauthToken) {
          $this->accessKey = 'Bearer ' . $oauthToken;
@@ -168,7 +168,7 @@ class Client {
      /**
       * Retrieves all available Business for the current Client
       *
-      * @return \Business[]
+      * @return void
       */
      public function fetchBusinesses($setDefault = true) {
         if($this->accessKey) {
@@ -260,7 +260,7 @@ class Client {
      /**
       * Returns all Documents for the Client without filtering the state
       * Only exception are deleted Documents
-      * @return \Document[]
+      * @return \Eversign\Document[]
       */
      public function getAllDocuments() {
          return $this->getDocuments();
@@ -268,7 +268,7 @@ class Client {
 
      /**
       * Returns all Completed Documents for the Client
-      * @return \Document[]
+      * @return \Eversign\Document[]
       */
      public function getCompletedDocuments() {
          return $this->getDocuments("completed");
@@ -276,7 +276,7 @@ class Client {
 
      /**
       * Returns all Documents which are still in Draft
-      * @return \Document[]
+      * @return \Eversign\Document[]
       */
      public function getDraftDocuments() {
          return $this->getDocuments("drafts");
@@ -284,7 +284,7 @@ class Client {
 
      /**
       * Returns all canceled Documents for the Client
-      * @return \Document[]
+      * @return \Eversign\Document[]
       */
      public function getCanceledDocuments() {
          return $this->getDocuments("cancelled");
@@ -293,7 +293,7 @@ class Client {
      /**
       * Returns all Documents for the Client which require Actions
       * from the User
-      * @return \Document[]
+      * @return \Eversign\Document[]
       */
      public function getActionRequiredDocuments() {
          return $this->getDocuments("my_action_required");
@@ -302,7 +302,7 @@ class Client {
      /**
       * Returns all Documents for the Client which are waiting on responses
       * from others.
-      * @return \Document[]
+      * @return \Eversign\Document[]
       */
      public function getWaitingForOthersDocuments() {
          return $this->getDocuments("waiting_for_others");
@@ -310,7 +310,7 @@ class Client {
 
      /**
       * Returns a list of Documents which are set to be Templates
-      * @return \Document[]
+      * @return \Eversign\Document[]
       */
      public function getTemplates() {
          return $this->getDocuments("templates");
@@ -319,7 +319,7 @@ class Client {
      /**
       * Returns a list of Documents which are set to be Templates
       * which are also set to be archived
-      * @return \Document[]
+      * @return \Eversign\Document[]
       */
      public function getArchivedTemplates() {
          return $this->getDocuments("templates_archived");
@@ -328,7 +328,7 @@ class Client {
      /**
       * Returns a list of Documents which are set to be Templates
       * which are also set to be drafts
-      * @return \Document[]
+      * @return \Eversign\Document[]
       */
      public function getDraftTemplates() {
          return $this->getDocuments("template_drafts");
@@ -340,7 +340,7 @@ class Client {
       * Returns true or false whether the reminder has been sent
       * @param \Eversign\Document $document
       * @param \Eversign\Signer $signer
-      * @throws Exception
+      * @throws \Exception
       * @return boolean success
       */
      public function sendReminderForDocument(Document $document, Signer $signer) {
@@ -642,7 +642,7 @@ class Client {
      /**
       * Cancels the specified Document. After canceling the Document
       * it can be deleted.
-      * @param type $document
+      * @param \Eversign\Document $document
       * @return boolean success
       */
      public function cancelDocument($document) {

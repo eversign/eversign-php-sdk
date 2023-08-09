@@ -224,7 +224,7 @@ class Document {
      /**
      * Array of Signer Objects which are associated with the Document
      *
-     * @var array<Eversign\Signer> $signers
+     * @var array<\Eversign\Signer> $signers
      * @Type("array<Eversign\Signer>")
      */
     private $signers;
@@ -232,7 +232,7 @@ class Document {
      /**
      * Array of Recipient Objects which are associated with the Document
      *
-     * @var array<Eversign\Recipient> $signers
+     * @var array<\Eversign\Recipient> $signers
      * @Type("array<Eversign\Recipient>")
      */
     private $recipients;
@@ -240,7 +240,7 @@ class Document {
      /**
      * Array of LogEntry Objects which are associated with the Document
      *
-     * @var array<Eversign\LogEntry> $log
+     * @var array<\Eversign\LogEntry> $log
      * @Type("array<Eversign\LogEntry>")
      */
     private $log;
@@ -248,7 +248,7 @@ class Document {
     /**
      * Array of FormField Objects and there respective Subclass
      *
-     * @var array<array<Eversign\FormField>> $fields
+     * @var array<array<\Eversign\FormField>> $fields
      * @Type("array<array<Eversign\FormField>>")
      */
     private $fields;
@@ -256,7 +256,7 @@ class Document {
      /**
      * Array of File Objects which are associated with the Document
      *
-     * @var array<Eversign\File> $files
+     * @var array<\Eversign\File> $files
      * @Type("array<Eversign\File>")
      */
     private $files;
