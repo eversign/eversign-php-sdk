@@ -29,7 +29,6 @@ namespace Eversign;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\SerializerBuilder;
 use Eversign\FormField;
-use Doctrine\Common\Annotations\AnnotationRegistry;
 
 
 /**
@@ -60,10 +59,6 @@ class Info {
      * @Type("string")
      */
     private $businessUrl;
-
-    public function __construct() {
-        AnnotationRegistry::registerLoader('class_exists');
-    }
 
     /**
      * Converts the document to a JSON String

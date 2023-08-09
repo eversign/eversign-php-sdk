@@ -30,7 +30,6 @@ use Eversign\ApiRequest;
 use Eversign\OAuthTokenRequest;
 use Eversign\Business;
 use Eversign\Config;
-use Doctrine\Common\Annotations\AnnotationRegistry;
 use JMS\Serializer\SerializerBuilder;
 
 class Client {
@@ -72,9 +71,6 @@ class Client {
       */
      public function __construct($accessKey = null, $businessId = 0, $apiBaseUrl = null, int $apiRequestTimeout = Config::GUZZLE_TIMEOUT)
      {
-        if (!class_exists('Doctrine\Common\Annotations\AnnotationRegistry', false) && class_exists('Doctrine\Common\Annotations\AnnotationRegistry')) {
-            AnnotationRegistry::registerLoader('class_exists');
-        }
         $this->accessKey = $accessKey;
 
         if($businessId != 0) {
