@@ -82,7 +82,7 @@ class File {
 
     /**
      * Setting this Property will upload the File as soon as createDocument
-     * or uploadFile on the Client is called. Cannot be used in conjuction with other
+     * or uploadFile on the Client is called. Cannot be used in conjunction with other
      * File Links or Ids. After the Upload the fileId will be set automatically
      * @var string $filePath
      */

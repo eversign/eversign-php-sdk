@@ -216,7 +216,7 @@ $client->downloadRawDocumentToPath($document, "raw.pdf");
 #### Get a list of documents or templates
 *Class: Client*
 
-The Client class is also capable fo listing all available documents templates based on their status. Each method below returns an array of document objects.
+The Client class is also able to list all available document templates based on their status. Each method below returns an array of document objects.
 
 ```
 $client->getAllDocuments();

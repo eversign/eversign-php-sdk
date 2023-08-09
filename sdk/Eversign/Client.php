@@ -156,7 +156,7 @@ class Client {
      }
 
      /**
-      * Sets a OAuth Access Token to beeing used as the access_key
+      * Sets a OAuth Access Token to be used as the access_key
       *
       * @return $oauthAccessToken
       */
@@ -345,7 +345,7 @@ class Client {
       */
      public function sendReminderForDocument(Document $document, Signer $signer) {
         if (!$document->getDocumentHash() || !$document->getSigners()) {
-            throw new \Exception('Sending Reminders requires the Document Hash and an approriate Signer');
+            throw new \Exception('Sending Reminders requires the Document Hash and an appropriate Signer');
         }
 
         $parameters = [
