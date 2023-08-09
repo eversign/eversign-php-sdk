@@ -25,6 +25,6 @@
         "php": "^7.1|^8.0",
         "guzzlehttp/guzzle": "^6.2.3|^7.0.0",
         "jms/serializer": "^1.6.2|^3.12.0",
-        "doctrine/annotations": "^1.9"
+        "doctrine/annotations": "^1.9|^2.0"
     }
 }

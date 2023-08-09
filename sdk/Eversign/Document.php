@@ -29,8 +29,6 @@ namespace Eversign;
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\SerializerBuilder;
 use Eversign\FormField;
-use Doctrine\Common\Annotations\AnnotationRegistry;
-
 
 /**
  * Documents are used by Signers to create legally Binding electronic signatures
@@ -285,8 +283,6 @@ class Document {
 
 
     public function __construct() {
-        AnnotationRegistry::registerLoader('class_exists');
-
         $this->setSandbox(false);
         $this->setIsDraft(false);
         $this->setUseSignerOrder(false);

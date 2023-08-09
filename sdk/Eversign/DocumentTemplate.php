@@ -29,7 +29,6 @@ namespace Eversign;
 
 use JMS\Serializer\Annotation\Type;
 use JMS\Serializer\SerializerBuilder;
-use Doctrine\Common\Annotations\AnnotationRegistry;
 
 /**
  * An existing template can be used by making an HTTP POST request to the
@@ -146,9 +145,6 @@ class DocumentTemplate {
     private $customRequesterName;
 
     public function __construct($templateId = null) {
-        if (!class_exists('Doctrine\Common\Annotations\AnnotationRegistry', false) && class_exists('Doctrine\Common\Annotations\AnnotationRegistry')) {
-            AnnotationRegistry::registerLoader('class_exists');
-        }
         $this->signers = [];
         $this->recipients = [];
         $this->setSandbox(false);
@@ -240,7 +236,7 @@ class DocumentTemplate {
     public function getEmbeddedSigningEnabled() {
         return !!$this->embeddedSigningEnabled;
     }
-    
+
     public function getCustomRequesterEmail() {
         return $this->customRequesterEmail;
     }
